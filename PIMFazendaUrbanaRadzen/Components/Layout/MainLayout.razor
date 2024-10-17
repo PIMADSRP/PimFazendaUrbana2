@@ -1,0 +1,64 @@
+@inject CookieThemeService CookieThemeService
+@inherits LayoutComponentBase
+<RadzenDialog />
+<RadzenNotification />
+<RadzenTooltip />
+<RadzenContextMenu />
+
+<RadzenLayout style="grid-template-areas: 'rz-sidebar rz-header' 'rz-sidebar rz-body';">
+    <RadzenHeader>
+        <RadzenRow JustifyContent="JustifyContent.Start" AlignItems="AlignItems.Center" Gap="0" Style="background-color: var(--rz-primary)">
+            <RadzenColumn Size="5">
+                <RadzenSidebarToggle Click="@SidebarToggleClick"></RadzenSidebarToggle>
+            </RadzenColumn>
+            <RadzenColumn Size="7">
+                <RadzenStack AlignItems="AlignItems.Center" Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End">
+                    <RadzenAppearanceToggle />
+                    <RadzenProfileMenu Click="@ProfileMenuClick" Style="background-color: #1eba2a">
+                        <ChildContent>
+                            <RadzenProfileMenuItem Path="profile" Icon="settings" Text="Profile" />
+                            <RadzenProfileMenuItem Path="application-users" Icon="person" Text="Users" />
+                            <RadzenProfileMenuItem Path="application-roles" Icon="security" Text="Roles" />
+                            <RadzenProfileMenuItem Text="Logout" Value="Logout" Icon="power_settings_new" />
+                        </ChildContent>
+                        <Template>
+                            <RadzenLabel Text="Bem vindo, " />
+                            <RadzenLabel Text="Security.User.LastName" />
+                        </Template>
+                    </RadzenProfileMenu>
+                </RadzenStack>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenHeader>
+    <RadzenBody Expanded="@sidebarExpanded">
+        <RadzenRow class="rz-mx-auto rz-px-2 rz-pt-1 rz-pt-md-1 rz-pt-lg-1 rz-pt-xl-1 rz-pb-1 rz-pb-lg-1" Style="max-width: 1920px;">
+            <RadzenColumn Size="12">
+            @Body
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenBody>
+    <RadzenSidebar Expanded="@sidebarExpanded" style="z-index: 2; background-color: var(--rz-primary); visibility: visible; max-width: 250px">
+        <RadzenStack AlignItems="Radzen.AlignItems.Center" class="rz-py-2 rz-py-lg-3" Style="padding: var(--rz-panel-menu-item-padding); border-bottom: var(--rz-panel-menu-item-border);">
+            <RadzenImage Path="images/logo.png"  style="width: 128px; height: 128px"></RadzenImage>
+            <RadzenText Text="Farm System" TextStyle="Radzen.Blazor.TextStyle.Subtitle1" class="rz-mb-0" style="color: #ffffff; font-size: 30px" />
+        </RadzenStack>
+        <RadzenPanelMenu Style="background-color: #1eba2a; color: #ffffff">
+            <RadzenPanelMenuItem Text="Home" Path="" Icon="home" />
+            <RadzenPanelMenuItem Text="Funcionários" Path="funcionarios" Icon="work"  />
+            <RadzenPanelMenuItem Text="Clientes" Path="clientes" Icon="perm_contact_calendar"/>
+            <RadzenPanelMenuItem Text="Fornecedores" Path="fornecedores" Icon="perm_contact_calendar"/>
+            <RadzenPanelMenuItem Text="Fornecedores" Path="fornecedores" Icon="perm_contact_calendar" />
+            <RadzenPanelMenuItem Text="Tasks" Path="tasks" Icon="work" />
+            <RadzenPanelMenuItem Text="Opportunities" Path="opportunities" Icon="shopping_cart" />
+            <RadzenPanelMenuItem Text="Opções"  >
+                <RadzenPanelMenuItem Text="OpportunityStatuses" Path="opportunity-statuses" />
+                <RadzenPanelMenuItem Text="TaskStatuses" Path="task-statuses" />
+                <RadzenPanelMenuItem Text="TaskTypes" Path="task-types" />
+            </RadzenPanelMenuItem>
+        </RadzenPanelMenu>
+        <RadzenStack AlignItems="Radzen.AlignItems.Center" Gap="0" class="rz-py-1 rz-py-lg-1" Style="padding: var(--rz-panel-menu-item-padding);">
+            <RadzenText Text="Farm System v2.0.0" TextStyle="Radzen.Blazor.TextStyle.Caption" style="color: #ffffff" TagName="Radzen.Blazor.TagName.P" TextAlign="Radzen.TextAlign.Center" />
+            <RadzenText Text="Copyright Ⓒ 2024" TextStyle="Radzen.Blazor.TextStyle.Caption" class="rz-mb-0" style="color: #ffffff" TagName="Radzen.Blazor.TagName.P" TextAlign="Radzen.TextAlign.Center" />
+        </RadzenStack>
+    </RadzenSidebar>
+</RadzenLayout>
