@@ -11,7 +11,10 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
         public ApiService<ClienteDTO> ClienteApiService { get; set; }
 
         [Inject]
-        public DialogService DialogService { get; set; } // Inject DialogService
+        public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        public NotificationService NotificationService { get; set; }
 
         protected ClienteDTO cliente;
         protected bool errorVisible;
@@ -28,8 +31,8 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
         {
             cliente = new ClienteDTO
             {
-                Endereco = new EnderecoDTO(), // Inicializa o Endereco
-                Telefone = new TelefoneDTO()  // Inicializa o Telefone
+                Endereco = new EnderecoDTO(),
+                Telefone = new TelefoneDTO()
             };
         }
 
@@ -37,20 +40,63 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
         {
             try
             {
-                await ClienteApiService.CreateAsync(cliente); // Chama o serviço para criar o cliente
-                                                              // Redirecionar ou exibir mensagem de sucesso
+                // Limpa e formata os campos antes de enviar
+                cliente.CNPJ = FormatCNPJ(cliente.CNPJ);
+                cliente.Telefone.Numero = FormatTelefone(cliente.Telefone.Numero);
+                cliente.Endereco.CEP = FormatCEP(cliente.Endereco.CEP);
+
+                cliente.StatusAtivo = true; // Define StatusAtivo como true por padrão
+
+                Console.WriteLine("Chamando ApiService");
+                var response = await ClienteApiService.CreateAsync(cliente); // Chama ApiService para criar o cliente
+                Console.WriteLine("Retornou de ApiService");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("Navegando para /Clientes");
+                    // Redireciona para a página de clientes e exibe mensagem de sucesso
+                    NavigationManager.NavigateTo("/clientes");
+                    NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Cliente cadastrado com sucesso!", duration: 5000);
+                }
+                else
+                {
+                    // Exibe mensagem de erro caso o status não seja de sucesso
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao cadastrar cliente: {errorMessage}", duration: 5000);
+                }
             }
             catch (Exception ex)
             {
-                errorVisible = true; // Mostra mensagem de erro
+                errorVisible = true; // Exibe mensagem de erro
                 Console.WriteLine($"Erro ao cadastrar cliente: {ex.Message}");
             }
         }
 
+
         protected async Task CancelButtonClick()
         {
-            // Lógica para cancelar a ação, redirecionar ou fechar o formulário
-            DialogService.Close(null);
+            // Redireciona para a página de clientes
+            NavigationManager.NavigateTo("/clientes");
         }
+
+
+        private string FormatCNPJ(string cnpj)
+        {
+            // Remove caracteres não numéricos e retorna o CNPJ formatado
+            return new string(cnpj.Where(char.IsDigit).ToArray());
+        }
+
+        private string FormatTelefone(string telefone)
+        {
+            // Remove caracteres não numéricos e retorna o telefone formatado
+            return new string(telefone.Where(char.IsDigit).ToArray());
+        }
+
+        private string FormatCEP(string cep)
+        {
+            // Remove caracteres não numéricos e retorna o CEP formatado
+            return new string(cep.Where(char.IsDigit).ToArray());
+        }
+
     }
 }

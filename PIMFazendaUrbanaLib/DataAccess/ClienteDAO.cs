@@ -7,7 +7,7 @@ namespace PIMFazendaUrbanaLib
     {
         private readonly string connectionString;
 
-        public ClienteDAO(string connectionString) // construtor  atualizado para receber a connection string como parâmetro
+        public ClienteDAO(string connectionString) // construtor atualizado para receber a connection string como parâmetro
         {
             this.connectionString = connectionString;
         }
@@ -20,17 +20,16 @@ namespace PIMFazendaUrbanaLib
             {
                 connection.Open();
 
-                string query = @"
-            SELECT c.id_cliente, c.nome_cliente, c.email_cliente, c.cnpj_cliente, c.ativo_cliente, 
-                   t.ddd_telcliente, t.numero_telcliente, t.ativo_telcliente, 
-                   e.logradouro_endcliente, e.numero_endcliente, e.complemento_endcliente, e.bairro_endcliente, 
-                   e.cidade_endcliente, e.uf_endcliente, e.cep_endcliente, e.ativo_endcliente
-            FROM cliente c
-            LEFT JOIN telefonecliente t ON c.id_cliente = t.id_cliente
-            LEFT JOIN enderecocliente e ON c.id_cliente = e.id_cliente
-            WHERE c.ativo_cliente = true 
-            AND (c.nome_cliente LIKE @search OR c.email_cliente LIKE @search OR 
-                 c.cnpj_cliente LIKE @search OR t.numero_telcliente LIKE @search)";
+                string query = @"SELECT c.id_cliente, c.nome_cliente, c.email_cliente, c.cnpj_cliente, c.ativo_cliente, 
+                                   t.ddd_telcliente, t.numero_telcliente, t.ativo_telcliente, 
+                                   e.logradouro_endcliente, e.numero_endcliente, e.complemento_endcliente, e.bairro_endcliente, 
+                                   e.cidade_endcliente, e.uf_endcliente, e.cep_endcliente, e.ativo_endcliente
+                                FROM cliente c
+                                LEFT JOIN telefonecliente t ON c.id_cliente = t.id_cliente
+                                LEFT JOIN enderecocliente e ON c.id_cliente = e.id_cliente
+                                WHERE c.ativo_cliente = true 
+                                AND (c.nome_cliente LIKE @search OR c.email_cliente LIKE @search OR 
+                                    c.cnpj_cliente LIKE @search OR t.numero_telcliente LIKE @search)";
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {

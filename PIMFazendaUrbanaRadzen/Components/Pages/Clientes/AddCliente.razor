@@ -86,7 +86,7 @@
             <RadzenRow>
                 <RadzenColumn Width="30%">
                     <RadzenFormField Text="UF:" Variant="Variant.Outlined">
-                        <RadzenDropDown TValue="string" Data="estados" @bind-Value="@cliente.Endereco.UF" title="UF é obrigatório, selecione uma UF da lista" />
+                        <RadzenDropDown Name="UF" TValue="string" Data="estados" @bind-Value="@cliente.Endereco.UF" title="UF é obrigatório, selecione uma UF da lista" />
                         <RadzenRequiredValidator Component="UF" Text="UF é obrigatório, selecione uma UF da lista" />
                     </RadzenFormField>
                 </RadzenColumn>

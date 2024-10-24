@@ -1,11 +1,12 @@
 ﻿namespace PIMFazendaUrbanaLib
 {
-    public class FuncionarioService
+    public class FuncionarioService : IFuncionarioService
     {
-        private readonly FuncionarioDAO funcionarioDAO;
-        public FuncionarioService()
+        private readonly IFuncionarioDAO funcionarioDAO;
+
+        public FuncionarioService(string connectionString)
         {
-            this.funcionarioDAO = new FuncionarioDAO();
+            this.funcionarioDAO = new FuncionarioDAO(connectionString);
         }
 
         public Funcionario AutenticarFuncionario(string usuario, string senha)
@@ -21,21 +22,26 @@
                     }
                     else
                     {
-                        throw new AuthenticationException("Usuário ou senha inválidos.");
+                        throw new UserInactiveException("Usuário inativado.");
                     }
                 }
                 else
                 {
-                    throw new UserInactiveException("Usuário inativado.");
+                    throw new AuthenticationException("Usuário ou senha inválidos.");
                 }
+            }
+            catch (UserInactiveException)
+            {
+                throw; // Propaga a exceção de usuário inativo
+            }
+            catch (AuthenticationException)
+            {
+                throw; // Propaga a exceção de autenticação
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao autenticar funcionário: " + ex.Message);
+                throw new Exception("Erro ao autenticar funcionário: " + ex.Message); // Para demais tipos de exceção
             }
         }
-
-
-
     }
 }

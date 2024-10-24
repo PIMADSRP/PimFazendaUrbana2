@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using PIMFazendaUrbanaAPI.Mapping;
 using PIMFazendaUrbanaLib;
+using System.Text;
 
 namespace PIMFazendaUrbanaAPI
 {
@@ -19,22 +22,36 @@ namespace PIMFazendaUrbanaAPI
             // Adiciona a connection string do appsettings.json
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddScoped<IClienteService>(provider => new ClienteService(connectionString));
+            builder.Services.AddScoped<IFuncionarioService>(provider => new FuncionarioService(connectionString));
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            /*
-            builder.Services.AddCors(options =>
+            // Configuração do JWT
+            var jwtKey = builder.Configuration["Jwt:Key"];
+            var issuer = builder.Configuration["Jwt:Issuer"];
+            var audience = builder.Configuration["Jwt:Audience"];
+            builder.Services.AddAuthentication(options =>
             {
-                options.AddPolicy("AllowAllOrigins", builder =>
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    builder.AllowAnyOrigin()
-                           .AllowAnyMethod()
-                           .AllowAnyHeader();
-                });
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = issuer,
+                    ValidAudience = audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                };
             });
-            */
 
+
+            // Configuração do CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOrigins", builder =>
@@ -58,8 +75,8 @@ namespace PIMFazendaUrbanaAPI
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
 
             app.MapControllers();
 

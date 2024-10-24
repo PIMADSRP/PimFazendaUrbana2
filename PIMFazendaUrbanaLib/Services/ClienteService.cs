@@ -5,7 +5,7 @@ namespace PIMFazendaUrbanaLib
     // A classe ClienteService é acessada publicamente e é responsável por intermediar as requisições do front end com o banco de dados
     public class ClienteService : IClienteService
     {
-        private readonly ClienteDAO clienteDAO;
+        private readonly IClienteDAO clienteDAO;
 
         public ClienteService(string connectionString) // construtor  atualizado para receber a connection string como parâmetro
         {

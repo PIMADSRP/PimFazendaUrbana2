@@ -3,12 +3,12 @@ using System.Data;
 
 namespace PIMFazendaUrbanaLib
 {
-    public class FuncionarioDAO
+    public class FuncionarioDAO : IFuncionarioDAO
     {
-        private string connectionString;
-        public FuncionarioDAO()
+        private readonly string connectionString;
+        public FuncionarioDAO(string connectionString)
         {
-            connectionString = ConnectionString.GetConnectionString();
+            this.connectionString = connectionString;
         }
 
 

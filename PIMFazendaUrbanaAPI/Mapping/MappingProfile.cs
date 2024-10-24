@@ -11,6 +11,7 @@ namespace PIMFazendaUrbanaAPI.Mapping
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
             CreateMap<Endereco, EnderecoDTO>().ReverseMap();
             CreateMap<Telefone, TelefoneDTO>().ReverseMap();
+            CreateMap<Funcionario, FuncionarioDTO>().ReverseMap();
             // Adicione outros mapeamentos conforme necessário
         }
     }
