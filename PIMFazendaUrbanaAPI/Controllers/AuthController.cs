@@ -43,7 +43,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
 
                 // Gerar um token JWT
                 var token = GerarToken(funcionario);
-                return Ok(new { Token = token, Funcionario = funcionarioDto });
+                return Ok(new { Token = token, Funcionario = funcionarioDto }); // Retorna código 200 com token e funcionário
             }
             catch (AuthenticationException ex)
             {

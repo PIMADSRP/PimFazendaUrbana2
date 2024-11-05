@@ -2,7 +2,6 @@
 
 namespace PIMFazendaUrbanaLib
 {
-    // A classe ClienteService é acessada publicamente e é responsável por intermediar as requisições do front end com o banco de dados
     public class ClienteService : IClienteService
     {
         private readonly IClienteDAO clienteDAO;
@@ -27,25 +26,6 @@ namespace PIMFazendaUrbanaLib
 
         public void CadastrarCliente(Cliente cliente)
         {
-            // 1- ver se fica melhor:
-            // front passa json com os dados, que são convertidos para objeto cliente por uma api (controller asp.net), que é passado para o service
-            // front passa json com os dados, que são convertidos para objeto cliente pelo service
-            // front passa os dados separados, que são passados para o service
-            // front passa os dados separados, que são convertidos para objeto cliente, que é passado para o service
-
-            // aparentemente:
-            // o front passaria um json quando o usuario clicar em enviar,
-            // que é convertido para um objeto cliente pelo controller asp.net,
-            // que é passado para o método service
-            // que é passado para o método de validação
-            // se der erro de validação, lança exceção para o service, que lança para o controller, que manda para o front
-
-            // 2- ver se fica melhor:
-            // método service passar os dados separados para o método de validação
-            // método service passar o objeto cliente para o método de validação
-
-            // os retornos e try catch e etc
-
             try
             {
                 ValidarCliente(cliente); // Chama o método dedicado para validar os dados do cliente

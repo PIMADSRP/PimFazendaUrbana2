@@ -125,7 +125,6 @@ a:focus {
     content: var(--blazor-load-percentage-text, "Loading");
 }
 
-
 /* CUSTOM */
 
 /* SPLITBUTTON */

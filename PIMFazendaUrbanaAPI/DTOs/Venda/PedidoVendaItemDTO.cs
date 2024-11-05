@@ -1,6 +1,6 @@
 ﻿namespace PIMFazendaUrbanaAPI.DTOs
 {
-    public class PedidoVendaItemDTO
+    public class PedidoVendaItemDTO  // precisa atualizar com composição
     {
         public int Id { get; set; }
         public int Qtd { get; set; }

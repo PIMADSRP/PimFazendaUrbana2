@@ -9,10 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageReference Include="Radzen.Blazor" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
 	  <ProjectReference Include="..\PIMFazendaUrbanaAPI\PIMFazendaUrbanaAPI.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
 </Project>

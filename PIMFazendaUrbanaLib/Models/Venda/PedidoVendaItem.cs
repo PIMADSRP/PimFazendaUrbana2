@@ -1,6 +1,6 @@
 ﻿namespace PIMFazendaUrbanaLib
 {
-    public class PedidoVendaItem
+    public class PedidoVendaItem  // precisa atualizar com composição
     {
         public int Id { get; set; }
         public int Qtd { get; set; }
