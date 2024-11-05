@@ -40,7 +40,7 @@ Bruno Zambuze Silva
 Luiz Fernando de Pádua Passos  
 
 **Front-end:**  
-Luiz Fernando de Pádua Passos  
+Luiz Fernando de Pádua Passos 
 Luan Lucas França Silva  
 Igor Henrique da Silva   
 Caique Conradi Bocamino  
