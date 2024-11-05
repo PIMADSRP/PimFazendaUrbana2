@@ -1,8 +1,7 @@
 ﻿namespace PIMFazendaUrbanaAPI.DTOs
 {
-    public class SaidaInsumoDTO
+    public class SaidaInsumoDTO  // precisa atualizar com composição
     {
-        // Propriedades
         public int Id { get; set; }
         public int Qtd { get; set; }
         public DateTime Data { get; set; }

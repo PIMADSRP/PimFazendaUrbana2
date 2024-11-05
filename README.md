@@ -40,13 +40,13 @@ Bruno Zambuze Silva
 Luiz Fernando de Pádua Passos  
 
 **Front-end:**  
+Luiz Fernando de Pádua Passos 
 Luan Lucas França Silva  
-Igor Henrique da Silva  
-Luiz Fernando de Pádua Passos  
+Igor Henrique da Silva   
 Caique Conradi Bocamino  
+Gabriel da Silva Bauer  
 Cezar de Alencar Assis Faria Junior  
 Gustavo Spinelli Lupaquini  
-Gabriel da Silva Bauer  
 
 **Documentação:**  
 Luiz Fernando de Pádua Passos  

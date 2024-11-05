@@ -26,7 +26,7 @@
                 <RadzenMask Mask="**.***.***/****-**" Placeholder="__.___.___/____-__" style="width: 100%" @bind-Value="@cliente.CNPJ" Name="CNPJ" title="CNPJ é obrigatório e deve ter 14 caracteres" />
                 <RadzenRequiredValidator Component="CNPJ" Text="CNPJ é obrigatório e deve ter 14 caracteres" />
             </RadzenFormField>
-
+            
             <!-- E-mail -->
             <RadzenFormField Text="E-mail:" Variant="Variant.Outlined">
                 <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Email" Name="Email" title="E-mail é obrigatório e deve o formato nome@dominio.com ou similar" />

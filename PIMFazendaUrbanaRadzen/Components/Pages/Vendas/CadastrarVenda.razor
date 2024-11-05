@@ -1,0 +1,167 @@
+@page "/cadastrar-vendas"
+
+@* Configurações do Título --------------------------------------------------------------------------------------------------------------------- *@
+<PageTitle>Cadastrar Venda</PageTitle>
+<RadzenRow>
+    <RadzenColumn Size="12">
+        <RadzenText Text="Cadastrar Venda" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-4" />
+    </RadzenColumn>
+</RadzenRow>
+
+@* Configurações dos Labels e TextBoxes -------------------------------------------------------------------------------------------------------------------- *@
+<RadzenRow>
+    <RadzenColumn Size="5">
+        <RadzenRow class="rz-mb-3" style="align-items: center;">
+            <RadzenColumn Size="4" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+                <RadzenLabel Text="Cliente:" />
+            </RadzenColumn>   
+            <RadzenColumn>
+                <RadzenDropDown TValue="string" @bind-Value="selectedProduct" Data="@comboBoxItems" TextProperty="Text" ValueProperty="Value" />
+            </RadzenColumn> 
+        </RadzenRow>
+
+        <RadzenRow class="rz-mb-3" style="align-items: center;">
+            <RadzenColumn Size="4" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+                <RadzenLabel Text="Produto:" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenDropDown TValue="string" @bind-Value="selectedCategory" Data="@comboBoxItems" TextProperty="Text" ValueProperty="Value" />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow class="rz-mb-3" style="align-items: center;">
+            <RadzenColumn Size="4" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+                <RadzenLabel Text="Categoria:" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenTextBox />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow class="rz-mb-3" style="align-items: center;">
+            <RadzenColumn Size="4" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+                <RadzenLabel Text="Unidade:" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenTextBox />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow class="rz-mb-3" style="align-items: center;">    
+            <RadzenColumn Size="4" style="text-align: center; display: flex; justify-content: center; align-items: center;">    
+                <RadzenLabel Text="Quantidade:" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenTextBox />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow class="rz-mb-3" style="align-items: center;">
+            <RadzenColumn Size="4" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+                <RadzenLabel Text="Valor Unitário:" />
+            </RadzenColumn>
+            <RadzenColumn>    
+                <RadzenTextBox />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow class="rz-mb-3" style="align-items: center;">
+            <RadzenColumn Size="4" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+                <RadzenLabel Text="Valor Total:" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenTextBox />
+            </RadzenColumn>
+        </RadzenRow>
+
+        <RadzenRow class="rz-mt-5" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+            <RadzenColumn>
+                <RadzenButton ButtonStyle="ButtonStyle.Primary"
+                            Icon="add"
+                            Size="ButtonSize.Small"
+                            Shade="Shade.Lighter"
+                            Variant="Variant.Flat"
+                            @onclick:stopPropagation="true"
+                            Style="color: #ffffff; background-color: var(--rz-primary-light)" Text="Adicionar" />
+            </RadzenColumn>
+
+            <RadzenColumn>
+                <RadzenButton ButtonStyle="ButtonStyle.Primary"
+                            Icon="edit"
+                            Size="ButtonSize.Small"
+                            Shade="Shade.Lighter"
+                            Variant="Variant.Flat"
+                            @onclick:stopPropagation="true"
+                            Style="color: #ffffff; background-color: rgba(66, 154, 255, 0.68)" Text="Editar" />
+            </RadzenColumn>
+
+            <RadzenColumn>
+                <RadzenButton ButtonStyle="ButtonStyle.Danger"
+                            Icon="delete"
+                            Size="ButtonSize.Small"
+                            Shade="Shade.Lighter"
+                            Variant="Variant.Flat"
+                            @onclick:stopPropagation="true" Text="Remover" />
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenColumn>
+
+    @* Configurações dos DataGrid ------------------------------------------------------------------------------------------------------------------ *@
+    <RadzenColumn Size="7">
+        <RadzenRow>
+            <RadzenDataGrid Data="@dataGridItems" TItem="dynamic" Style="border: 1px solid black; padding: 5px; width: 100%;">
+                <Columns>
+                    <RadzenDataGridColumn TItem="dynamic" Property="Text" Title="Texto" />
+                    <RadzenDataGridColumn TItem="dynamic" Property="Value" Title="Valor" />
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenRow>
+        
+        <RadzenRow class="rz-mt-4" style="align-items: center;">
+            <RadzenColumn Size="3" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+                <RadzenLabel Text="Valor Total do Pedido:" />
+            </RadzenColumn>
+            <RadzenColumn  Size="3" style="text-align: center; display: flex; justify-content: center; align-items: center;">
+                <RadzenTextBox Style="width: 150px" />
+            </RadzenColumn>
+            <RadzenColumn Size="6" style="text-align: right; display: flex; justify-content: right; align-items: center;">
+                <RadzenColumn class="rz-mr-1 rz-ml-1">
+                    <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="Confirmar" 
+                      Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Default" Style="background-color: var(--rz-primary)" />
+                </RadzenColumn>
+                <RadzenColumn class="rz-mr-1 rz-ml-1">
+                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Text="Cancelar" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Light" />
+                </RadzenColumn>
+            </RadzenColumn>
+        </RadzenRow>
+
+    </RadzenColumn>
+</RadzenRow>
+
+@* Códigos-------------------------------------------------------------------------------------------------------------------------------------- *@
+@code {
+    private string selectedProduct;
+    private string selectedCategory;
+
+    @* Itens do ComboBox------------------------------------------------------------------------------------------------------------------------ *@
+    private List<Item> comboBoxItems = new List<Item>
+    {
+        new Item { Text = "Opção 1", Value = "1" },
+        new Item { Text = "Opção 2", Value = "2" },
+        new Item { Text = "Opção 3", Value = "3" }
+    };
+
+    @* Itens do DataGrid------------------------------------------------------------------------------------------------------------------------ *@
+    private List<dynamic> dataGridItems = new List<dynamic>
+    {
+        new { Text = "Item 1", Value = "1" },
+        new { Text = "Item 2", Value = "2" },
+        new { Text = "Item 3", Value = "3" }
+    };
+
+    public class Item
+    {
+        public string Text { get; set; }
+        public string Value { get; set; }
+    }
+}

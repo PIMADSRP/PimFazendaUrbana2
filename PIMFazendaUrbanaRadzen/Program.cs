@@ -2,6 +2,8 @@ using PIMFazendaUrbanaRadzen.Services;
 using PIMFazendaUrbanaRadzen.Components;
 using Radzen;
 using PIMFazendaUrbanaAPI.DTOs;
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,18 +28,24 @@ var apiBaseUrl = Environment.GetEnvironmentVariable("API_BASE_URL") ?? "https://
 
 builder.Services.AddScoped<DialogService>(); // Para DialogService
 
-/*
-builder.Services.AddScoped<ApiService<ClienteDTO>>(provider =>
-    new ApiService<ClienteDTO>(provider.GetRequiredService<HttpClient>(),
-    builder.Configuration["API_BASE_URL"]));
-*/
+builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddScoped<CustomAuthenticationStateProvider>();
+builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthenticationStateProvider>());
+
+builder.Services.AddScoped<AuthService>(provider =>
+    new AuthService(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/auth/login",
+        provider.GetRequiredService<ILocalStorageService>(),
+        provider.GetRequiredService<CustomAuthenticationStateProvider>() // Passando o provedor aqui
+    ));
 
 builder.Services.AddScoped(provider =>
     new ApiService<ClienteDTO>(
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/Cliente"
     ));
-
 
 builder.Services.AddScoped(provider =>
     new ApiService<EnderecoDTO>(
@@ -50,7 +58,6 @@ builder.Services.AddScoped(provider =>
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/telefones"
     ));
-
 
 
 var app = builder.Build();

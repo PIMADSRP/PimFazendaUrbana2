@@ -1,8 +1,7 @@
 ﻿namespace PIMFazendaUrbanaLib
 {
-    public class EstoqueProduto
+    public class EstoqueProduto  // precisa atualizar com composição
     {
-        // Atributos/Propriedades
         public int Id { get; set; }
         public int Qtd { get; set; }
         public string Unidqtd { get; set; }

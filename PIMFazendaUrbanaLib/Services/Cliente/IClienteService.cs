@@ -3,7 +3,6 @@
     public interface IClienteService
     {
         List<Cliente> ListarClientesComFiltros(string search);
-
         void CadastrarCliente(Cliente cliente);
         void AlterarCliente(Cliente cliente);
         void ExcluirCliente(int clienteId);
