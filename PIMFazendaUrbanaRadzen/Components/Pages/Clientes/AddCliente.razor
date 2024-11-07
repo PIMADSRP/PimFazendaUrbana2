@@ -124,32 +124,50 @@
 </RadzenStack>
 
 @code{
+    EnderecoViaCep endereco { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        endereco = new EnderecoViaCep();  // Inicializa o objeto de endereço
+    }
     private async Task BuscarEnderecoPorCEP()
     {
         try
         {
-            var cep = cliente.Endereco.CEP.Replace("-", ""); // Remove o traço do CEP, se presente
-
-            // Fazer requisição à API de CEP
-            var response = await Http.GetFromJsonAsync<EnderecoViaCep>($"api/cep/{cep}");
-
-            if (response != null && !response.erro)
-            {
-                // Preencher automaticamente o campo Logradouro
-                cliente.Endereco.Logradouro = response.Logradouro;
-                cliente.Endereco.Bairro = response.Bairro; // Pode preencher outros campos aqui, se necessário
-                cliente.Endereco.Cidade = response.Localidade;
-
-                errorVisible = false; // Se não houver erro, oculta a mensagem de erro
-            }
-            else
-            {
-                errorVisible = true; // Exibe erro se não encontrar o CEP
-            }
+            endereco = await Http.GetFromJsonAsync<EnderecoViaCep>($"api/Cep/{endereco.cep}");
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            errorVisible = true; // Exibe erro caso ocorra uma falha na requisição
+            
+
         }
     }
+    // private async Task BuscarEnderecoPorCEP()
+    // {
+    //     try
+    //     {
+    //         var cep = cliente.Endereco.CEP.Replace("-", ""); // Remove o traço do CEP, se presente
+
+    //         // Fazer requisição à API de CEP
+    //         var response = await Http.GetFromJsonAsync<EnderecoViaCep>($"api/cep/{cep}");
+
+    //         if (response != null && !response.erro)
+    //         {
+    //             // Preencher automaticamente o campo Logradouro
+    //             cliente.Endereco.Logradouro = response.Logradouro;
+    //             cliente.Endereco.Bairro = response.Bairro; // Pode preencher outros campos aqui, se necessário
+    //             cliente.Endereco.Cidade = response.Localidade;
+
+    //             errorVisible = false; // Se não houver erro, oculta a mensagem de erro
+    //         }
+    //         else
+    //         {
+    //             errorVisible = true; // Exibe erro se não encontrar o CEP
+    //         }
+    //     }
+    //     catch (Exception)
+    //     {
+    //         errorVisible = true; // Exibe erro caso ocorra uma falha na requisição
+    //     }
+    // }
 }
