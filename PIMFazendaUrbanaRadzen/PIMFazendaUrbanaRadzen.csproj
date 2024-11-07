@@ -10,11 +10,13 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Radzen.Blazor" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
 	  <ProjectReference Include="..\PIMFazendaUrbanaAPI\PIMFazendaUrbanaAPI.csproj" />
+	  <ProjectReference Include="..\PIMFazendaUrbanaLib\PIMFazendaUrbanaLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
