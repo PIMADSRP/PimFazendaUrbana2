@@ -1,59 +1,59 @@
 
 # Projeto Integrado Multidisciplinar - Fazenda Urbana
 
-## Descri√ß√£o
-Projeto Integrado Multidisciplinar elaborado como parte das exig√™ncias para a conclus√£o do semestre 02/2024 do curso de An√°lise e Desenvolvimento de Sistemas pela Universidade Paulista, campus de Ribeir√£o Preto.
+## DescriÁ„o
+Projeto Integrado Multidisciplinar elaborado como parte das exigÍncias para a conclus„o do semestre 02/2024 do curso de An·lise e Desenvolvimento de Sistemas pela Universidade Paulista, campus de Ribeir„o Preto.
 
-Com base no tema proposto *‚Äúlevantamento e an√°lise de requisitos de um sistema de controle de uma fazenda urbana de uma startup focada em garantir inova√ß√£o para √°rea de seguran√ßa alimentar‚Äù*, o projeto apresenta o cen√°rio de uma startup, representada pelos autores, encarregada do desenvolvimento de um sistema para uma fazenda urbana, a partir de um cen√°rio de aumento da inseguran√ßa alimentar no Brasil, seguindo os objetivos de desenvolvimento sustent√°vel delineados pela ONU.
+Com base no tema proposto *ìlevantamento e an·lise de requisitos de um sistema de controle de uma fazenda urbana de uma startup focada em garantir inovaÁ„o para ·rea de seguranÁa alimentarî*, o projeto apresenta o cen·rio de uma startup, representada pelos autores, encarregada do desenvolvimento de um sistema para uma fazenda urbana, a partir de um cen·rio de aumento da inseguranÁa alimentar no Brasil, seguindo os objetivos de desenvolvimento sustent·vel delineados pela ONU.
 
-Desenvolvemos uma aplica√ß√£o web que visa auxiliar o controle de uma fazenda urbana, permitindo o gerenciamento de todas as etapas do processo produtivo, desde o plantio at√© a venda dos produtos, incluindo o controle de estoque, controle de fornecedores e clientes, e gera√ß√£o de relat√≥rios.
+Desenvolvemos uma aplicaÁ„o web que visa auxiliar o controle de uma fazenda urbana, permitindo o gerenciamento de todas as etapas do processo produtivo, desde o plantio atÈ a venda dos produtos, incluindo o controle de estoque, controle de fornecedores e clientes, e geraÁ„o de relatÛrios.
 O sistema possui **3 camadas**:
 
- - O **back-end**, em forma de class library, respons√°vel pelas classes das entidades (**Models**), pela l√≥gica de neg√≥cio (**Services**) e comunica√ß√£o com o banco de dados (**DAOs**);
- - Uma **API** ASP.NET que realiza a integra√ß√£o do back-end com o front-end por meio de **Controllers** e **DTOs;**  
- - E o **front-end**, respons√°vel pela interface com o usu√°rio, utilizando **Blazor** Server e componentes
+ - O **back-end**, em forma de class library, respons·vel pelas classes das entidades (**Models**), pela lÛgica de negÛcio (**Services**) e comunicaÁ„o com o banco de dados (**DAOs**);
+ - Uma **API** ASP.NET que realiza a integraÁ„o do back-end com o front-end por meio de **Controllers** e **DTOs;**  
+ - E o **front-end**, respons·vel pela interface com o usu·rio, utilizando **Blazor** Server e componentes
    **Radzen**, em uma **SPA** (Single Page Application).
 
 #### O sistema inclui:
-- Cadastro de usu√°rios
+- Cadastro de usu·rios
 - Controle de fornecedores e clientes
 - Controle de compra de insumos e de venda dos produtos
 - Controle de estoque
-- Controle de produ√ß√£o
-- Gera√ß√£o de relat√≥rios
-- Sistema de recomenda√ß√£o do cultivo a ser plantado, conforme a localiza√ß√£o, √©poca do ano, e disponibilidade ou n√£o de ambiente controlado.
+- Controle de produÁ„o
+- GeraÁ„o de relatÛrios
+- Sistema de recomendaÁ„o do cultivo a ser plantado, conforme a localizaÁ„o, Època do ano, e disponibilidade ou n„o de ambiente controlado.
 
-Tamb√©m √© disponibilizada extensa documenta√ß√£o do projeto, incluindo diversos diagramas UML e modelagem do banco de dados.
+TambÈm È disponibilizada extensa documentaÁ„o do projeto, incluindo diversos diagramas UML e modelagem do banco de dados.
 
-Desenvolvido em C#, utilizando .NET 8.0, ASP.NET, AutoMapper, Swagger, Blazor, e Radzen, com integra√ß√£o a banco de dados MySQL.
+Desenvolvido em C#, utilizando .NET 8.0, ASP.NET, AutoMapper, Swagger, Blazor, e Radzen, com integraÁ„o a banco de dados MySQL.
 
 ---
 
 #### Desenvolvido por:
-**L√≠der:** Luiz Fernando de P√°dua Passos  
+**LÌder:** Luiz Fernando de P·dua Passos  
 
 **Back-end:**  
-Luiz Fernando de P√°dua Passos  
+Luiz Fernando de P·dua Passos  
 Bruno Zambuze Silva
 
 **API:**  
-Luiz Fernando de P√°dua Passos  
+Luiz Fernando de P·dua Passos  
 
 **Front-end:**  
-Luiz Fernando de P√°dua Passos   
-Luan Lucas Fran√ßa Silva  
+Luiz Fernando de P·dua Passos  
+Luan Lucas FranÁa Silva  
 Igor Henrique da Silva   
 Caique Conradi Bocamino  
 Gabriel da Silva Bauer  
 Cezar de Alencar Assis Faria Junior  
 Gustavo Spinelli Lupaquini  
 
-**Documenta√ß√£o:**  
-Luiz Fernando de P√°dua Passos  
+**DocumentaÁ„o:**  
+Luiz Fernando de P·dua Passos  
 Cezar de Alencar Assis Faria Junior  
 Bruno Zambuze Silva  
-Luan Lucas Fran√ßa Silva  
+Luan Lucas FranÁa Silva  
 Caique Conradi Bocamino  
 
-#### Sob orienta√ß√£o de:
+#### Sob orientaÁ„o de:
 Prof. Ms. Marcelo Gomes de Paula

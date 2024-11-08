@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using PIMFazendaUrbanaAPI.Mapping;
 using PIMFazendaUrbanaLib;
+using PIMFazendaUrbanaRadzen.Controllers;
 using System.Text;
 
 namespace PIMFazendaUrbanaAPI
@@ -18,6 +19,8 @@ namespace PIMFazendaUrbanaAPI
             builder.Services.AddControllers();
 
             builder.Services.AddAutoMapper(typeof(MappingProfile)); // Adiciona AutoMapper definido em MappingProfile.cs
+
+            builder.Services.AddHttpClient<CepController>();
 
             // Adiciona a connection string do appsettings.json
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
