@@ -1,14 +1,12 @@
 ﻿@page "/add-cliente"
 @using PIMFazendaUrbanaRadzen.Services
-@using PIMFazendaUrbanaLib
 @using PIMFazendaUrbanaAPI.DTOs
-@inject HttpClient Http
 @attribute [Authorize]
 
 <PageTitle>Cadastrar Cliente</PageTitle>
 
-<RadzenCard Style="max-width: 800px; margin: 0 auto; padding: 20px;" class="rz-mt-6">
-    <RadzenText Text="Cadastrar Cliente" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-4" />
+<RadzenCard Style="max-width: 800px; margin: 0 auto; padding: 20px;" class="rz-mt-2">
+    <RadzenText Text="Cadastrar Cliente" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-2" />
 
     <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">
         Erro ao cadastrar cliente
@@ -16,158 +14,102 @@
 
     <RadzenTemplateForm TItem="ClienteDTO" Data="@cliente" Submit="@FormSubmit">
         <RadzenStack>
-
-            <!-- Sessão Dados Pessoais -->
-            <RadzenText Text="Dados Pessoais" TextStyle="TextStyle.H5" TagName="TagName.H1" />
-
-            <!-- Nome -->
-            <RadzenFormField Text="Nome:" Variant="Variant.Outlined">
-                <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Nome" Name="Nome" title="Nome é obrigatório e deve ter ao menos 3 caracteres" />
-                <RadzenRequiredValidator Component="Nome" Text="Nome é obrigatório e deve ter ao menos 3 caracteres" />
-            </RadzenFormField>
-
-            <!-- CNPJ -->
-            <RadzenFormField Text="CNPJ:" Variant="Variant.Outlined">
-                <RadzenMask Mask="**.***.***/****-**" Pattern="[^0-9]" Placeholder="__.___.___/____-__" style="width: 100%" @bind-Value="@cliente.CNPJ" Name="CNPJ" title="CNPJ é obrigatório e deve ter 14 caracteres" />
-                <RadzenRequiredValidator Component="CNPJ" Text="CNPJ é obrigatório e deve ter 14 caracteres" />
-            </RadzenFormField>
-
-            <!-- E-mail -->
-            <RadzenFormField Text="E-mail:" Variant="Variant.Outlined">
-                <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Email" Name="Email" title="E-mail é obrigatório e deve o formato nome@dominio.com ou similar" />
-                <RadzenRequiredValidator Component="Email" Text="E-mail é obrigatório e deve o formato nome@dominio.com ou similar" />
-            </RadzenFormField>
-
-            <!-- DDD e Telefone em uma linha -->
-            <RadzenRow>
-                <RadzenColumn Width="20%">
-                    <RadzenFormField Text="DDD:" Variant="Variant.Outlined">
-                        <RadzenMask Mask="**" Pattern="[^0-9]" Placeholder="__" style="width: 100%" @bind-Value="@cliente.Telefone.DDD" Name="DDD" title="DDD é obrigatório e deve ter 2 dígitos" />
-                        <RadzenRequiredValidator Component="DDD" Text="DDD é obrigatório e deve ter 2 dígitos" />
+            <RadzenFieldset Text="Dados Pessoais">
+                <RadzenStack Gap="0.5rem">
+                    <!-- Nome -->
+                    <RadzenFormField Text="Nome:" Variant="Variant.Outlined">
+                        <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Nome" Name="Nome" title="Nome é obrigatório e deve ter ao menos 3 caracteres" />
+                        <RadzenRequiredValidator Component="Nome" Text="Nome é obrigatório e deve ter ao menos 3 caracteres" />
                     </RadzenFormField>
-                </RadzenColumn>
-                <RadzenColumn Width="80%">
-                    <RadzenFormField Text="Telefone:" Variant="Variant.Outlined">
-                        <RadzenMask Mask="*****-****" Pattern="[^0-9]" Placeholder="_____-____" style="width: 100%" @bind-Value="@cliente.Telefone.Numero" Name="Telefone" title="Número de telefone é obrigatório e deve ter 9 dígitos" />
-                        <RadzenRequiredValidator Component="Telefone" Text="Número de telefone é obrigatório e deve ter 9 dígitos" />
+
+                    <!-- CNPJ -->
+                    <RadzenFormField Text="CNPJ:" Variant="Variant.Outlined">
+                        <RadzenMask Mask="**.***.***/****-**" Pattern="[^0-9]" Placeholder="__.___.___/____-__" style="width: 100%" @bind-Value="@cliente.CNPJ" Name="CNPJ" title="CNPJ é obrigatório e deve ter 14 caracteres" />
+                        <RadzenRequiredValidator Component="CNPJ" Text="CNPJ é obrigatório e deve ter 14 caracteres" />
                     </RadzenFormField>
-                </RadzenColumn>
-            </RadzenRow>
 
-            <!-- Sessão Endereço -->
-            <RadzenText Text="Endereço" TextStyle="TextStyle.H5" TagName="TagName.H1" />
-
-            <!-- CEP -->
-            <RadzenColumn Width="70%">
-                <RadzenFormField Text="CEP:" Variant="Variant.Outlined">
-                    <RadzenMask Mask="*****-***" Pattern="[^0-9]" Placeholder="_____-___" style="width: 100%" @bind-Value="@cliente.Endereco.CEP" Name="CEP" title="CEP é obrigatório e deve ter 8 dígitos" />
-                    <RadzenRequiredValidator Component="CEP" Text="CEP é obrigatório e deve ter 8 dígitos" />
-                </RadzenFormField>
-            </RadzenColumn>
-
-            <!-- Logradouro -->
-            <RadzenFormField Text="Logradouro:" Variant="Variant.Outlined">
-                <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Logradouro" Name="Logradouro" title="Logradouro é obrigatório e deve ter ao menos 3 caracteres" />
-                <RadzenRequiredValidator Component="Logradouro" Text="Logradouro é obrigatório e deve ter ao menos 3 caracteres" />
-            </RadzenFormField>
-
-            <!-- Número e Complemento em uma linha -->
-            <RadzenRow>
-                <RadzenColumn Width="20%">
-                    <RadzenFormField Text="Número:" Variant="Variant.Outlined">
-                        <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Numero" Name="Numero" title="Número é obrigatório e deve ter apenas caracteres numéricos" />
-                        <RadzenRequiredValidator Component="Numero" Text="Número é obrigatório e deve ter apenas caracteres numéricos" />
+                    <!-- E-mail -->
+                    <RadzenFormField Text="E-mail:" Variant="Variant.Outlined">
+                        <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Email" Name="Email" title="E-mail é obrigatório e deve o formato nome@dominio.com ou similar" />
+                        <RadzenRequiredValidator Component="Email" Text="E-mail é obrigatório e deve o formato nome@dominio.com ou similar" />
                     </RadzenFormField>
-                </RadzenColumn>
-                <RadzenColumn Width="80%">
-                    <RadzenFormField Text="Complemento:" Variant="Variant.Outlined">
-                        <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Complemento" Name="Complemento" title="Complemento é opcional" />
+
+                    <!-- DDD e Telefone em uma linha -->
+                    <RadzenRow>
+                        <RadzenColumn Width="20%">
+                            <RadzenFormField Text="DDD:" Variant="Variant.Outlined">
+                                <RadzenMask Mask="**" Pattern="[^0-9]" Placeholder="__" style="width: 100%" @bind-Value="@cliente.Telefone.DDD" Name="DDD" title="DDD é obrigatório e deve ter 2 dígitos" />
+                                <RadzenRequiredValidator Component="DDD" Text="DDD é obrigatório e deve ter 2 dígitos" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Width="80%">
+                            <RadzenFormField Text="Telefone:" Variant="Variant.Outlined">
+                                <RadzenMask Mask="*****-****" Pattern="[^0-9]" Placeholder="_____-____" style="width: 100%" @bind-Value="@cliente.Telefone.Numero" Name="Telefone" title="Número de telefone é obrigatório e deve ter 9 dígitos" />
+                                <RadzenRequiredValidator Component="Telefone" Text="Número de telefone é obrigatório e deve ter 9 dígitos" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                </RadzenStack>
+            </RadzenFieldset>
+
+            <RadzenFieldset Text="Endereço">
+                <RadzenStack Gap="0.5rem">
+                    <!-- CEP -->
+                    <RadzenColumn Width="100%">
+                        <RadzenRow>
+                            <RadzenFormField Text="CEP:" Variant="Variant.Outlined">
+                                <RadzenMask Mask="*****-***" Pattern="[^0-9]" Placeholder="_____-___" style="width: 100%" @bind-Value="@cliente.Endereco.CEP" Name="CEP" title="CEP é obrigatório e deve ter 8 dígitos" />
+                                <RadzenRequiredValidator Component="CEP" Text="CEP é obrigatório e deve ter 8 dígitos" />
+                            </RadzenFormField>
+                            <RadzenStack class="rz-mt-2 rz-ml-2" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
+                                <RadzenButton Icon="add_location" ButtonStyle="ButtonStyle.Primary" Text="Consultar CEP" Click="@BuscarEnderecoPorCEP" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Default" />
+                            </RadzenStack>
+                        </RadzenRow>
+                    </RadzenColumn>
+
+                    <!-- Logradouro -->
+                    <RadzenFormField Text="Logradouro:" Variant="Variant.Outlined">
+                        <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Logradouro" Name="Logradouro" title="Logradouro é obrigatório e deve ter ao menos 3 caracteres" />
+                        <RadzenRequiredValidator Component="Logradouro" Text="Logradouro é obrigatório e deve ter ao menos 3 caracteres" />
                     </RadzenFormField>
-                </RadzenColumn>
-            </RadzenRow>
 
-            <!-- Bairro -->
-            <RadzenFormField Text="Bairro:" Variant="Variant.Outlined">
-                <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Bairro" Name="Bairro" title="Bairro é obrigatório e deve ter ao menos 3 caracteres" />
-                <RadzenRequiredValidator Component="Bairro" Text="Bairro é obrigatório e deve ter ao menos 3 caracteres" />
-            </RadzenFormField>
+                    <!-- Número e Complemento em uma linha -->
+                    <RadzenRow>
+                        <RadzenColumn Width="50%">
+                            <RadzenFormField Text="Número:" Variant="Variant.Outlined">
+                                <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Numero" Name="Numero" title="Número é obrigatório e deve ter apenas caracteres numéricos" />
+                                <RadzenRequiredValidator Component="Numero" Text="Número é obrigatório e deve ter apenas caracteres numéricos" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Width="50%">
+                            <RadzenFormField Text="Complemento:" Variant="Variant.Outlined">
+                                <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Complemento" Name="Complemento" title="Complemento é opcional" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
 
-            <!-- Cidade -->
-            <RadzenFormField Text="Cidade:" Variant="Variant.Outlined">
-                <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Cidade" Name="Cidade" title="Cidade é obrigatório e deve ter ao menos 3 caracteres" />
-                <RadzenRequiredValidator Component="Cidade" Text="Cidade é obrigatório e deve ter ao menos 3 caracteres" />
-            </RadzenFormField>
-
-            <!-- UF -->
-            <RadzenRow>
-                <RadzenColumn Width="30%">
-                    <RadzenFormField Text="UF:" Variant="Variant.Outlined">
-                        <RadzenDropDown Name="UF" TValue="string" Data="estados" @bind-Value="@cliente.Endereco.UF" title="UF é obrigatório, selecione uma UF da lista" />
-                        <RadzenRequiredValidator Component="UF" Text="UF é obrigatório, selecione uma UF da lista" />
+                    <!-- Bairro -->
+                    <RadzenFormField Text="Bairro:" Variant="Variant.Outlined">
+                        <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Bairro" Name="Bairro" title="Bairro é obrigatório e deve ter ao menos 3 caracteres" />
+                        <RadzenRequiredValidator Component="Bairro" Text="Bairro é obrigatório e deve ter ao menos 3 caracteres" />
                     </RadzenFormField>
-                </RadzenColumn>
-            </RadzenRow>
 
-        </RadzenStack>
+                    <!-- Cidade -->
+                    <RadzenFormField Text="Cidade:" Variant="Variant.Outlined">
+                        <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.Cidade" Name="Cidade" title="Cidade é obrigatória e deve ter ao menos 3 caracteres" />
+                        <RadzenRequiredValidator Component="Cidade" Text="Cidade é obrigatória e deve ter ao menos 3 caracteres" />
+                    </RadzenFormField>
 
-        <!-- Botões de Ação -->
-        <RadzenStack style="margin-top:1rem;" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Gap="1rem">
-            <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="Confirmar" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Default" Style="background-color: var(--rz-primary)" />
-            <RadzenButton ButtonStyle="ButtonStyle.Danger" Text="Cancelar" Variant="Radzen.Variant.Filled" Click="@CancelButtonClick" Shade="Radzen.Shade.Light" />
+                    <!-- UF -->
+                    <RadzenFormField Text="Estado (UF):" Variant="Variant.Outlined">
+                        <RadzenTextBox style="width: 100%" @bind-Value="@cliente.Endereco.UF" Name="UF" title="Estado é obrigatório e deve ter 2 caracteres" />
+                        <RadzenRequiredValidator Component="UF" Text="Estado é obrigatório e deve ter 2 caracteres" />
+                    </RadzenFormField>
+                </RadzenStack>
+            </RadzenFieldset>
+
+            <RadzenButton ButtonStyle="ButtonStyle.Primary" Text="Salvar Cliente" Click="@FormSubmit" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Light" />
         </RadzenStack>
     </RadzenTemplateForm>
 </RadzenCard>
-
-<!-- Botão de Buscar Endereço -->
-<RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem">
-    <RadzenButton ButtonStyle="ButtonStyle.Secondary" Text="Consultar CEP" Click="@BuscarEnderecoPorCEP" />
-</RadzenStack>
-
-@code{
-    EnderecoViaCep endereco { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        endereco = new EnderecoViaCep();  // Inicializa o objeto de endereço
-    }
-    private async Task BuscarEnderecoPorCEP()
-    {
-        try
-        {
-            endereco = await Http.GetFromJsonAsync<EnderecoViaCep>($"api/Cep/{endereco.cep}");
-        }
-        catch (Exception ex)
-        {
-            
-
-        }
-    }
-    // private async Task BuscarEnderecoPorCEP()
-    // {
-    //     try
-    //     {
-    //         var cep = cliente.Endereco.CEP.Replace("-", ""); // Remove o traço do CEP, se presente
-
-    //         // Fazer requisição à API de CEP
-    //         var response = await Http.GetFromJsonAsync<EnderecoViaCep>($"api/cep/{cep}");
-
-    //         if (response != null && !response.erro)
-    //         {
-    //             // Preencher automaticamente o campo Logradouro
-    //             cliente.Endereco.Logradouro = response.Logradouro;
-    //             cliente.Endereco.Bairro = response.Bairro; // Pode preencher outros campos aqui, se necessário
-    //             cliente.Endereco.Cidade = response.Localidade;
-
-    //             errorVisible = false; // Se não houver erro, oculta a mensagem de erro
-    //         }
-    //         else
-    //         {
-    //             errorVisible = true; // Exibe erro se não encontrar o CEP
-    //         }
-    //     }
-    //     catch (Exception)
-    //     {
-    //         errorVisible = true; // Exibe erro caso ocorra uma falha na requisição
-    //     }
-    // }
-}

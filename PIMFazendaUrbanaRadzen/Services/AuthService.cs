@@ -31,8 +31,8 @@ namespace PIMFazendaUrbanaRadzen.Services
             {
                 var result = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
 
-                var token = result["Token"].ToString();
-                var funcionario = JsonSerializer.Deserialize<FuncionarioDTO>(result["Funcionario"].ToString());
+                var token = result["token"].ToString();
+                var funcionario = JsonSerializer.Deserialize<FuncionarioDTO>(result["funcionario"].ToString());
 
                 await _localStorage.SetItemAsync("authToken", token);
                 await _localStorage.SetItemAsync("funcionario", JsonSerializer.Serialize(funcionario));

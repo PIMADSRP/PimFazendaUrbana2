@@ -1,60 +1,53 @@
-﻿using PIMFazendaUrbanaLib;
+﻿using PIMFazendaUrbanaAPI.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net.Http;
-using System.Threading.Tasks;
+using AutoMapper;
 
 namespace PIMFazendaUrbanaRadzen.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class CepController : ControllerBase
     {
         private readonly HttpClient _httpClient;
+        private readonly IMapper _mapper;
 
-        // Injetando HttpClient via dependência
-        public CepController(HttpClient httpClient)
+        // Injetando HttpClient e AutoMapper via dependência
+        public CepController(HttpClient httpClient, IMapper mapper)
         {
             _httpClient = httpClient;
-            _httpClient.BaseAddress = new Uri("https://viacep.com.br/ws/");
+            _mapper = mapper;
         }
 
-        [HttpGet("{cep}")]
-        public async Task<ActionResult<EnderecoViaCep>> RetornarEndereco(string cep)
+        [HttpGet("get")]
+        public async Task<ActionResult<EnderecoDTO>> RetornarEndereco(string cep)
         {
-            var endereco = new EnderecoViaCep();
-
             try
             {
-                // Requisição assíncrona para obter o JSON
-                var json = await _httpClient.GetStringAsync($"{cep}/json");
+                var json = await _httpClient.GetStringAsync($"https://viacep.com.br/ws/{cep}/json");
 
-                // Desserializa o JSON na classe Endereco
-                endereco = JsonConvert.DeserializeObject<EnderecoViaCep>(json);
+                var enderecoViaCep = JsonConvert.DeserializeObject<EnderecoViaCepDTO>(json);
 
-                // Se a resposta for inválida ou erro, retorna um resultado de erro
-                if (endereco == null || endereco.erro)
+                if (enderecoViaCep == null || enderecoViaCep.erro)
                 {
                     return NotFound(new { message = "CEP não encontrado." });
                 }
 
-                return Ok(endereco);
+                // Converte o EnderecoViaCepDTO para EnderecoDTO usando AutoMapper
+                var enderecoDTO = _mapper.Map<EnderecoDTO>(enderecoViaCep);
+
+                return Ok(enderecoDTO);
             }
             catch (HttpRequestException)
             {
-                // Caso a requisição falhe (por exemplo, erro de rede)
                 return StatusCode(500, new { message = "Erro ao acessar o serviço de CEP." });
-            }
-            catch (JsonException)
-            {
-                // Caso haja um erro na desserialização
-                return StatusCode(500, new { message = "Erro ao processar a resposta do serviço de CEP." });
             }
             catch (Exception ex)
             {
-                // Captura exceções inesperadas
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+
+
     }
 }

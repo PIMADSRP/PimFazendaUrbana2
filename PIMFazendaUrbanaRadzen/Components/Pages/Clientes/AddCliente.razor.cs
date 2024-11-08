@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Components;
 using PIMFazendaUrbanaAPI.DTOs;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
@@ -9,6 +10,9 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
     {
         [Inject]
         public ApiService<ClienteDTO> ClienteApiService { get; set; }
+
+        [Inject]
+        public CepApiService CepApiService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -96,6 +100,38 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
         {
             // Remove caracteres não numéricos e retorna o CEP formatado
             return new string(cep.Where(char.IsDigit).ToArray());
+        }
+
+        protected async Task BuscarEnderecoPorCEP()
+        {
+            try
+            {
+                // Limpa o formato do CEP (remove o hífen)
+                string cepFormatado = FormatCEP(cliente.Endereco.CEP);
+
+                // Chama o CepApiService para buscar o endereço
+                var endereco = await CepApiService.GetEnderecoViaCep(cepFormatado);
+
+                if (endereco != null)
+                {
+                    // Preenche os campos de endereço com os dados retornados
+                    cliente.Endereco.Logradouro = endereco.Logradouro;
+                    cliente.Endereco.Bairro = endereco.Bairro;
+                    cliente.Endereco.Cidade = endereco.Cidade;
+                    cliente.Endereco.UF = endereco.UF;
+                    cliente.Endereco.Complemento = endereco.Complemento ?? string.Empty; // Complemento pode ser nulo
+                }
+                else
+                {
+                    // Se o endereço não for encontrado, exibe uma mensagem de erro
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "CEP não encontrado. Verifique o número do CEP e tente novamente.");
+                }
+            }
+            catch (Exception ex)
+            {
+                // Caso ocorra algum erro na consulta, exibe mensagem de erro
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Erro ao consultar o CEP: {ex.Message}");
+            }
         }
 
     }
