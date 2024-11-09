@@ -9,7 +9,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
     public partial class AddCliente
     {
         [Inject]
-        public ApiService<ClienteDTO> ClienteApiService { get; set; }
+        public ClienteApiService<ClienteDTO> ClienteApiService { get; set; }
 
         [Inject]
         public CepApiService CepApiService { get; set; }

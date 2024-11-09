@@ -26,6 +26,7 @@ namespace PIMFazendaUrbanaAPI
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddScoped<IClienteService>(provider => new ClienteService(connectionString));
             builder.Services.AddScoped<IFuncionarioService>(provider => new FuncionarioService(connectionString));
+            builder.Services.AddScoped<IRecomendacaoService>(provider => new RecomendacaoService(connectionString));
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

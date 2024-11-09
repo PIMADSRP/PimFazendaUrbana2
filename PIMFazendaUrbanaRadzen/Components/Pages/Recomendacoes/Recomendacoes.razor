@@ -1,4 +1,8 @@
 ﻿@page "/recomendacoes"
+@using PIMFazendaUrbanaRadzen.Services
+@using PIMFazendaUrbanaAPI.DTOs
+@attribute [Authorize]
+
 <PageTitle>Recomendações de plantio</PageTitle>
 
 <!-- Título na parte superior -->
@@ -12,29 +16,40 @@
     <!-- Parte do formulário (lado esquerdo) -->
     <div style="flex: 1; margin-right: 20px; min-width: 300px; display: flex; flex-direction: column;">
         <!-- Centralizar o texto -->
-        <div style="text-align: center; margin-bottom: 15px;">
+        <div style="text-align: left; margin-bottom: 15px;">
             <RadzenText Text="Preencha as informações abaixo:" TextStyle="Radzen.Blazor.TextStyle.H6" />
         </div>
 
         <div style="margin-bottom: 15px;">
-            <RadzenRow Gap="5" RowGap="5">
-                <RadzenText Text="Região" Style="flex: 0 0 30%; min-width: 100px;" />
-                <RadzenDropDown TValue="object" Style="height: 30px; flex: 1; min-width: 150px;"></RadzenDropDown>
+            <RadzenRow Gap="5" RowGap="5" >
+                <RadzenText Text="Região" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px;"/>
+                <RadzenDropDown TValue="string"
+                                Style="height: 40px; flex: 1; min-width: 150px;"
+                                @bind-Value="selectedRegiao" 
+                                Data="@comboBoxRegiaoItems" 
+                                TextProperty="Text" 
+                                ValueProperty="Value" />
             </RadzenRow>
         </div>
 
         <div style="margin-bottom: 15px;">
             <RadzenRow Gap="5" RowGap="5">
-                <RadzenText Text="Estação do Plantio" Style="flex: 0 0 30%; min-width: 100px;" />
-                <RadzenDropDown TValue="object" Style="height: 30px; flex: 1; min-width: 150px;"></RadzenDropDown>
+                <RadzenText Text="Estação do Plantio" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px;" />
+                <RadzenDropDown TValue="string"
+                                Style="height: 40px; flex: 1; min-width: 150px;"
+                                @bind-Value="selectedEstacao"
+                                Data="@comboBoxEstacaoItems"
+                                TextProperty="Text"
+                                ValueProperty="Value" />
             </RadzenRow>
         </div>
 
         <div style="margin-bottom: 15px;">
             <RadzenRow>
                 <RadzenText Text="Possui ambiente climatizado para plantio" Style="flex: 0 0 50%; min-width: 150px;" />
-                <RadzenRadioButtonList TValue="object"
+                <RadzenRadioButtonList TValue="string"
                                        Data="@(new List<string> { "Sim", "Não" })"
+                                       @bind-Value="selectedAmbienteControlado"
                                        Style="margin-left: 10px;" />
             </RadzenRow>
         </div>
@@ -47,7 +62,8 @@
                               Text="Confirmar"
                               Variant="Radzen.Variant.Filled"
                               Shade="Radzen.Shade.Default"
-                              Style="background-color: var(--rz-primary); width: 100%;" />
+                              Style="background-color: var(--rz-primary); width: 100%;"
+                              Click="OnConfirmarClick" />
             </RadzenColumn>
         </div>
     </div>
@@ -55,35 +71,40 @@
     <!-- DataGrid (lado direito) -->
     <div style="flex: 1; min-width: 300px; margin-top: 10px;">
         <RadzenRow>
-            <RadzenDataGrid Data="@dataGridItems" TItem="object" Style="border: 1px solid black; padding: 10px; width: 100%; height: auto; min-height: 300px;">
+            <RadzenDataGrid Data="@dataGridItems" 
+                            TItem="CultivoDTO"
+                            AllowSorting="false"
+                            EmptyText="Sem itens para mostrar"
+                            Style="border: 1px solid black; padding: 10px; width: 100%; height: auto; min-height: 300px;">
                 <Columns>
-                    <RadzenDataGridColumn TItem="object" Property="Text" Title="ID" />
-                    <RadzenDataGridColumn TItem="object" Property="Text" Title="Nome" />
-                    <RadzenDataGridColumn TItem="object" Property="Text" Title="Variedade" />
-                    <RadzenDataGridColumn TItem="object" Property="Text" Title="Categoria" />
-                    <RadzenDataGridColumn TItem="object" Property="Value" Title="Tempo médio de produção (dias)" />
+                    <!-- Comentei a coluna Nome para ver se fica menos apertado
+                        <RadzenDataGridColumn TItem="CultivoDTO" Property="Nome" Title="Nome" Width="20%" />
+                    -->
+                    <RadzenDataGridColumn TItem="CultivoDTO" Property="Variedade" Title="Variedade" Width="45%" />
+                    <RadzenDataGridColumn TItem="CultivoDTO" Property="Categoria" Title="Categoria" Width="25%" />
+                    <!-- Coluna de Tempo de Produção com template condicional usando selectedAmbienteControladoBool -->
+                    <RadzenDataGridColumn TItem="CultivoDTO" 
+                        Title="Tempo médio de produção (dias)"
+                        Width="30%">
+                        <HeaderTemplate>
+                            <div style="text-align: center;">
+                                <div>Tempo médio de</div>
+                                <div>produção (dias)</div>
+                            </div>
+                        </HeaderTemplate>
+                        <Template Context="cultivo">
+                            @if (selectedAmbienteControladoBool)
+                            {
+                                @cultivo.TempoProdControlado
+                            }
+                            else
+                            {
+                                @cultivo.TempoProdTradicional
+                            }
+                        </Template>
+                    </RadzenDataGridColumn>
                 </Columns>
             </RadzenDataGrid>
         </RadzenRow>
     </div>
 </div>
-
-@code {
-    private string selectedProduct;
-    private string selectedCategory;
-
-    private List<dynamic> dataGridItems = new List<dynamic>
-    {
-        new { Text = "Item 1", Value = "1" },
-        new { Text = "Item 2", Value = "2" },
-        new { Text = "Item 3", Value = "3" }
-    };
-
-    public class Item
-    {
-        public string Text { get; set; }
-        public string Value { get; set; }
-    }
-
-    private string teste = "teste";
-}

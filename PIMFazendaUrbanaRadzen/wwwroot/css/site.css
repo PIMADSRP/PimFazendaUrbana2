@@ -127,6 +127,23 @@ a:focus {
 
 /* CUSTOM */
 
+/* Estilo responsivo para telas pequenas */
+@media (max-width: 1200px) {
+    .responsive-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #carousel-column {
+        order: -1; /* Garante que o carousel fique no topo */
+        width: 100%;
+    }
+
+    #news-column, #notes-column {
+        width: 100%;
+    }
+}
+
 /* SPLITBUTTON */
 /* texto */
 .rz-splitbutton .rz-button-text {

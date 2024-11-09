@@ -19,6 +19,7 @@ namespace PIMFazendaUrbanaAPI.Mapping
             .ForMember(dest => dest.Bairro, opt => opt.MapFrom(src => src.bairro))
             .ForMember(dest => dest.Cidade, opt => opt.MapFrom(src => src.localidade))
             .ForMember(dest => dest.UF, opt => opt.MapFrom(src => src.uf));
+            CreateMap<Cultivo, CultivoDTO>().ReverseMap();
             // adicionar outros mapeamentos conforme necessário
         }
     }

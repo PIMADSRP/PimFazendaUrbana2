@@ -49,21 +49,27 @@ builder.Services.AddScoped<CepApiService>(provider =>
     ));
 
 builder.Services.AddScoped(provider =>
-    new ApiService<ClienteDTO>(
+    new ClienteApiService<ClienteDTO>(
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/Cliente"
     ));
 
 builder.Services.AddScoped(provider =>
-    new ApiService<EnderecoDTO>(
+    new ClienteApiService<EnderecoDTO>(
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/enderecos"
     ));
 
 builder.Services.AddScoped(provider =>
-    new ApiService<TelefoneDTO>(
+    new ClienteApiService<TelefoneDTO>(
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/telefones"
+    ));
+
+builder.Services.AddScoped(provider =>
+    new RecomendacaoApiService<CultivoDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/recomendacao"
     ));
 
 

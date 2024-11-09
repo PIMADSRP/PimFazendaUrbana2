@@ -18,8 +18,6 @@ namespace PIMFazendaUrbanaRadzen.Services
             try
             {
                 Console.WriteLine($"Chamando API em: {_endpointUrl}/get/{cep}");
-
-                // Chama a API e retorna diretamente como EnderecoDTO
                 return await _httpClient.GetFromJsonAsync<EnderecoDTO>($"{_endpointUrl}/get?cep={Uri.EscapeDataString(cep)}");
             }
             catch (HttpRequestException httpEx)

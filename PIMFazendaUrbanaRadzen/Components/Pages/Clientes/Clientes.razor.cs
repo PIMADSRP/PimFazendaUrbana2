@@ -8,7 +8,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
     public partial class Clientes
     {
         [Inject]
-        public ApiService<ClienteDTO> ClienteApiService { get; set; }
+        public ClienteApiService<ClienteDTO> ClienteApiService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; } // Inject NavigationManager
