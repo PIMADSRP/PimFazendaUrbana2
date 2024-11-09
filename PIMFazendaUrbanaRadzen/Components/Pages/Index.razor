@@ -2,95 +2,116 @@
 
 <PageTitle>Index</PageTitle>
 
-<!-- Container principal com classe para aplicar CSS responsivo -->
-<div class="responsive-layout" style="display: flex; height: calc(100vh - 90px); align-items: center; justify-content: center; gap: 1rem;">
-    <!-- Coluna de Notícias -->
-    <div id="news-column" style="flex: 1; padding: 5px;">
-        <RadzenCard Style="margin-bottom: 1rem;">
-            <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Notícias 1</RadzenText>
-            <!-- Usando RadzenListBox com tipo especificado -->
-            <RadzenListBox TValue="dynamic" Data="@noticias1" Style="width: 100%; max-height: 300px; overflow-y: auto;" ReadOnly="true">
-                <Template Context="item">
-                    <span>&#8226;</span> @item
-                </Template>
-            </RadzenListBox>
-        </RadzenCard>
-        <RadzenCard Style="margin-bottom: 1rem;">
-            <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Notícias 2</RadzenText>
-            <!-- Usando RadzenListBox com tipo especificado -->
-            <RadzenListBox TValue="dynamic" Data="@noticias2" Style="width: 100%; max-height: 300px; overflow-y: auto;" ReadOnly="true">
-                <Template Context="item">
-                    <span>&#8226;</span> @item
-                </Template>
-            </RadzenListBox>
-        </RadzenCard>
-    </div>
+<RadzenRow Style="height: 15vh;">
+        <RadzenColumn Size ="6">
+            <!-- Exibe a data com estilo personalizado -->
+            <RadzenText Style="font-size: 1.5rem; font-weight: bold; color: #333;">
+                @dataAtual
+            </RadzenText>
+        </RadzenColumn>
 
-    <!-- Coluna Central com Carousel e Logo -->
-    <div id="carousel-column" style="flex: 2; padding: 5px; text-align: center;">
-        <div style="position: relative; width: 100%; max-width: 1000px; margin: 0 auto;">
-            <RadzenCarousel AllowNavigation="false" AllowPaging="false">
-                <Items>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow01.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow02.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow03.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow04.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow05.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow06.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow07.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow08.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow09.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow10.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                    <RadzenCarouselItem>
-                        <RadzenImage Path="images/slideshow11.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                    </RadzenCarouselItem>
-                </Items>
-            </RadzenCarousel>
+        <RadzenColumn Size ="6">
+            <!-- Exibe a hora com estilo diferente para destaque -->
+            <RadzenText Style="font-size: 1.2rem; color: #555;">
+                @horaAtual
+            </RadzenText>
+        </RadzenColumn>
+</RadzenRow>
 
-            <!-- Logo sobreposta no centro do carousel -->
-            <RadzenImage Path="images/LogoPaginaInicial.png" Style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 95%;" />
+<RadzenRow Style="height: 85vh;">
+    <!-- Container principal com classe para aplicar CSS responsivo -->
+    <div class="responsive-layout" style="display: flex; align-items: flex-start; justify-content: center; gap: 1rem;">
+        <!-- Coluna de Notícias -->
+        <div id="news-column" style="flex: 1; padding: 5px;">
+            <RadzenCard Style="margin-bottom: 1rem;">
+                <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Notícias 1</RadzenText>
+                <!-- Usando RadzenListBox com tipo especificado -->
+                <RadzenListBox TValue="dynamic" Data="@noticias1" Style="width: 100%; max-height: 250px; overflow-y: auto;" ReadOnly="true">
+                    <Template Context="item">
+                        <span>&#8226;</span> @item
+                    </Template>
+                </RadzenListBox>
+            </RadzenCard>
+            <RadzenCard Style="margin-bottom: 1rem;">
+                <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Notícias 2</RadzenText>
+                <!-- Usando RadzenListBox com tipo especificado -->
+                <RadzenListBox TValue="dynamic" Data="@noticias2" Style="width: 100%; max-height: 250px; overflow-y: auto;" ReadOnly="true">
+                    <Template Context="item">
+                        <span>&#8226;</span> @item
+                    </Template>
+                </RadzenListBox>
+            </RadzenCard>
+        </div>
+
+        <!-- Coluna Central com Carousel e Logo -->
+        <div id="carousel-column" style="flex: 2; padding: 5px; text-align: center;">
+            <div style="position: relative; width: 100%; max-width: 1000px; margin: 0 auto;">
+                <RadzenCarousel AllowNavigation="false" AllowPaging="false">
+                    <Items>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow01.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow02.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow03.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow04.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow05.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow06.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow07.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow08.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow09.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow10.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                        <RadzenCarouselItem>
+                            <RadzenImage Path="images/slideshow11.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
+                        </RadzenCarouselItem>
+                    </Items>
+                </RadzenCarousel>
+
+                <!-- Logo sobreposta no centro do carousel -->
+                <RadzenImage Path="images/LogoPaginaInicial.png" Style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 95%;" />
+            </div>
+        </div>
+
+        <!-- Coluna de Notas e Previsão do Tempo -->
+        <div id="notes-column" style="flex: 1; padding: 5px; ">
+            <!-- notas do usuário -->
+            <RadzenCard Style="background-color: #FFFBCC; margin-bottom: 1rem;">
+                <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold; color: black">Anotações</RadzenText>
+                <RadzenTextArea @bind-Value="notaUsuario"
+                                @oninput="HandleInput"
+                                @onfocus="OnFocus"
+                                Style="background-color: #FFFBCC; color: black; width: 100%; height: 250px; min-height: 50px; max-height: 400px; resize: vertical;"
+                                Placeholder="Escreva suas anotações aqui..." />
+            </RadzenCard>
+            <!-- previsão do tempo -->
+            <RadzenCard Style="margin-bottom: 1rem; height: 250px;">
+                <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Previsão do tempo</RadzenText>
+            </RadzenCard>
         </div>
     </div>
+</RadzenRow>
 
-    <!-- Coluna de Notas e Previsão do Tempo -->
-    <div id="notes-column" style="flex: 1; padding: 5px; ">
-        <!-- notas do usuário -->
-        <RadzenCard Style="background-color: #FFFBCC; margin-bottom: 1rem;">
-            <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold; color: black">Anotações</RadzenText>
-            <RadzenTextArea @bind-Value="notaUsuario"
-                            @oninput="HandleInput"
-                            @onfocus="OnFocus"
-                            Style="background-color: #FFFBCC; color: black; width: 100%; height: 200px; min-height: 50px; max-height: 400px; resize: vertical;" 
-                            Placeholder="Escreva suas anotações aqui..." />
-        </RadzenCard>
-        <!-- previsão do tempo -->
-        <RadzenCard Style="margin-bottom: 1rem; ">
-            <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Previsão do tempo</RadzenText>
-        </RadzenCard>
-    </div>
-</div>
 
 @code {
+    // Código para anotações do usuário
+
     private string notaUsuario { get; set; }
 
     private void OnFocus(FocusEventArgs e)
@@ -114,7 +135,12 @@
         }
     }
 
-    // Listas de notícias
+}
+
+@code{
+    // Código para notícias
+
+    // Listas de notícias 1
     private List<string> noticias1 = new List<string>
     {
         "Mercado global de fazendas urbanas deve movimentar US$ 236 bilhões em 2024",
@@ -140,10 +166,44 @@
 
     };
 
+    // Listas de notícias 2
     private List<string> noticias2 = new List<string>
     {
         "Atualização do sistema agendada para: 28/11/2024",
         "Notícia 2.2",
         "Notícia 2.3"
     };
+}
+
+
+@code {
+    // Código para data e hora
+
+    private string dataAtual { get; set; }
+    private string horaAtual { get; set; }
+
+    protected override void OnInitialized()
+    {
+        AtualizarDataHora();
+        _ = AtualizarDataHoraPeriodicamente();
+    }
+
+    private void AtualizarDataHora()
+    {
+        // Formata a data: "quarta-feira, 8 de novembro de 2023"
+        dataAtual = DateTime.Now.ToString("dddd, dd 'de' MMMM 'de' yyyy");
+
+        // Formata a hora: "14:35"
+        horaAtual = DateTime.Now.ToString("HH:mm");
+    }
+
+    private async Task AtualizarDataHoraPeriodicamente()
+    {
+        while (true)
+        {
+            AtualizarDataHora();
+            await InvokeAsync(StateHasChanged); // Atualiza a UI
+            await Task.Delay(1000); // Atualiza a cada segundo
+        }
+    }
 }

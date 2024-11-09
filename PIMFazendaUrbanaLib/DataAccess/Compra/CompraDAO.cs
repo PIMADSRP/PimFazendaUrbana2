@@ -4,12 +4,85 @@ namespace PIMFazendaUrbanaLib
 {
     public class CompraDAO
     {
-        private string connectionString;
+        private readonly string connectionString;
 
-        public CompraDAO()
+        public CompraDAO(string connectionString)
         {
-            this.connectionString = ConnectionString.GetConnectionString();
+            this.connectionString = connectionString;
         }
+
+        // NOVO Método para obter todos os pedidos de compra e seus itens
+        public List<PedidoCompra> ListarPedidosCompraComItems()
+        {
+            // cada PedidoCompra possui um List<PedidoCompraItem> Itens
+            List<PedidoCompra> pedidosCompra = new List<PedidoCompra>();
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT pc.id_pedidocompra, pc.data_pedidocompra, pc.id_fornecedor, f.nome_fornecedor 
+                                FROM pedidocompra pc
+                                LEFT JOIN fornecedor f ON pc.id_fornecedor = f.id_fornecedor";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PedidoCompra pedidoCompra = new PedidoCompra
+                            {
+                                Id = reader.GetInt32("id_pedidocompra"),
+                                Data = reader.GetDateTime("data_pedidocompra"),
+                                IdFornecedor = reader.GetInt32("id_fornecedor"),
+                                NomeFornecedor = reader.GetString("nome_fornecedor")
+                            };
+
+                            pedidoCompra.Itens = ListarItensPedidoCompraPorId(pedidoCompra.Id);
+                            pedidosCompra.Add(pedidoCompra);
+                        }
+                    }
+                }
+            }
+            return pedidosCompra;
+        }
+
+        // NOVO Método para listar os itens de compra de um pedido de compra por id
+        public List<PedidoCompraItem> ListarItensPedidoCompraPorId(int idPedidoCompra)
+        {
+            List<PedidoCompraItem> itensPedidoCompra = new List<PedidoCompraItem>();
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT ci.id_compraitem, ci.qtd_compraitem, ci.unidqtd_compraitem, ci.valor_compraitem, ci.id_pedidocompra, ci.id_insumo, ei.nome_insumo  
+                                FROM compraitem ci 
+                                LEFT JOIN estoqueinsumo ei ON ci.id_insumo = ei.id_insumo
+                                WHERE ci.id_pedidocompra = @idPedidoCompra";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idPedidoCompra", idPedidoCompra);
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PedidoCompraItem compraItem = new PedidoCompraItem
+                            {
+                                Id = reader.GetInt32("id_compraitem"),
+                                Qtd = reader.GetInt32("qtd_compraitem"),
+                                UnidQtd = reader.GetString("unidqtd_compraitem"),
+                                Valor = reader.GetDecimal("valor_compraitem"),
+                                IdPedidoCompra = reader.GetInt32("id_pedidocompra"),
+                                IdInsumo = reader.GetInt32("id_insumo"),
+                                NomeInsumo = reader.GetString("nome_insumo")
+                            };
+                            itensPedidoCompra.Add(compraItem);
+                        }
+                    }
+                }
+            }
+            return itensPedidoCompra;
+        }
+
 
         // Método para cadastrar um novo pedido de compra
         public void CadastrarPedidoCompra(PedidoCompra pedidoCompra, MySqlTransaction transaction)
@@ -153,7 +226,7 @@ namespace PIMFazendaUrbanaLib
                                 IdInsumo = reader.GetInt32("id_insumo"),
                                 NomeInsumo = reader.GetString("nome_insumo"),
                                 Data = reader.GetDateTime("data_pedidocompra"),
-                                NomeFornecedor = reader.GetString("nome_fornecedor")
+                                //NomeFornecedor = reader.GetString("nome_fornecedor")
                             };
                             compraItens.Add(compraItem);
                         }
@@ -196,7 +269,7 @@ namespace PIMFazendaUrbanaLib
                                 IdInsumo = reader.GetInt32("id_insumo"),
                                 NomeInsumo = reader.GetString("nome_insumo"),
                                 Data = reader.GetDateTime("data_pedidocompra"),
-                                NomeFornecedor = reader.GetString("nome_fornecedor")
+                                //NomeFornecedor = reader.GetString("nome_fornecedor")
                             };
                             compraItens.Add(compraItem);
                         }
@@ -272,7 +345,7 @@ namespace PIMFazendaUrbanaLib
                                 IdInsumo = reader.GetInt32("id_insumo"),
                                 NomeInsumo = reader.GetString("nome_insumo"),
                                 Data = reader.GetDateTime("data_pedidocompra"),
-                                NomeFornecedor = reader.GetString("nome_fornecedor")
+                                //NomeFornecedor = reader.GetString("nome_fornecedor")
                             };
                             compraItens.Add(compraItem);
                         }
