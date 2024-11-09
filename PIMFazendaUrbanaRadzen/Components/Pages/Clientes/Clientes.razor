@@ -12,11 +12,14 @@
         </RadzenColumn>
         <RadzenColumn Size="12" SizeMD="6">
             <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                
                 <RadzenSplitButton ButtonStyle="ButtonStyle.Secondary" Icon="get_app" Text="Exportar" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Lighter" IconColor="black">
                     <RadzenSplitButtonItem Text="Excel" Value="xlsx" />
                     <RadzenSplitButtonItem Text="CSV" Value="csv" />
                 </RadzenSplitButton>
+                
                 <RadzenButton ButtonStyle="ButtonStyle.Primary" Icon="add_circle_outline" Text="Adicionar" Click="@AddButtonClick" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Light" />
+            
             </RadzenStack>
         </RadzenColumn>
     </RadzenRow>

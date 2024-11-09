@@ -11,6 +11,7 @@
         //public string Categoria { get; set; }
         //public int TempoProdTradicional { get; set; }
         //public int TempoProdControlado { get; set; }
+
         public int Qtd { get; set; }
         public string Unidqtd { get; set; }
         public DateTime Data { get; set; }

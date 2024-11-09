@@ -6,7 +6,7 @@ using Radzen;
 
 namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
 {
-    public partial class AddCliente
+    public partial class CadastrarCliente
     {
         [Inject]
         public ClienteApiService<ClienteDTO> ClienteApiService { get; set; }

@@ -7,12 +7,14 @@
         public string Unidqtd { get; set; }
         public DateTime DataEntrada { get; set; }
         public bool StatusAtivo { get; set; }
-        public string NomeCultivo { get; set; }
-        public string VariedadeCultivo { get; set; }
-        public string CategoriaCultivo { get; set; }
-        public int IdProducao { get; set; }
-        public DateTime DataProducao { get; set; }
-        public DateTime DataColheita { get; set; }
+        public Producao Producao { get; set; }
+
+        //public string NomeCultivo { get; set; }
+        //public string VariedadeCultivo { get; set; }
+        //public string CategoriaCultivo { get; set; }
+        //public int IdProducao { get; set; }
+        //public DateTime DataProducao { get; set; }
+        //public DateTime DataColheita { get; set; }
 
     }
 }

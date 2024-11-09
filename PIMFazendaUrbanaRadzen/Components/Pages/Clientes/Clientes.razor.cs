@@ -50,7 +50,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
         protected void AddButtonClick()
         {
             // Ação ao clicar no botão "Adicionar"
-            NavigationManager.NavigateTo("/add-cliente"); // Redireciona para a página de cadastro de cliente
+            NavigationManager.NavigateTo("/cadastrar-cliente"); // Redireciona para a página de cadastro de cliente
         }
 
         protected void OnRowSelect(ClienteDTO cliente)
