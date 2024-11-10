@@ -2,109 +2,124 @@
 
 <PageTitle>Index</PageTitle>
 
-<RadzenRow Style="height: 15vh;">
-        <RadzenColumn Size ="6">
-            <!-- Exibe a data com estilo personalizado -->
-            <RadzenText Style="font-size: 1.5rem; font-weight: bold; color: #333;">
-                @dataAtual
-            </RadzenText>
-        </RadzenColumn>
-
-        <RadzenColumn Size ="6">
-            <!-- Exibe a hora com estilo diferente para destaque -->
-            <RadzenText Style="font-size: 1.2rem; color: #555;">
-                @horaAtual
-            </RadzenText>
-        </RadzenColumn>
+<RadzenRow Style="height: 4vh;">
+    <RadzenStack Orientation="Orientation.Horizontal" Style="width: 100%;">
+        <RadzenText Style="font-size: 1.2rem; font-weight: bold; color: #333;">
+            @dataAtual
+        </RadzenText>
+        <RadzenText Style="font-size: 1.1rem; color: #333;">
+            @horaAtual
+        </RadzenText>
+    </RadzenStack>
 </RadzenRow>
 
-<RadzenRow Style="height: 85vh;">
+<RadzenRow Style="height: 17vh; margin-bottom: 1rem;">
+    <RadzenCard Style="width: 100%; margin-bottom: 0.5rem;">
+        <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Previsão do tempo</RadzenText>
+        <div style="max-height: 150px;">
+            <a class="weatherwidget-io" href="https://forecast7.com/pt/n21d17n47d81/ribeirao-preto/"
+               data-label_1="Ribeirão Preto"
+               data-language="PT"
+               data-theme="original"
+               style="display: block; width: 100%; text-align: center; max-height: 100px !important">
+                Ribeirão Preto
+            </a>
+            <script>
+                !function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = 'https://weatherwidget.io/js/widget.min.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'weatherwidget-io-js');
+            </script>
+        </div>
+    </RadzenCard>
+</RadzenRow>
+
+<RadzenRow Style="height: 50vh;">
     <!-- Container principal com classe para aplicar CSS responsivo -->
     <div class="responsive-layout" style="display: flex; align-items: flex-start; justify-content: center; gap: 1rem;">
-        <!-- Coluna de Notícias -->
-        <div id="news-column" style="flex: 1; padding: 5px;">
-            <RadzenCard Style="margin-bottom: 1rem;">
-                <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Notícias 1</RadzenText>
-                <!-- Usando RadzenListBox com tipo especificado -->
-                <RadzenListBox TValue="dynamic" Data="@noticias1" Style="width: 100%; max-height: 250px; overflow-y: auto;" ReadOnly="true">
-                    <Template Context="item">
-                        <span>&#8226;</span> @item
-                    </Template>
-                </RadzenListBox>
-            </RadzenCard>
-            <RadzenCard Style="margin-bottom: 1rem;">
-                <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Notícias 2</RadzenText>
-                <!-- Usando RadzenListBox com tipo especificado -->
-                <RadzenListBox TValue="dynamic" Data="@noticias2" Style="width: 100%; max-height: 250px; overflow-y: auto;" ReadOnly="true">
-                    <Template Context="item">
-                        <span>&#8226;</span> @item
-                    </Template>
-                </RadzenListBox>
-            </RadzenCard>
-        </div>
 
-        <!-- Coluna Central com Carousel e Logo -->
-        <div id="carousel-column" style="flex: 2; padding: 5px; text-align: center;">
-            <div style="position: relative; width: 100%; max-width: 1000px; margin: 0 auto;">
-                <RadzenCarousel AllowNavigation="false" AllowPaging="false">
-                    <Items>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow01.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow02.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow03.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow04.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow05.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow06.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow07.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow08.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow09.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow10.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                        <RadzenCarouselItem>
-                            <RadzenImage Path="images/slideshow11.png" style="width: 100%; max-width: 1000px; margin: 0 auto;" />
-                        </RadzenCarouselItem>
-                    </Items>
-                </RadzenCarousel>
+        <RadzenColumn Size="8" Style="width: 100%;" id="carousel-column">
+            <!-- Coluna Central com Carousel e Logo -->
+            <div id="carousel-column" style="flex: 2; padding: 5px; text-align: center;">
+                <div style="position: relative; width: 100%; margin: 0 auto;">
+                    <RadzenCarousel AllowNavigation="false" AllowPaging="false" Style="max-height: 600px; max-width: 1500px;">
+                        <Items>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow01.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow02.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow03.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow04.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow05.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow06.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow07.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow08.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow09.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow10.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                            <RadzenCarouselItem>
+                                <RadzenImage Path="images/slideshow11.png" style="width: 100%; margin: 0 auto;" />
+                            </RadzenCarouselItem>
+                        </Items>
+                    </RadzenCarousel>
 
-                <!-- Logo sobreposta no centro do carousel -->
-                <RadzenImage Path="images/LogoPaginaInicial.png" Style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 95%;" />
+                    <!-- Logo sobreposta no centro do carousel -->
+                    <RadzenImage Path="images/LogoPaginaInicial.png" Style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); height: 95%;" />
+                </div>
             </div>
-        </div>
+        </RadzenColumn>
 
-        <!-- Coluna de Notas e Previsão do Tempo -->
-        <div id="notes-column" style="flex: 1; padding: 5px; ">
-            <!-- notas do usuário -->
-            <RadzenCard Style="background-color: #FFFBCC; margin-bottom: 1rem;">
-                <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold; color: black">Anotações</RadzenText>
-                <RadzenTextArea @bind-Value="notaUsuario"
-                                @oninput="HandleInput"
-                                @onfocus="OnFocus"
-                                Style="background-color: #FFFBCC; color: black; width: 100%; height: 250px; min-height: 50px; max-height: 400px; resize: vertical;"
-                                Placeholder="Escreva suas anotações aqui..." />
-            </RadzenCard>
-            <!-- previsão do tempo -->
-            <RadzenCard Style="margin-bottom: 1rem; height: 250px;">
-                <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Previsão do tempo</RadzenText>
-            </RadzenCard>
-        </div>
+        <RadzenColumn Size="4" Style="width: 100%;" id="notes-and-news-column">
+            <!-- Coluna de Notas e Previsão do Tempo -->
+            <div style="flex: 1; padding: 5px;">
+                <!-- Anotações -->
+                <RadzenCard Style="background-color: #FFFBCC; margin-bottom: 1rem; width: 100%; max-height: 290px;">
+                    <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold; color: black">Anotações</RadzenText>
+                    <RadzenTextArea @bind-Value="notaUsuario"
+                                    @oninput="HandleInput"
+                                    @onfocus="OnFocus"
+                                    Style="background-color: #FFFBCC; color: black; width: 100%; height: 225px; max-height: 225px; min-height: 50px; resize: vertical;"
+                                    Placeholder="Escreva suas anotações aqui..." />
+                </RadzenCard>
+
+                <!-- Notícias -->
+
+                <RadzenCard Style="width: 100%; margin-bottom: 1rem; height: 290px; max-height: 290px; overflow: hidden;">
+                    <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Notícias</RadzenText>
+                    <RadzenListBox TValue="dynamic" Data="@noticias1"
+                                   Style="width: 100%; height: calc(100% - 30px); overflow-y: auto; padding-right: 5px;"
+                                   ReadOnly="true">
+                        <Template Context="item">
+                            <span>&#8226;</span> @item
+                        </Template>
+                    </RadzenListBox>
+                </RadzenCard>
+
+            </div>
+        </RadzenColumn>
+
     </div>
 </RadzenRow>
 
@@ -140,7 +155,6 @@
 @code{
     // Código para notícias
 
-    // Listas de notícias 1
     private List<string> noticias1 = new List<string>
     {
         "Mercado global de fazendas urbanas deve movimentar US$ 236 bilhões em 2024",
@@ -148,30 +162,7 @@
         "Educação no agro: por que crianças devem saber mais sobre alimentos e cultivos (Forbes)",
         "PIB paulista cresce 2,3% em março impulsionado pelo agro e indústria (Governo do Estado de São Paulo)",
         "Combate ao Greening: SP cria linha de crédito para citricultores (Band)",
-        "Agro do RS estima perdas de R$ 3 bi e uma década para recuperar produções inundadas (CNN)",
-        "Notícia 1.7",
-        "Notícia 1.8",
-        "Notícia 1.9",
-        "Notícia 1.10",
-        "Notícia 1.11",
-        "Notícia 1.12",
-        "Notícia 1.13",
-        "Notícia 1.14",
-        "Notícia 1.15",
-        "Notícia 1.16",
-        "Notícia 1.17",
-        "Notícia 1.18",
-        "Notícia 1.19",
-        "Notícia 1.20"
-
-    };
-
-    // Listas de notícias 2
-    private List<string> noticias2 = new List<string>
-    {
-        "Atualização do sistema agendada para: 28/11/2024",
-        "Notícia 2.2",
-        "Notícia 2.3"
+        "Agro do RS estima perdas de R$ 3 bi e uma década para recuperar produções inundadas (CNN)"
     };
 }
 

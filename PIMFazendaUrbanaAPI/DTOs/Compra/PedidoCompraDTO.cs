@@ -1,10 +1,14 @@
-﻿namespace PIMFazendaUrbanaAPI.DTOs
+﻿using PIMFazendaUrbanaLib;
+
+namespace PIMFazendaUrbanaAPI.DTOs
 {
-    public class PedidoCompraDTO  // precisa atualizar com composição
+    public class PedidoCompraDTO  // atualizado com composição
     {
         public int Id { get; set; }
         public DateTime Data { get; set; }
         public int IdFornecedor { get; set; }
+        public string NomeFornecedor { get; set; }
+        public List<PedidoCompraItemDTO> Itens { get; set; }
     }
 }
 

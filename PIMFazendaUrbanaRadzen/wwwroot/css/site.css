@@ -28,6 +28,7 @@
     --rz-primary-dark: #23992c;
     --rz-primary-darker: #247a2a;
     --rz-primary-superdark: #114715;
+    
     --rz-switch-checked-circle-background-color: #1eba2a;
     --rz-selectbar-selected-color: #1eba2a;
     --rz-grid-selected-color: #1eba2a;
@@ -35,16 +36,24 @@
     --rz-transition: 0.2s linear;
     --rz-transition-all: all 0.2s linear;
     --rz-series-1: #247a2a;
+
+    /*
     --rz-secondary: #6739b7;
     --rz-secondary-light: #7e57c2;
     --rz-secondary-lighter: #9475cd;
     --rz-secondary-dark: #5e35b1;
     --rz-secondary-darker: #512da8;
-    --rz-selection: rgba(50, 143, 67, 0.9);
+    */
 
+    --rz-secondary: #3b5c9d; /* Tom principal de azul */
+    --rz-secondary-light: #4f7ab9; /* Azul mais claro */
+    --rz-secondary-lighter: #7598d3; /* Azul ainda mais claro */
+    --rz-secondary-dark: #1f567c; /* Azul escuro */
+    --rz-secondary-darker: #174263; /* Azul mais escuro */
+
+    --rz-selection: rgba(50, 143, 67, 0.9);
     --rz-base-900: #151515; /* Preto profundo */
     --rz-base-800: #1b1b1b; /* Cinza muito escuro */
-
     /* cores gradiente preto/branco padrão do radzen */
     /*--rz-base-900: #121212; */ /* Preto profundo */
     /*--rz-base-800: #1e1e1e; */ /* Cinza muito escuro */
@@ -127,26 +136,54 @@ a:focus {
 
 /* CUSTOM */
 
-/* Estilo responsivo para telas pequenas */
+/* Layout para telas grandes (largura maior que 1200px) */
+@media (min-width: 1200px) {
+    .responsive-layout {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    #carousel-column {
+        flex: 0 0 70%; /* O carousel ocupa 70% da largura */
+    }
+
+    #notes-and-news-column {
+        flex: 0 0 30%; /* As colunas de anotações e notícias ocupam 30% */
+        display: flex;
+        flex-direction: column;
+    }
+
+    #notes-column {
+        margin-bottom: 1rem; /* Adiciona espaço entre anotações e notícias */
+    }
+}
+
+/* Layout para telas menores (largura menor que 1200px) */
 @media (max-width: 1200px) {
     .responsive-layout {
-        flex-direction: column;
+        flex-direction: column; /* Coloca as colunas em formato de coluna */
         align-items: flex-start;
         overflow-y: auto; /* Habilita rolagem vertical */
         height: auto; /* Remove a restrição de altura */
     }
 
-    #carousel-column {
-        order: -1; /* Garante que o carousel fique no topo */
-        width: 100%;
+    #carousel-column, #notes-and-news-column {
+        width: 100%; /* Todos ocupam 100% da largura */
     }
 
-    #news-column, #notes-column {
-        width: 100%;
+    #notes-column, #news-column {
+        width: 100%; /* Garantir que ambos ocupem toda a largura */
     }
 }
 
 /* SPLITBUTTON */
+/* cor de fundo */
+.rz-button.rz-secondary.rz-shade-lighter {
+    background-color: #9475cd !important;
+}
+
 /* texto */
 .rz-splitbutton .rz-button-text {
     /* color: #247a2a !important; /* Altere para a cor desejada */
@@ -290,4 +327,10 @@ a:focus {
 ::-moz-selection {
     background-color: #FF5733 !important; /* Cor de fundo do texto selecionado no Firefox */
     color: #FFFFFF !important; /* Cor do texto selecionado no Firefox */
+}
+
+/* LISTBOX */
+.rz-state-highlight.rz-multiselect-item {
+    background-color: var(--rz-primary-dark) !important; /* Cor de fundo */
+    color: white !important; /* Cor do texto */
 }
