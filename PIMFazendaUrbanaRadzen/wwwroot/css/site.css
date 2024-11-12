@@ -23,6 +23,7 @@
     /* --rz-primary: #1eba2a; */
     --rz-primary: #29b334;
     --rz-primary-light: #58dd46;
+    --rz-primary-mediumlight: #7ceb57;
     --rz-primary-lighter: #a8ff6f;
     --rz-primary-superlight: #d1ffb3;
     --rz-primary-dark: #23992c;
@@ -273,7 +274,7 @@ a:focus {
 }
 /* Texto */
 .rz-navigation-item-link:hover .rz-navigation-item-text {
-    color: white !important;
+    color: black !important;
 }
 /* Ícone */
 .rz-navigation-item-link:hover .rz-navigation-item-icon {
@@ -297,7 +298,7 @@ a:focus {
 /* Menu que está ativo */
 /* Fundo */
 .rz-navigation-item-link:focus {
-    background-color: var(--rz-primary-superlight) !important;
+    background-color: var(--rz-primary-mediumlight) !important;
 }
 /* Texto */
 .rz-navigation-item-link:focus .rz-navigation-item-text {
@@ -306,6 +307,10 @@ a:focus {
 /* Ícone */
 .rz-navigation-item-link:focus .rz-navigation-item-icon {
     color: var(--rz-primary-darker) !important;
+}
+
+.rz-navigation-item .rz-navigation-item-link-active, .rz-navigation-item .rz-navigation-item-link-active .rz-navigation-item-text {
+    color: white !important;
 }
 
 /* DATAGRID */
