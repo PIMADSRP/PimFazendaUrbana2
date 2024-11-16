@@ -13,10 +13,10 @@
         void ExcluirFuncionario(int funcionarioId);
         List<Funcionario> ListarFuncionariosAtivos();
         List<Funcionario> ListarFuncionariosInativos();
-        Funcionario ConsultarFuncionarioID(int funcionarioId);
-        Funcionario ConsultarFuncionarioNome(string funcionarioNome);
-        Funcionario ConsultarFuncionarioUsuario(string funcionarioUsuario);
-        List<Funcionario> FiltrarFuncionariosNome(string funcionarioNome);
+        Funcionario ConsultarFuncionarioPorID(int funcionarioId);
+        Funcionario ConsultarFuncionarioPorNome(string funcionarioNome);
+        Funcionario ConsultarFuncionarioPorUsuario(string funcionarioUsuario);
+        List<Funcionario> FiltrarFuncionariosPorNome(string funcionarioNome);
         void ValidarFuncionario(Funcionario funcionario);
         List<ValidationError> ValidarSenha(string senha, List<ValidationError> erros);
     }

@@ -260,11 +260,11 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public Funcionario ConsultarFuncionarioID(int funcionarioId)
+        public Funcionario ConsultarFuncionarioPorID(int funcionarioId)
         {
             try
             {
-                Funcionario funcionario = funcionarioDAO.ConsultarFuncionarioID(funcionarioId);
+                Funcionario funcionario = funcionarioDAO.ConsultarFuncionarioPorID(funcionarioId);
                 return funcionario;
             }
             catch (Exception ex)
@@ -273,11 +273,11 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public Funcionario ConsultarFuncionarioNome(string funcionarioNome)
+        public Funcionario ConsultarFuncionarioPorNome(string funcionarioNome)
         {
             try
             {
-                Funcionario funcionario = funcionarioDAO.ConsultarFuncionarioNome(funcionarioNome);
+                Funcionario funcionario = funcionarioDAO.ConsultarFuncionarioPorNome(funcionarioNome);
                 return funcionario;
             }
             catch (Exception ex)
@@ -286,11 +286,11 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public Funcionario ConsultarFuncionarioUsuario(string funcionarioUsuario)
+        public Funcionario ConsultarFuncionarioPorUsuario(string funcionarioUsuario)
         {
             try
             {
-                Funcionario funcionario = funcionarioDAO.ConsultarFuncionarioUsuario(funcionarioUsuario);
+                Funcionario funcionario = funcionarioDAO.ConsultarFuncionarioPorUsuario(funcionarioUsuario);
                 return funcionario;
             }
             catch (Exception ex)
@@ -299,11 +299,11 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public List<Funcionario> FiltrarFuncionariosNome(string funcionarioNome)
+        public List<Funcionario> FiltrarFuncionariosPorNome(string funcionarioNome)
         {
             try
             {
-                List<Funcionario> funcionarios = funcionarioDAO.FiltrarFuncionariosNome(funcionarioNome);
+                List<Funcionario> funcionarios = funcionarioDAO.FiltrarFuncionariosPorNome(funcionarioNome);
                 return funcionarios;
             }
             catch (Exception ex)

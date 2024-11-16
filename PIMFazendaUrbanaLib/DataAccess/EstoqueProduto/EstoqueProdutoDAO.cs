@@ -62,7 +62,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para filtrar estoque de produtos (ativos) pelo nome
-        public List<EstoqueProduto> FiltrarProdutosNome(string produtoNome)
+        public List<EstoqueProduto> FiltrarProdutosPorNome(string produtoNome)
         {
             List<EstoqueProduto> produtos = new List<EstoqueProduto>();
 

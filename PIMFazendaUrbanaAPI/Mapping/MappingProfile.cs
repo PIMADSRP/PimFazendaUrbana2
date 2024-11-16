@@ -11,7 +11,6 @@ namespace PIMFazendaUrbanaAPI.Mapping
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
             CreateMap<Endereco, EnderecoDTO>().ReverseMap();
             CreateMap<Telefone, TelefoneDTO>().ReverseMap();
-            CreateMap<Funcionario, FuncionarioDTO>().ReverseMap();
             CreateMap<EnderecoViaCepDTO, EnderecoDTO>()
             .ForMember(dest => dest.CEP, opt => opt.MapFrom(src => src.cep))
             .ForMember(dest => dest.Logradouro, opt => opt.MapFrom(src => src.logradouro))
@@ -19,6 +18,8 @@ namespace PIMFazendaUrbanaAPI.Mapping
             .ForMember(dest => dest.Bairro, opt => opt.MapFrom(src => src.bairro))
             .ForMember(dest => dest.Cidade, opt => opt.MapFrom(src => src.localidade))
             .ForMember(dest => dest.UF, opt => opt.MapFrom(src => src.uf));
+            CreateMap<Funcionario, FuncionarioDTO>().ReverseMap();
+            CreateMap<Fornecedor, FornecedorDTO>().ReverseMap();
             CreateMap<Cultivo, CultivoDTO>().ReverseMap();
             // adicionar outros mapeamentos conforme necessário
         }

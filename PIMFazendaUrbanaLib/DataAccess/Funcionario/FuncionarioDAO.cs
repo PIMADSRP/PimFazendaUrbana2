@@ -549,7 +549,7 @@ namespace PIMFazendaUrbanaLib
 
         // 9- Consulta
         // 9.1- Método para consultar funcionário por ID (somente funcionários ativos)
-        public Funcionario ConsultarFuncionarioID(int funcionarioId)
+        public Funcionario ConsultarFuncionarioPorID(int funcionarioId)
         {
             Funcionario funcionario = null;
 
@@ -608,7 +608,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 9.2- Método para consultar funcionário por nome (somente funcionários ativos)
-        public Funcionario ConsultarFuncionarioNome(string funcionarioNome)
+        public Funcionario ConsultarFuncionarioPorNome(string funcionarioNome)
         {
             Funcionario funcionario = null;
 
@@ -667,7 +667,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 9.3- Método para consultar funcionário por nome de usuário (somente funcionários ativos)
-        public Funcionario ConsultarFuncionarioUsuario(string funcionarioUsuario)
+        public Funcionario ConsultarFuncionarioPorUsuario(string funcionarioUsuario)
         {
             Funcionario funcionario = null;
 
@@ -726,7 +726,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 10- Método para filtrar lista de funcionários por nome
-        public List<Funcionario> FiltrarFuncionariosNome(string funcionarioNome)
+        public List<Funcionario> FiltrarFuncionariosPorNome(string funcionarioNome)
         {
             List<Funcionario> funcionarios = new List<Funcionario>();
 

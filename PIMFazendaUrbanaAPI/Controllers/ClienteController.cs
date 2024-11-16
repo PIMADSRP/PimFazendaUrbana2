@@ -111,31 +111,15 @@ namespace PIMFazendaUrbanaAPI.Controllers
             }
         }
 
-        // Método para listar clientes inativos
-        [HttpGet("inativos")]
-        public IActionResult ListarClientesInativos()
-        {
-            try
-            {
-                var clientes = _clienteService.ListarClientesInativos();
-                var clientesDto = _mapper.Map<List<ClienteDTO>>(clientes); // Mapeia Cliente para ClienteDTO
-                return Ok(clientesDto); // Retorna a lista de clientes inativos
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
-            }
-        }
-
-        // Método para consultar um cliente pelo ID
+        // Método para buscar um cliente por id
         [HttpGet("{id}")]
-        public IActionResult ConsultarClientePorID(int id)
+        public IActionResult ConsultarClientePorId(int id)
         {
             try
             {
                 var cliente = _clienteService.ConsultarClientePorID(id);
                 var clienteDto = _mapper.Map<ClienteDTO>(cliente); // Mapeia Cliente para ClienteDTO
-                return Ok(clienteDto); // Retorna o cliente encontrado
+                return Ok(clienteDto);
             }
             catch (Exception ex)
             {
@@ -143,52 +127,5 @@ namespace PIMFazendaUrbanaAPI.Controllers
             }
         }
 
-        // Método para consultar um cliente pelo nome
-        [HttpGet("nome/{nome}")]
-        public IActionResult ConsultarClientePorNome(string nome)
-        {
-            try
-            {
-                var cliente = _clienteService.ConsultarClientePorNome(nome);
-                var clienteDto = _mapper.Map<ClienteDTO>(cliente); // Mapeia Cliente para ClienteDTO
-                return Ok(clienteDto); // Retorna o cliente encontrado
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
-            }
-        }
-
-        // Método para consultar um cliente pelo CNPJ
-        [HttpGet("cnpj/{cnpj}")]
-        public IActionResult ConsultarClientePorCNPJ(string cnpj)
-        {
-            try
-            {
-                var cliente = _clienteService.ConsultarClientePorCNPJ(cnpj);
-                var clienteDto = _mapper.Map<ClienteDTO>(cliente); // Mapeia Cliente para ClienteDTO
-                return Ok(clienteDto); // Retorna o cliente encontrado
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
-            }
-        }
-
-        // Método para filtrar clientes pelo nome
-        [HttpGet("filtrar/{nome}")]
-        public IActionResult FiltrarClientesPorNome(string nome)
-        {
-            try
-            {
-                var clientes = _clienteService.FiltrarClientesPorNome(nome);
-                var clientesDto = _mapper.Map<List<ClienteDTO>>(clientes); // Mapeia Cliente para ClienteDTO
-                return Ok(clientesDto); // Retorna a lista de clientes filtrados
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
-            }
-        }
     }
 }

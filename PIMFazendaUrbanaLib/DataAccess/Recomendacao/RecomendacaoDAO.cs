@@ -4,7 +4,7 @@ namespace PIMFazendaUrbanaLib
 {
     public class RecomendacaoDAO : IRecomendacaoDAO
     {
-        private string connectionString;
+        private readonly string connectionString;
         public RecomendacaoDAO(string connectionString)
         {
             this.connectionString = connectionString;

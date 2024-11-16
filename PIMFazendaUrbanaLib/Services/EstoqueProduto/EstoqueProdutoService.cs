@@ -22,11 +22,11 @@
             }
         }
 
-        public List<EstoqueProduto> FiltrarProdutosNome(string produtoNome)
+        public List<EstoqueProduto> FiltrarProdutosPorNome(string produtoNome)
         {
             try
             {
-                List<EstoqueProduto> produtos = estoqueProdutoDAO.FiltrarProdutosNome(produtoNome);
+                List<EstoqueProduto> produtos = estoqueProdutoDAO.FiltrarProdutosPorNome(produtoNome);
                 return produtos;
             }
             catch (Exception ex)
