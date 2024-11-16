@@ -2,7 +2,7 @@
 
 namespace PIMFazendaUrbanaLib
 {
-    public class CompraDAO
+    public class CompraDAO : ICompraDAO
     {
         private readonly string connectionString;
 

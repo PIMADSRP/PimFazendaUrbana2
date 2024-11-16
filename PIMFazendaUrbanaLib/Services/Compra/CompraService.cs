@@ -2,15 +2,15 @@
 
 namespace PIMFazendaUrbanaLib
 {
-    public class CompraService
+    public class CompraService : ICompraService
     {
-        private CompraDAO pedidoCompraDAO;
+        private readonly ICompraDAO pedidoCompraDAO;
         private readonly string connectionString;
 
         public CompraService(string connectionString)
         {
-            this.pedidoCompraDAO = new CompraDAO(connectionString);
             this.connectionString = connectionString;
+            this.pedidoCompraDAO = new CompraDAO(connectionString);
         }
 
         // Método para cadastrar um novo pedido de compra

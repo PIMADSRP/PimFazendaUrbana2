@@ -1,12 +1,12 @@
 ﻿namespace PIMFazendaUrbanaLib
 {
-    public class ProdutoService
+    public class EstoqueProdutoService : IEstoqueProdutoService
     {
-        private EstoqueProdutoDAO estoqueProdutoDAO;
+        private readonly IEstoqueProdutoDAO estoqueProdutoDAO;
 
-        public ProdutoService()
+        public EstoqueProdutoService(string connectionString)
         {
-            this.estoqueProdutoDAO = new EstoqueProdutoDAO();
+            this.estoqueProdutoDAO = new EstoqueProdutoDAO(connectionString);
         }
 
         public List<EstoqueProduto> ListarEstoqueProdutoAtivos()

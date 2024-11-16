@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PIMFazendaUrbanaLib;
 using PIMFazendaUrbanaAPI.DTOs;
+using PIMFazendaUrbPIMFazendaUrbanaAPI.DTOs;
 
 namespace PIMFazendaUrbanaAPI.Mapping
 {
@@ -20,8 +21,14 @@ namespace PIMFazendaUrbanaAPI.Mapping
             .ForMember(dest => dest.UF, opt => opt.MapFrom(src => src.uf));
             CreateMap<Funcionario, FuncionarioDTO>().ReverseMap();
             CreateMap<Fornecedor, FornecedorDTO>().ReverseMap();
-            CreateMap<Cultivo, CultivoDTO>().ReverseMap();
-            // adicionar outros mapeamentos conforme necessário
+            CreateMap<Insumo, InsumoDTO>().ReverseMap();
+            CreateMap<SaidaInsumo, SaidaInsumoDTO>().ReverseMap();
+            CreateMap<Producao, ProducaoDTO>().ReverseMap();
+            CreateMap<EstoqueProduto, EstoqueProdutoDTO>().ReverseMap();
+            CreateMap<PedidoCompra, PedidoCompraDTO>().ReverseMap();
+            CreateMap<PedidoCompraItem, PedidoCompraItemDTO>().ReverseMap();
+            CreateMap<PedidoVenda, PedidoVendaDTO>().ReverseMap();
+            CreateMap<PedidoVendaItem, PedidoVendaItemDTO>().ReverseMap();
         }
     }
 }

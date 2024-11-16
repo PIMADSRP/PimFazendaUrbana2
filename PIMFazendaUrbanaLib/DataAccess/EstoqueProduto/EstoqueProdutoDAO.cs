@@ -2,13 +2,13 @@
 
 namespace PIMFazendaUrbanaLib
 {
-    public class EstoqueProdutoDAO
+    public class EstoqueProdutoDAO : IEstoqueProdutoDAO
     {
-        private string connectionString;
+        private readonly string connectionString;
 
-        public EstoqueProdutoDAO()
+        public EstoqueProdutoDAO(string connectionString)
         {
-            this.connectionString = ConnectionString.GetConnectionString();
+            this.connectionString = connectionString;
         }
 
 

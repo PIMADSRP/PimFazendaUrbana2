@@ -3,13 +3,13 @@ using MySqlX.XDevAPI;
 
 namespace PIMFazendaUrbanaLib
 {
-    public class VendaDAO
+    public class VendaDAO : IVendaDAO
     {
-        private string connectionString;
+        private readonly string connectionString;
 
-        public VendaDAO()
+        public VendaDAO(string connectionString)
         {
-            this.connectionString = ConnectionString.GetConnectionString();
+            this.connectionString = connectionString;
         }
 
         // Método para cadastrar um novo pedido de venda

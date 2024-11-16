@@ -2,15 +2,15 @@
 
 namespace PIMFazendaUrbanaLib
 {
-    public class VendaService
+    public class VendaService : IVendaService
     {
-        private VendaDAO pedidoVendaDAO;
-        private string connectionString;
+        private readonly IVendaDAO pedidoVendaDAO;
+        private readonly string connectionString;
 
-        public VendaService()
+        public VendaService(string connectionString)
         {
-            this.pedidoVendaDAO = new VendaDAO();
-            this.connectionString = ConnectionString.GetConnectionString();
+            this.connectionString = connectionString;
+            this.pedidoVendaDAO = new VendaDAO(connectionString);
         }
 
         // Método para cadastrar um novo pedido de venda

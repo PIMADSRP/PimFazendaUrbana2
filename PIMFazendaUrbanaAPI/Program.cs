@@ -31,6 +31,9 @@ namespace PIMFazendaUrbanaAPI
             builder.Services.AddScoped<ICultivoService>(provider => new CultivoService(connectionString));
             builder.Services.AddScoped<IProducaoService>(provider => new ProducaoService(connectionString));
             builder.Services.AddScoped<IInsumoService>(provider => new InsumoService(connectionString));
+            builder.Services.AddScoped<ICompraService>(provider => new CompraService(connectionString));
+            builder.Services.AddScoped<IVendaService>(provider => new VendaService(connectionString));
+            builder.Services.AddScoped<IEstoqueProdutoService>(provider => new EstoqueProdutoService(connectionString));
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
