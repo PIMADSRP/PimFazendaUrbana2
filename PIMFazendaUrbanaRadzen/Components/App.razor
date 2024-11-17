@@ -16,6 +16,17 @@
     <Routes @rendermode="@InteractiveServer" />
     <script src="_framework/blazor.web.js"></script>
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
+
+    <!-- Script para download de arquivos -->
+    <script>
+        function downloadFile(fileName, byteBase64) {
+            const link = document.createElement('a');
+            link.href = 'data:application/octet-stream;base64,' + byteBase64;
+            link.download = fileName;
+            link.click();
+        }
+    </script>
+
 </body>
 
 </html>

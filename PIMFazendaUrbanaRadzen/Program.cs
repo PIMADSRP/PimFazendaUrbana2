@@ -86,6 +86,12 @@ builder.Services.AddScoped(provider =>
         $"{apiBaseUrl}/recomendacao"
     ));
 
+builder.Services.AddScoped(provider =>
+    new ExportacaoApiService<object>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/exportacao"
+    ));
+
 
 var app = builder.Build();
 

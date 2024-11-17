@@ -29,7 +29,6 @@
     --rz-primary-dark: #23992c;
     --rz-primary-darker: #247a2a;
     --rz-primary-superdark: #114715;
-    
     --rz-switch-checked-circle-background-color: #1eba2a;
     --rz-selectbar-selected-color: #1eba2a;
     --rz-grid-selected-color: #1eba2a;
@@ -37,7 +36,6 @@
     --rz-transition: 0.2s linear;
     --rz-transition-all: all 0.2s linear;
     --rz-series-1: #247a2a;
-
     /*
     --rz-secondary: #6739b7;
     --rz-secondary-light: #7e57c2;
@@ -67,6 +65,14 @@
     /*--rz-base-200: #e0e0e0; */ /* Cinza quase branco */
     /*--rz-base-100: #f5f5f5; */ /* Cinza muito, muito claro */
     /*--rz-base-0: #ffffff; */ /* Branco */
+    /* espaçamento das células do datagrid */
+    /*--rz-grid-header-cell-padding: 0.75rem 0; */
+    /*--rz-grid-cell-padding: 0.625rem 1rem; */
+    /*--rz-grid-header-title-padding-inline: 1rem 0;*/
+    
+    --rz-grid-header-cell-padding: 0.5rem 10px;
+    --rz-grid-cell-padding: 0.5rem 10px;
+    --rz-grid-header-title-padding-inline: 0 0;
 }
 
 
@@ -136,52 +142,49 @@ a:focus {
 }
 
 /* CUSTOM */
+    /* Layout para telas grandes (largura maior que 1200px) */
+    @media (min-width: 1200px) {
+        .responsive-layout {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 1rem;
+        }
 
-/* Layout para telas grandes (largura maior que 1200px) */
-@media (min-width: 1200px) {
-    .responsive-layout {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        gap: 1rem;
+        #carousel-column {
+            flex: 0 0 70%; /* O carousel ocupa 70% da largura */
+        }
+
+        #notes-and-news-column {
+            flex: 0 0 30%; /* As colunas de anotações e notícias ocupam 30% */
+            display: flex;
+            flex-direction: column;
+        }
+
+        #notes-column {
+            margin-bottom: 1rem; /* Adiciona espaço entre anotações e notícias */
+        }
     }
+    /* Layout para telas menores (largura menor que 1200px) */
+    @media (max-width: 1200px) {
+        .responsive-layout {
+            flex-direction: column; /* Coloca as colunas em formato de coluna */
+            align-items: flex-start;
+            overflow-y: auto; /* Habilita rolagem vertical */
+            height: auto; /* Remove a restrição de altura */
+        }
 
-    #carousel-column {
-        flex: 0 0 70%; /* O carousel ocupa 70% da largura */
+        #carousel-column, #notes-and-news-column {
+            width: 100%; /* Todos ocupam 100% da largura */
+        }
+
+        #notes-column, #news-column {
+            width: 100%; /* Garantir que ambos ocupem toda a largura */
+        }
     }
-
-    #notes-and-news-column {
-        flex: 0 0 30%; /* As colunas de anotações e notícias ocupam 30% */
-        display: flex;
-        flex-direction: column;
-    }
-
-    #notes-column {
-        margin-bottom: 1rem; /* Adiciona espaço entre anotações e notícias */
-    }
-}
-
-/* Layout para telas menores (largura menor que 1200px) */
-@media (max-width: 1200px) {
-    .responsive-layout {
-        flex-direction: column; /* Coloca as colunas em formato de coluna */
-        align-items: flex-start;
-        overflow-y: auto; /* Habilita rolagem vertical */
-        height: auto; /* Remove a restrição de altura */
-    }
-
-    #carousel-column, #notes-and-news-column {
-        width: 100%; /* Todos ocupam 100% da largura */
-    }
-
-    #notes-column, #news-column {
-        width: 100%; /* Garantir que ambos ocupem toda a largura */
-    }
-}
-
-/* SPLITBUTTON */
-/* cor de fundo */
-.rz-button.rz-secondary.rz-shade-lighter {
+    /* SPLITBUTTON */
+    /* cor de fundo */
+    .rz-button.rz-secondary.rz-shade-lighter {
     background-color: #9475cd !important;
 }
 
@@ -334,8 +337,44 @@ a:focus {
     color: #FFFFFF !important; /* Cor do texto selecionado no Firefox */
 }
 
+/*
+.rz-grid-table thead th .rz-column-title {
+    padding: 5px !important;
+}
+
+.rz-grid-table td {
+    padding: 5px !important;
+}
+*/
+
+
+/* tamanho das células do datagrid */
+.data-grid-com-poucas-colunas {
+    --rz-grid-header-cell-padding: 0.5rem 0.5rem;
+    --rz-grid-cell-padding: 0.5rem 0.5rem;
+    --rz-grid-header-title-padding-inline: 0 0;
+}
+
+.data-grid-com-muitas-colunas {
+    --rz-grid-header-cell-padding: 0.5rem 10px;
+    --rz-grid-cell-padding: 0.5rem 10px;
+    --rz-grid-header-title-padding-inline: 0 0;
+}
+
+
 /* LISTBOX */
 .rz-state-highlight.rz-multiselect-item {
     background-color: var(--rz-primary-dark) !important; /* Cor de fundo */
     color: white !important; /* Cor do texto */
 }
+
+
+.rz-button.custom-padding-button.rz-button-md {
+    padding: 0.1rem 0.1rem !important;
+}
+
+#botao-menor {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+

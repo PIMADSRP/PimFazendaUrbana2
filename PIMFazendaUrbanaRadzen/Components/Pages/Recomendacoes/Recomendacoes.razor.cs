@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using PIMFazendaUrbanaAPI.DTOs;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
 using Radzen.Blazor;
+using System.Net.Http;
 using static PIMFazendaUrbanaRadzen.Components.Pages.Vendas.CadastrarVenda;
 
 namespace PIMFazendaUrbanaRadzen.Components.Pages.Recomendacoes
@@ -38,6 +40,13 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Recomendacoes
 
         [Inject]
         private RecomendacaoApiService<CultivoDTO> recomendacaoApiService { get; set; }
+
+        [Inject]
+        private ExportacaoApiService<object> exportacaoApiService { get; set; }
+
+        [Inject]
+        public IJSRuntime JSRuntime { get; set; }
+
 
         protected bool errorVisible;
 
@@ -77,6 +86,46 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Recomendacoes
                 NotificationService.Notify(NotificationSeverity.Error, "Erro ao obter recomendações", ex.Message, duration: 5000);
             }
         }
+
+        protected async Task OnExportarClick(RadzenSplitButtonItem args)
+        {
+            if (args == null || string.IsNullOrEmpty(args.Value.ToString()))
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.");
+                return;
+            }
+
+            string format = args.Value.ToString(); // "xlsx" ou "csv"
+            string fileName = $"Recomendacoes_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+            try
+            {
+                // Verifique se há dados
+                if (dataGridItems == null || !dataGridItems.Any())
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.");
+                    return;
+                }
+
+                // Chama o serviço para exportação com base no formato selecionado
+                var fileBytes = await exportacaoApiService.ExportarAsync(dataGridItems, format, fileName);
+
+                if (fileBytes != null)
+                {
+                    // Gera o download no navegador
+                    await JSRuntime.InvokeVoidAsync("downloadFile", fileName + "." + format, Convert.ToBase64String(fileBytes));
+                }
+                else
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message);
+            }
+        }
+
 
 
 

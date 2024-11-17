@@ -21,6 +21,7 @@ namespace PIMFazendaUrbanaAPI.Mapping
             .ForMember(dest => dest.UF, opt => opt.MapFrom(src => src.uf));
             CreateMap<Funcionario, FuncionarioDTO>().ReverseMap();
             CreateMap<Fornecedor, FornecedorDTO>().ReverseMap();
+            CreateMap<Cultivo, CultivoDTO>().ReverseMap();
             CreateMap<Insumo, InsumoDTO>().ReverseMap();
             CreateMap<SaidaInsumo, SaidaInsumoDTO>().ReverseMap();
             CreateMap<Producao, ProducaoDTO>().ReverseMap();
