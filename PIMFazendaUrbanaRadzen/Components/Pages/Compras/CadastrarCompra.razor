@@ -1,13 +1,13 @@
-@page "/cadastrar-venda"
+@page "/cadastrar-compra"
 @using PIMFazendaUrbanaRadzen.Services
 @using PIMFazendaUrbanaAPI.DTOs
 @* @attribute [Authorize] *@
 
-<PageTitle>Cadastrar Venda</PageTitle>
+<PageTitle>Cadastrar Compra</PageTitle>
 
 <!-- Título na parte superior -->
 <div style="text-align: left; margin-bottom: 20px;">
-    <RadzenText Text="Cadastrar Venda" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-4" />
+    <RadzenText Text="Cadastrar Compra" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-4" />
 </div>
 
 <!-- Container geral usando Flexbox para organizar o grid e o formulário -->
@@ -17,15 +17,15 @@
     <div style="flex: 1; min-width: 400px; display: flex; flex-direction: column;">
         <RadzenFieldset>
             <HeaderTemplate>
-                <div >
+                <div>
                     <RadzenText Text="Preencha as informações abaixo:" TextStyle="Radzen.Blazor.TextStyle.H6" Style="margin-bottom: 0px;" />
                 </div>
             </HeaderTemplate>
             <ChildContent>
-                <!-- Combo Box Cliente -->
+                <!-- Combo Box Fornecedor -->
                 <div style="margin-bottom: 10px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
-                        <RadzenText Text="Cliente" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px; margin-bottom: 5px;" />
+                        <RadzenText Text="Fornecedor" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px; margin-bottom: 5px;" />
                         <RadzenDropDown TValue="string" @bind-Value="selectedClient" Data="@comboBoxClients" TextProperty="Text" ValueProperty="Value" Style="width: 100%;" />
                     </RadzenRow>
                 </div>
@@ -119,18 +119,17 @@
 
             <!-- DataGrid -->
             <RadzenRow>
-                <RadzenDataGrid Data="@dataGridItems" 
-                                     TItem="dynamic" 
-                                     Style="border: 1px solid black; padding: 5px; width: 100%;" 
-                                     class="data-grid-com-poucas-colunas"
-                                     AllowColumnResize="true"
-                                     >
+                <RadzenDataGrid Data="@dataGridItems"
+                                TItem="dynamic"
+                                Style="border: 1px solid black; padding: 5px; width: 100%;"
+                                class="data-grid-com-poucas-colunas"
+                                AllowColumnResize="true">
                     <Columns>
-                        <RadzenDataGridColumn TItem="dynamic" Property="ProductName" Title="Nome do Produto" Width="30%"/>
-                        <RadzenDataGridColumn TItem="dynamic" Property="Quantity" Title="Quantidade" Width="15%"/>
-                        <RadzenDataGridColumn TItem="dynamic" Property="Unit" Title="Unidade" Width="15%"/>
-                        <RadzenDataGridColumn TItem="dynamic" Property="UnitPrice" Title="Valor Unitário" Width="20%"/>
-                        <RadzenDataGridColumn TItem="dynamic" Property="TotalPrice" Title="Valor Total" Width="20%"/>
+                        <RadzenDataGridColumn TItem="dynamic" Property="ProductName" Title="Nome do Produto" Width="30%" />
+                        <RadzenDataGridColumn TItem="dynamic" Property="Quantity" Title="Quantidade" Width="15%" />
+                        <RadzenDataGridColumn TItem="dynamic" Property="Unit" Title="Unidade" Width="15%" />
+                        <RadzenDataGridColumn TItem="dynamic" Property="UnitPrice" Title="Valor Unitário" Width="20%" />
+                        <RadzenDataGridColumn TItem="dynamic" Property="TotalPrice" Title="Valor Total" Width="20%" />
                     </Columns>
                 </RadzenDataGrid>
             </RadzenRow>

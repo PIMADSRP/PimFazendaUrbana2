@@ -1,7 +1,7 @@
 ﻿@page "/recomendacoes"
 @using PIMFazendaUrbanaRadzen.Services
 @using PIMFazendaUrbanaAPI.DTOs
-@attribute [Authorize]
+@* @attribute [Authorize] *@
 
 <PageTitle>Recomendações de plantio</PageTitle>
 
@@ -80,6 +80,7 @@
                             AllowSorting="false"
                             EmptyText="Sem itens para mostrar"
                             Style="border: 1px solid black; padding: 10px; width: 100%; height: auto; min-height: 300px;"
+                            AllowColumnResize="true"
                             class="data-grid-com-poucas-colunas">
                 <Columns>
                     <!-- Comentei a coluna Nome para ver se fica menos apertado

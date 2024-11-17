@@ -19,7 +19,7 @@ namespace PIMFazendaUrbanaRadzen.Services
             {
                 var request = new ExportacaoRequestDTO
                 {
-                    Dados = dados.Cast<CultivoDTO>().ToList(),
+                    Dados = dados.Cast<object>().ToList(),
                     Formato = formato,
                     NomeArquivo = nomeArquivo
                 };
