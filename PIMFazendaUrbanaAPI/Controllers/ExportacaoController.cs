@@ -1,7 +1,7 @@
 ﻿//using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using PIMFazendaUrbanaAPI.DTOs;
-using PIMFazendaUrbanaLib;
+using PIMFazendaUrbanaAPI.Services;
 
 namespace PIMFazendaUrbanaAPI.Controllers
 {

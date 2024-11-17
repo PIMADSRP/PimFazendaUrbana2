@@ -1,4 +1,4 @@
-﻿namespace PIMFazendaUrbanaLib
+﻿namespace PIMFazendaUrbanaAPI.Services
 {
     public interface IExportacaoService
     {

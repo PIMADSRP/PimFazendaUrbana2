@@ -1,0 +1,261 @@
+﻿using ClosedXML.Excel;
+using Newtonsoft.Json;
+using System.Collections;
+using System.Globalization;
+using System.Text;
+using PIMFazendaUrbanaAPI.DTOs;
+using System.Text.Json;
+
+namespace PIMFazendaUrbanaAPI.Services
+{
+    public class ExportacaoService : IExportacaoService
+    {
+        public byte[] Exportar(IEnumerable<object> dados, string formato)
+        {
+            if (dados == null || !dados.Any())
+            {
+                throw new ArgumentException("Nenhum dado fornecido.");
+            }
+
+            // Gera os dados mapeados de forma dinâmica
+            var dadosMapeados = MapearDadosDinamicos(dados);
+
+            switch (formato.ToLower())
+            {
+                case "xlsx":
+                    return GerarExcel(dadosMapeados);
+                case "csv":
+                    return GerarCsv(dadosMapeados);
+                default:
+                    throw new ArgumentException("Formato não suportado.");
+            }
+        }
+
+        // Método para mapear os dados dinamicamente a partir de JsonElement
+        private List<Dictionary<string, object>> MapearDadosDinamicos(IEnumerable<object> dados)
+        {
+            var dadosMapeados = new List<Dictionary<string, object>>();
+
+            foreach (var item in dados)
+            {
+                var linha = new Dictionary<string, object>();
+
+                // Se o item é do tipo JsonElement
+                if (item is JsonElement jsonElement)
+                {
+                    // Itera pelas propriedades do JsonElement e adiciona ao dicionário
+                    foreach (var property in jsonElement.EnumerateObject())
+                    {
+                        // Ignora a chave "StatusAtivo"
+                        if (property.Name.Equals("StatusAtivo", StringComparison.OrdinalIgnoreCase))
+                            continue;
+
+                        // Se a propriedade for um JsonObject (compoesto), desmembra em várias colunas
+                        if (property.Value.ValueKind == JsonValueKind.Object)
+                        {
+                            var nestedProperties = MapearDadosDinamicos(new[] { property.Value }.Cast<object>()).First();
+
+                            // Para cada propriedade dentro do objeto composto, adicione uma nova coluna
+                            foreach (var nestedProperty in nestedProperties)
+                            {
+                                string newKey;
+
+                                // Verifica se a chave é "Numero" e, nesse caso, inverte a ordem: "Número (Objeto)"
+                                if (nestedProperty.Key.Equals("Numero", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    newKey = $"{FormatarNomeObjeto(nestedProperty.Key)} ({FormatarNomeObjeto(property.Name)})"; // Exemplo: "Número (Endereço)" ou "Número (Telefone)"
+                                }
+                                else
+                                {
+                                    // Para outras propriedades, mantém o nome simples
+                                    newKey = FormatarNomeObjeto(nestedProperty.Key);
+                                }
+
+                                linha[newKey] = nestedProperty.Value;
+                            }
+                        }
+                        else
+                        {
+                            // Caso contrário, adicione normalmente a propriedade
+                            linha[property.Name] = property.Value.ToString();
+                        }
+                    }
+                }
+                else
+                {
+                    // Caso não seja JsonElement, lança um erro ou ignora o item
+                    throw new ArgumentException($"Tipo de objeto não tratado: {item.GetType().Name}");
+                }
+
+                dadosMapeados.Add(linha);
+            }
+
+            // Capitalizar a primeira letra de todas as chaves (nomes das colunas), e garantir que a chave StatusAtivo nunca seja adicionada
+            foreach (var linha in dadosMapeados)
+            {
+                var keys = linha.Keys.ToList();
+                foreach (var key in keys)
+                {
+                    // Verifica se a chave é "StatusAtivo" e a ignora completamente
+                    if (key.Equals("StatusAtivo", StringComparison.OrdinalIgnoreCase))
+                    {
+                        linha.Remove(key);
+                        continue;
+                    }
+
+                    var capitalizedKey = CapitalizarPrimeiraLetra(key);
+                    if (capitalizedKey != key)
+                    {
+                        var value = linha[key];
+                        linha.Remove(key);
+                        linha.Add(capitalizedKey, value);
+                    }
+                }
+            }
+
+            return dadosMapeados;
+        }
+
+        // Função para formatar os nomes das propriedades de maneira personalizada
+        private string FormatarNomeObjeto(string texto)
+        {
+            if (string.IsNullOrEmpty(texto))
+                return texto;
+
+            switch (texto.ToLower())
+            {
+                case "endereco":
+                    return "Endereço";
+                case "ddd":
+                    return "DDD";
+                case "cnpj":
+                    return "CNPJ";
+                case "cpf":
+                    return "CPF";
+                case "uf":
+                    return "UF";
+                case "cep":
+                    return "CEP";
+                case "numero":
+                    return "Número";
+                case "email":
+                    return "E-mail";
+                default:
+                    return CapitalizarPrimeiraLetra(texto);
+            }
+        }
+
+        // Função para capitalizar a primeira letra de uma string
+        private string CapitalizarPrimeiraLetra(string texto)
+        {
+            if (string.IsNullOrEmpty(texto))
+                return texto;
+
+            return char.ToUpper(texto[0]) + texto.Substring(1);
+        }
+
+
+
+        // Geração de arquivo Excel (XLSX)
+        private byte[] GerarExcel(IEnumerable<Dictionary<string, object>> dados)
+        {
+            using var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Exportação");
+
+            // Obter as chaves (nomes das propriedades) do primeiro item
+            var chaves = dados.First().Keys.ToList();
+
+            // Adicionar e estilizar cabeçalhos
+            for (int i = 0; i < chaves.Count; i++)
+            {
+                var headerCell = worksheet.Cell(1, i + 1);
+                headerCell.Value = chaves[i];
+                headerCell.Style.Font.Bold = true;
+                headerCell.Style.Fill.BackgroundColor = XLColor.FromHtml("#23992c");
+                headerCell.Style.Font.FontColor = XLColor.White;
+                headerCell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            }
+
+            // Adicionar dados
+            int row = 2;
+            foreach (var linha in dados)
+            {
+                for (int i = 0; i < chaves.Count; i++)
+                {
+                    var valor = linha[chaves[i]];
+
+                    if (valor == null)
+                    {
+                        worksheet.Cell(row, i + 1).Value = string.Empty; // Para valores nulos
+                    }
+                    else if (valor is string stringValue)
+                    {
+                        worksheet.Cell(row, i + 1).Value = stringValue; // Tratamento de string
+                    }
+                    else if (valor is int intValue)
+                    {
+                        worksheet.Cell(row, i + 1).Value = intValue; // Tratamento de inteiro
+                    }
+                    else if (valor is decimal decimalValue)
+                    {
+                        worksheet.Cell(row, i + 1).Value = decimalValue; // Tratamento de decimal
+                    }
+                    else if (valor is double doubleValue)
+                    {
+                        worksheet.Cell(row, i + 1).Value = doubleValue; // Tratamento de double
+                    }
+                    else if (valor is bool boolValue)
+                    {
+                        worksheet.Cell(row, i + 1).Value = boolValue ? "Sim" : "Não"; // Tratamento de booleano
+                    }
+                    else if (valor is DateTime dateTimeValue)
+                    {
+                        worksheet.Cell(row, i + 1).Value = dateTimeValue.ToString("yyyy-MM-dd"); // Formato para Data
+                    }
+                    else
+                    {
+                        worksheet.Cell(row, i + 1).Value = valor.ToString(); // Para valores não especificados
+                    }
+                }
+                row++;
+            }
+
+            // Ajustar largura das colunas
+            worksheet.Columns().AdjustToContents();
+
+            // Adicionar bordas
+            var range = worksheet.Range(1, 1, row - 1, chaves.Count);
+            range.Style.Border.OutsideBorder = XLBorderStyleValues.Medium;
+            range.Style.Border.InsideBorder = XLBorderStyleValues.Thin;
+
+            // Congelar o cabeçalho
+            worksheet.SheetView.FreezeRows(1);
+
+            using var memoryStream = new MemoryStream();
+            workbook.SaveAs(memoryStream);
+            return memoryStream.ToArray();
+        }
+
+
+
+        // Geração de arquivo CSV
+        private byte[] GerarCsv(IEnumerable<Dictionary<string, object>> dados)
+        {
+            var sb = new StringBuilder();
+
+            // Obter as chaves (nomes das propriedades) do primeiro item
+            var chaves = dados.First().Keys.ToList();
+
+            // Adicionar cabeçalhos
+            sb.AppendLine(string.Join(",", chaves));
+
+            // Adicionar dados
+            foreach (var linha in dados)
+            {
+                sb.AppendLine(string.Join(",", linha.Values.Select(v => v.ToString())));
+            }
+
+            return Encoding.UTF8.GetBytes(sb.ToString());
+        }
+    }
+}

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using PIMFazendaUrbanaAPI.Mapping;
 using PIMFazendaUrbanaLib;
+using PIMFazendaUrbanaAPI.Services;
 using PIMFazendaUrbanaRadzen.Controllers;
 using System.Text;
 
