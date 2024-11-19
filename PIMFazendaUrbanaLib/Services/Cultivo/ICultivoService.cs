@@ -9,7 +9,7 @@
         List<Cultivo> ListarCultivosAtivos();
         List<Cultivo> ListarCultivosInativos();
         List<string> ListarCategorias();
-        Cultivo ConsultarCultivoID(int cultivoId);
+        Cultivo ConsultarCultivoPorID(int cultivoId);
         List<Cultivo> FiltrarCultivosNome(string cultivoNome);
         void ValidarCultivo(Cultivo cultivo);
     }

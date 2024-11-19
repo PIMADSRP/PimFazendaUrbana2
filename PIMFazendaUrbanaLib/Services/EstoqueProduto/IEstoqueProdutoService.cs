@@ -4,6 +4,8 @@ namespace PIMFazendaUrbanaLib
 {
     public interface IEstoqueProdutoService
     {
+        List<EstoqueProduto> ListarEstoqueProdutoComFiltros(string search);
+
         List<EstoqueProduto> ListarEstoqueProdutoAtivos();
 
         List<EstoqueProduto> FiltrarProdutosPorNome(string produtoNome);

@@ -81,6 +81,12 @@ builder.Services.AddScoped(provider =>
     ));
 
 builder.Services.AddScoped(provider =>
+    new CultivoApiService<CultivoDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/cultivo"
+    ));
+
+builder.Services.AddScoped(provider =>
     new RecomendacaoApiService<CultivoDTO>(
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/recomendacao"

@@ -1,4 +1,4 @@
-﻿@page "/add-funcionario"
+﻿@page "/cadastrar-funcionario"
 @using PIMFazendaUrbanaRadzen.Services
 @using PIMFazendaUrbanaAPI.DTOs
 @* @attribute [Authorize] *@
@@ -6,7 +6,7 @@
 <PageTitle>Cadastrar Funcionario</PageTitle>
 
 <RadzenCard Style="max-width: 800px; margin: 0 auto; padding: 20px;" class="rz-mt-2">
-    <RadzenText Text="Cadastrar Funcionario" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-2" />
+    <RadzenText Text="Cadastrar Funcionário" TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-mb-2" />
 
     <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">
         Erro ao cadastrar funcionario
@@ -48,7 +48,6 @@
                                        @onblur="VerificarSenhasCoincidem" />
                         <RadzenRequiredValidator Component="ConfirmaSenha" Text="Confirmação de senha obrigatória" />
                         @if (!senhasCoincidem)
-
                         {
                             <div style="color: red;">@mensagemErroSenha</div>
                         }

@@ -9,6 +9,19 @@
             this.estoqueProdutoDAO = new EstoqueProdutoDAO(connectionString);
         }
 
+        public List<EstoqueProduto> ListarEstoqueProdutoComFiltros(string search)
+        {
+            try
+            {
+                List<EstoqueProduto> produtos = estoqueProdutoDAO.ListarEstoqueProdutoComFiltros(search);
+                return produtos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao listar estoque de produtos filtrados: " + ex.Message);
+            }
+        }
+
         public List<EstoqueProduto> ListarEstoqueProdutoAtivos()
         {
             try

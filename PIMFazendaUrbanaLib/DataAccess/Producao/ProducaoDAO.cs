@@ -287,7 +287,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 4.3 - MÉTODO FILTRAR PRODUCOES POR NOME DE CULTIVO NO BANCO
-        public List<Producao> FiltrarProducoesNome(string cultivoNome)
+        public List<Producao> FiltrarProducoesPorNome(string cultivoNome)
         {
             List<Producao> producoes = new List<Producao>();
 
@@ -403,7 +403,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 5 - MÉTODO CONSULTAR PRODUCAO POR ID NO BANCO
-        public Producao ConsultarProducaoID(int producaoId)
+        public Producao ConsultarProducaoPorID(int producaoId)
         {
             Producao producao = null;
 

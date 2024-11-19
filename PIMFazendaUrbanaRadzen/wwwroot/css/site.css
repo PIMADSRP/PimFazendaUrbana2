@@ -69,7 +69,7 @@
     /*--rz-grid-header-cell-padding: 0.75rem 0; */
     /*--rz-grid-cell-padding: 0.625rem 1rem; */
     /*--rz-grid-header-title-padding-inline: 1rem 0;*/
-    
+
     --rz-grid-header-cell-padding: 0.5rem 10px;
     --rz-grid-cell-padding: 0.5rem 10px;
     --rz-grid-header-title-padding-inline: 0 0;
@@ -361,6 +361,16 @@ a:focus {
     --rz-grid-header-title-padding-inline: 0 0;
 }
 
+/* tamanho dos ícones de filtrar e organizar */
+.rz-grid-filter-icon {
+    margin-inline: 0 !important;
+    font-size: 15px;
+}
+.rz-sortable-column .rzi-grid-sort {
+    width: 15px;
+    height: var(--rz-grid-sort-icon-height);
+    font-size: 20px;
+}
 
 /* LISTBOX */
 .rz-state-highlight.rz-multiselect-item {
@@ -368,7 +378,7 @@ a:focus {
     color: white !important; /* Cor do texto */
 }
 
-
+/* BOTÕES */
 .rz-button.custom-padding-button.rz-button-md {
     padding: 0.1rem 0.1rem !important;
 }
@@ -376,5 +386,21 @@ a:focus {
 #botao-menor {
     padding-left: 0 !important;
     padding-right: 0 !important;
+    padding: 0 0 !important;
 }
 
+/* Para botão normal */
+.botao-menor .rz-button,
+.botao-menor {
+    padding: 5px 5px 5px 5px !important;
+}
+
+/* Para o SplitButton */
+.split-button-menor .rz-button-md {
+    padding: 5px 5px 5px 5px !important;
+}
+
+/* Para o botão de menu [v] do splitbutton  */
+.split-button-menor .rz-splitbutton-menubutton {
+    min-width: 0px !important;
+}

@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using PIMFazendaUrbanaAPI.DTOs;
+using PIMFazendaUrbanaRadzen.Components.Pages.Clientes;
 using PIMFazendaUrbanaRadzen.Services;
+using Radzen;
 using Radzen.Blazor;
 
 namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
@@ -12,6 +15,15 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
 
         [Inject]
         public NavigationManager NavigationManager { get; set; } // Inject NavigationManager
+
+        [Inject]
+        public NotificationService NotificationService { get; set; }
+
+        [Inject]
+        private ExportacaoApiService<object> exportacaoApiService { get; set; }
+
+        [Inject]
+        public IJSRuntime JSRuntime { get; set; }
 
         protected List<FornecedorDTO> fornecedores;
         protected string errorMessage = string.Empty;
@@ -50,7 +62,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
         protected void AddButtonClick()
         {
             // Ação ao clicar no botão "Adicionar"
-            NavigationManager.NavigateTo("/add-fornecedor"); // Redireciona para a página de cadastro de fornecedor
+            NavigationManager.NavigateTo("/cadastrar-fornecedor"); // Redireciona para a página de cadastro de fornecedor
         }
 
         protected void OnRowSelect(FornecedorDTO fornecedor)
@@ -67,5 +79,45 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
         {
             // Implementar lógica de exclusão de fornecedor
         }
+
+        protected async Task OnExportarClick(RadzenSplitButtonItem args)
+        {
+            if (args == null || string.IsNullOrEmpty(args.Value.ToString()))
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.");
+                return;
+            }
+
+            string format = args.Value.ToString(); // "xlsx" ou "csv"
+            string fileName = $"Fornecedores_{DateTime.Now:yyyyMMdd_HHmmss}";
+
+            try
+            {
+                // Verifique se há dados
+                if (fornecedores == null || !fornecedores.Any())
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.");
+                    return;
+                }
+
+                // Chama o serviço para exportação com base no formato selecionado
+                var fileBytes = await exportacaoApiService.ExportarAsync(fornecedores, format, fileName);
+
+                if (fileBytes != null)
+                {
+                    // Gera o download no navegador
+                    await JSRuntime.InvokeVoidAsync("downloadFile", fileName + "." + format, Convert.ToBase64String(fileBytes));
+                }
+                else
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.");
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message);
+            }
+        }
+
     }
 }

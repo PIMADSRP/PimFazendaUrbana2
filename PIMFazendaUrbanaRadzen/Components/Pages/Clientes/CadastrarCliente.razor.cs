@@ -51,13 +51,13 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
 
                 cliente.StatusAtivo = true; // Define StatusAtivo como true por padrão
 
-                Console.WriteLine("Chamando ApiService");
+                Console.WriteLine($"Chamando ApiService: CreateAsync" + " hora atual: " + DateTime.Now);
                 var response = await ClienteApiService.CreateAsync(cliente); // Chama ApiService para criar o cliente
-                Console.WriteLine("Retornou de ApiService");
+                Console.WriteLine("Retornou de ApiService: Create Async" + " hora atual: " + DateTime.Now);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("Navegando para /Clientes");
+                    Console.WriteLine("Navegando para /clientes");
                     // Redireciona para a página de clientes e exibe mensagem de sucesso
                     NavigationManager.NavigateTo("/clientes");
                     NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Cliente cadastrado com sucesso!", duration: 5000);

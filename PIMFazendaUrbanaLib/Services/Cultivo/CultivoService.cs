@@ -108,11 +108,11 @@
 
         // 5- Consulta
         // 5.1 - Consultar Cultivo por ID
-        public Cultivo ConsultarCultivoID(int cultivoId)
+        public Cultivo ConsultarCultivoPorID(int cultivoId)
         {
             try
             {
-                Cultivo cultivo = cultivoDAO.ConsultarCultivoID(cultivoId); // Chama o método ConsultarCultivoID do DAO para obter os dados de um cultivo pelo ID
+                Cultivo cultivo = cultivoDAO.ConsultarCultivoPorID(cultivoId); // Chama o método ConsultarCultivoID do DAO para obter os dados de um cultivo pelo ID
                 return cultivo; // Retorna o cultivo encontrado
             }
             catch (Exception ex)

@@ -229,7 +229,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 5.1 - MÉTODO CONSULTAR CULTIVO NO BANCO POR ID (somente cultivos ativos)
-        public Cultivo ConsultarCultivoID(int cultivoId)
+        public Cultivo ConsultarCultivoPorID(int cultivoId)
         {
             Cultivo cultivo = null;
 

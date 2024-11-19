@@ -98,63 +98,91 @@
 
                 <Columns>
                     <!-- Coluna para Id -->
-                    <RadzenDataGridColumn TItem="ClienteDTO" Property="Id" Title="Id" Width="6%">
+                    <RadzenDataGridColumn TItem="ClienteDTO" Property="Id" Title="Id" Width="4%" MinWidth="35px" Filterable="false">
                     </RadzenDataGridColumn>
 
                     <!-- Coluna para Nome com tooltip -->
-                    <RadzenDataGridColumn TItem="ClienteDTO" Property="Nome" Title="Nome"  Width="13%">
+                    <RadzenDataGridColumn TItem="ClienteDTO" Property="Nome" Title="Nome" Width="12%" MinWidth="150px">
                         <Template Context="cliente">
                             <span title="@cliente.Nome">@cliente.Nome</span> <!-- Tooltip com o nome completo -->
                         </Template>
                     </RadzenDataGridColumn>
 
                     <!-- Coluna para Email com tooltip -->
-                    <RadzenDataGridColumn TItem="ClienteDTO" Property="Email" Title="Email"  Width="17%">
+                    <RadzenDataGridColumn TItem="ClienteDTO" Property="Email" Title="Email" Width="17%">
                         <Template Context="cliente">
                             <span title="@cliente.Email">@cliente.Email</span> <!-- Tooltip com o email completo -->
                         </Template>
                     </RadzenDataGridColumn>
 
                     <!-- Coluna para CNPJ com tooltip -->
-                    <RadzenDataGridColumn TItem="ClienteDTO" Property="CNPJ" Title="CNPJ"  Width="10%">
+                    <RadzenDataGridColumn TItem="ClienteDTO" Property="CNPJ" Title="CNPJ" Width="10%" Sortable="false">
                         <Template Context="cliente">
-                            <span title="@cliente.CNPJ">@cliente.CNPJ</span> <!-- Tooltip com o CNPJ completo -->
+                            @if (cliente.CNPJ != null)
+                            {
+                                <span title="@FormatarCNPJ(cliente.CNPJ)">
+                                    @FormatarCNPJ(cliente.CNPJ)
+                                </span> <!-- Tooltip com o CNPJ completo -->
+                            }
                         </Template>
                     </RadzenDataGridColumn>
 
                     <!-- Coluna customizada para Telefone -->
-                    <RadzenDataGridColumn TItem="ClienteDTO" Title="Telefone"  Width="10%">
+                    <RadzenDataGridColumn TItem="ClienteDTO" Property="Telefone.Numero" Title="Telefone" Width="9%" Sortable="true">
                         <Template Context="cliente">
                             @if (cliente.Telefone != null)
                             {
-                                <span title="@($"({cliente.Telefone.DDD}) {cliente.Telefone.Numero}")">
-                                    @($"({cliente.Telefone.DDD}) {cliente.Telefone.Numero}")
+                                <span title="@FormatarTelefone(cliente.Telefone.DDD, cliente.Telefone.Numero)">
+                                    @FormatarTelefone(cliente.Telefone.DDD, cliente.Telefone.Numero)
                                 </span> <!-- Tooltip com o telefone completo -->
                             }
                         </Template>
                     </RadzenDataGridColumn>
 
-                    <!-- Coluna customizada para Endereço -->
-                    <RadzenDataGridColumn TItem="ClienteDTO" Title="Endereço"  Width="30%">
+                    <RadzenDataGridColumn TItem="ClienteDTO" Title="Endereço" Width="37%">
                         <Template Context="cliente">
                             @if (cliente.Endereco != null)
                             {
                                 <span title="@($"{cliente.Endereco.Logradouro}, {cliente.Endereco.Numero}, {cliente.Endereco.Bairro}, {cliente.Endereco.Cidade} - {cliente.Endereco.UF}")">
                                     @($"{cliente.Endereco.Logradouro}, {cliente.Endereco.Numero}, {cliente.Endereco.Bairro}, {cliente.Endereco.Cidade} - {cliente.Endereco.UF}")
-                                </span> <!-- Tooltip com o endereço completo -->
+                                </span>
+                            }
+                        </Template>
+                        <FilterTemplate>
+                            <RadzenCard>
+                                <RadzenRow>
+                                    <RadzenTextBox @bind-Value="enderecoFiltro" Placeholder="Filtrar endereço..." Style="flex: 1;" />
+                                </RadzenRow>
+                                <RadzenRow>
+                                    <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" JustifyContent="JustifyContent.Center" class="rz-mt-2" Style="width: 100%;">
+                                        <!-- Botão Confirmar -->
+                                        <RadzenButton Text="Aplicar" Click="@OnEnderecoFilterChanged"
+                                                      ButtonStyle="ButtonStyle.Primary"
+                                                      Style="width: 50%;" />
+                                        <!-- Botão Cancelar -->
+                                        <RadzenButton Text="Limpar" Click="@OnEnderecoFilterClear"
+                                                      ButtonStyle="ButtonStyle.Light"
+                                                      Style="width: 50%;" />
+                                    </RadzenStack>
+                                </RadzenRow>
+                            </RadzenCard>
+                        </FilterTemplate>
+                    </RadzenDataGridColumn>
+
+                    <!-- Coluna para CEP com tooltip -->
+                    <RadzenDataGridColumn TItem="ClienteDTO" Title="CEP" Property="Endereco.CEP" Width="6%" Sortable="false">
+                        <Template Context="cliente">
+                            @if (cliente.Endereco.CEP != null)
+                            {
+                                <span title="@FormatarCEP(cliente.Endereco.CEP)">
+                                    @FormatarCEP(cliente.Endereco.CEP)
+                                </span> <!-- Tooltip com o CEP completo -->
                             }
                         </Template>
                     </RadzenDataGridColumn>
 
-                    <!-- Coluna para CEP com tooltip -->
-                    <RadzenDataGridColumn TItem="ClienteDTO" Property="Endereco.CEP" Title="CEP"  Width="7%">
-                        <Template Context="cliente">
-                            <span title="@cliente.Endereco.CEP">@cliente.Endereco.CEP</span> <!-- Tooltip com o CEP completo -->
-                        </Template>
-                    </RadzenDataGridColumn>
-
                     <!-- Coluna customizada para botões de ação -->
-                    <RadzenDataGridColumn TItem="ClienteDTO" Filterable="false" Sortable="false"  TextAlign="TextAlign.Center" Width="7%" MinWidth="110px">
+                    <RadzenDataGridColumn TItem="ClienteDTO" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="5%" MinWidth="110px">
                         <Template Context="cliente">
                             <RadzenButton ButtonStyle="ButtonStyle.Primary"
                                           Icon="edit"

@@ -12,11 +12,22 @@
         </RadzenColumn>
         <RadzenColumn Size="12" SizeMD="6">
             <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
-                <RadzenSplitButton ButtonStyle="ButtonStyle.Secondary" Icon="get_app" Text="Exportar" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Lighter" IconColor="black">
+
+                <!-- Botão Exportar-->
+                <RadzenSplitButton ButtonStyle="ButtonStyle.Secondary"
+                                   Icon="get_app"
+                                   Text="Exportar"
+                                   Variant="Radzen.Variant.Filled"
+                                   Shade="Radzen.Shade.Lighter"
+                                   IconColor="black"
+                                   Click="OnExportarClick">
                     <RadzenSplitButtonItem Text="Excel" Value="xlsx" />
                     <RadzenSplitButtonItem Text="CSV" Value="csv" />
                 </RadzenSplitButton>
+
+                <!-- Botão Adicionar -->
                 <RadzenButton ButtonStyle="ButtonStyle.Primary" Icon="add_circle_outline" Text="Adicionar" Click="@AddButtonClick" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Light" />
+
             </RadzenStack>
         </RadzenColumn>
     </RadzenRow>
@@ -128,7 +139,6 @@
                     <RadzenDataGridColumn TItem="FornecedorDTO" Title="Endereço" Width="30%">
                         <Template Context="fornecedor">
                             @if (fornecedor.Endereco != null)
-
                             {
                                 <span title="@($"{fornecedor.Endereco.Logradouro}, {fornecedor.Endereco.Numero}, {fornecedor.Endereco.Bairro}, {fornecedor.Endereco.Cidade} - {fornecedor.Endereco.UF}")">
                                     @($"{fornecedor.Endereco.Logradouro}, {fornecedor.Endereco.Numero}, {fornecedor.Endereco.Bairro}, {fornecedor.Endereco.Cidade} - {fornecedor.Endereco.UF}")

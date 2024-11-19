@@ -8,8 +8,8 @@
         void FinalizarProducao(int producaoId);
         List<Producao> ListarProducoes();
         List<Producao> ListarProducoesNaoFinalizadas();
-        List<Producao> FiltrarProducoesNome(string cultivoNome);
+        List<Producao> FiltrarProducoesPorNome(string cultivoNome);
         List<Producao> FiltrarProducoesPorNomeEPeriodo(string cultivoNome, DateTime dataInicio, DateTime dataFim);
-        Producao ConsultarProducaoID(int producaoId);
+        Producao ConsultarProducaoPorID(int producaoId);
     }
 }

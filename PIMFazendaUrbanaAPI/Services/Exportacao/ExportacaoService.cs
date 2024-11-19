@@ -46,8 +46,8 @@ namespace PIMFazendaUrbanaAPI.Services
                     // Itera pelas propriedades do JsonElement e adiciona ao dicionário
                     foreach (var property in jsonElement.EnumerateObject())
                     {
-                        // Ignora a chave "StatusAtivo"
-                        if (property.Name.Equals("StatusAtivo", StringComparison.OrdinalIgnoreCase))
+                        // Ignora a chave "StatusAtivo" ou "Senha"
+                        if (property.Name.Equals("StatusAtivo", StringComparison.OrdinalIgnoreCase) || property.Name.Equals("Senha", StringComparison.OrdinalIgnoreCase))
                             continue;
 
                         // Se a propriedade for um JsonObject (compoesto), desmembra em várias colunas
@@ -90,14 +90,14 @@ namespace PIMFazendaUrbanaAPI.Services
                 dadosMapeados.Add(linha);
             }
 
-            // Capitalizar a primeira letra de todas as chaves (nomes das colunas), e garantir que a chave StatusAtivo nunca seja adicionada
+            // Capitalizar a primeira letra de todas as chaves (nomes das colunas), e garantir que as chaves StatusAtivo e Senha nunca sejam adicionadas
             foreach (var linha in dadosMapeados)
             {
                 var keys = linha.Keys.ToList();
                 foreach (var key in keys)
                 {
                     // Verifica se a chave é "StatusAtivo" e a ignora completamente
-                    if (key.Equals("StatusAtivo", StringComparison.OrdinalIgnoreCase))
+                    if (key.Equals("StatusAtivo", StringComparison.OrdinalIgnoreCase) || key.Equals("Senha", StringComparison.OrdinalIgnoreCase))
                     {
                         linha.Remove(key);
                         continue;
@@ -154,7 +154,40 @@ namespace PIMFazendaUrbanaAPI.Services
             return char.ToUpper(texto[0]) + texto.Substring(1);
         }
 
+        private string FormatarValor(string coluna, object valor)
+        {
+            if (valor == null) return string.Empty;
 
+            string stringValue = valor.ToString();
+
+            switch (coluna.ToLower())
+            {
+                case "telefone":
+                case "número de telefone":
+                    if (stringValue.Length == 10)
+                        return string.Format("({0}) {1}-{2}", stringValue.Substring(0, 2), stringValue.Substring(2, 4), stringValue.Substring(6));
+                    if (stringValue.Length == 11)
+                        return string.Format("({0}) {1}-{2}", stringValue.Substring(0, 2), stringValue.Substring(2, 5), stringValue.Substring(7));
+                    break;
+                case "cpf":
+                    if (stringValue.Length == 11)
+                        return string.Format("{0}.{1}.{2}-{3}", stringValue.Substring(0, 3), stringValue.Substring(3, 3), stringValue.Substring(6, 3), stringValue.Substring(9));
+                    break;
+                case "cnpj":
+                    if (stringValue.Length == 14)
+                        return string.Format("{0}.{1}.{2}/{3}-{4}", stringValue.Substring(0, 2), stringValue.Substring(2, 3), stringValue.Substring(5, 3), stringValue.Substring(8, 4), stringValue.Substring(12));
+                    break;
+                case "cep":
+                    if (stringValue.Length == 8)
+                        return string.Format("{0}-{1}", stringValue.Substring(0, 5), stringValue.Substring(5));
+                    break;
+            }
+
+            return stringValue; // Retorna o valor sem formatação se não for tratado
+        }
+
+
+        // --------------------------------
 
         // Geração de arquivo Excel (XLSX)
         private byte[] GerarExcel(IEnumerable<Dictionary<string, object>> dados)

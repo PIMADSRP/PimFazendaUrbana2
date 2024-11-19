@@ -93,11 +93,11 @@
         }
 
         // 4.3 - MÉTODO FILTRAR PRODUCOES POR NOME DE CULTIVO
-        public List<Producao> FiltrarProducoesNome(string nomeCultivo)
+        public List<Producao> FiltrarProducoesPorNome(string nomeCultivo)
         {
             try
             {
-                List<Producao> producoes = producaoDAO.FiltrarProducoesNome(nomeCultivo);
+                List<Producao> producoes = producaoDAO.FiltrarProducoesPorNome(nomeCultivo);
                 return producoes; // Retorna a lista de produções quando tudo corre bem
             }
             catch (Exception ex)
@@ -107,11 +107,11 @@
         }
 
         // 5 - MÉTODO CONSULTAR PRODUCAO POR ID
-        public Producao ConsultarProducaoID(int producaoId)
+        public Producao ConsultarProducaoPorID(int producaoId)
         {
             try
             {
-                Producao producao = producaoDAO.ConsultarProducaoID(producaoId);
+                Producao producao = producaoDAO.ConsultarProducaoPorID(producaoId);
                 return producao;
             }
             catch (Exception ex)

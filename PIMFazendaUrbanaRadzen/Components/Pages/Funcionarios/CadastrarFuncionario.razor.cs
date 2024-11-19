@@ -4,12 +4,12 @@ using PIMFazendaUrbanaAPI.DTOs;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
 
-namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
+namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
 {
-    public partial class AddFornecedor
+    public partial class CadastrarFuncionario
     {
         [Inject]
-        public FornecedorApiService<FornecedorDTO> FornecedorApiService { get; set; }
+        public FuncionarioApiService<FuncionarioDTO> FuncionarioApiService { get; set; }
 
         [Inject]
         public CepApiService CepApiService { get; set; }
@@ -20,7 +20,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
         [Inject]
         public NotificationService NotificationService { get; set; }
 
-        protected FornecedorDTO fornecedor;
+        protected FuncionarioDTO funcionario;
         protected bool errorVisible;
 
         protected List<string> estados = new List<string>
@@ -30,10 +30,12 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
             "RS", "RO", "RR", "SC", "SP", "SE", "TO"
         };
 
+        private List<string> generos = new List<string> { "M", "F", "Outro" };
+
 
         protected override async Task OnInitializedAsync()
         {
-            fornecedor = new FornecedorDTO
+            funcionario = new FuncionarioDTO
             {
                 Endereco = new EnderecoDTO(),
                 Telefone = new TelefoneDTO()
@@ -45,49 +47,49 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
             try
             {
                 // Limpa e formata os campos antes de enviar
-                fornecedor.CNPJ = FormatCNPJ(fornecedor.CNPJ);
-                fornecedor.Telefone.Numero = FormatTelefone(fornecedor.Telefone.Numero);
-                fornecedor.Endereco.CEP = FormatCEP(fornecedor.Endereco.CEP);
+                funcionario.CPF = FormatCPF(funcionario.CPF);
+                funcionario.Telefone.Numero = FormatTelefone(funcionario.Telefone.Numero);
+                funcionario.Endereco.CEP = FormatCEP(funcionario.Endereco.CEP);
 
-                fornecedor.StatusAtivo = true; // Define StatusAtivo como true por padrão
+                funcionario.StatusAtivo = true; // Define StatusAtivo como true por padrão
 
                 Console.WriteLine("Chamando ApiService");
-                var response = await FornecedorApiService.CreateAsync(fornecedor); // Chama ApiService para criar o fornecedor
+                var response = await FuncionarioApiService.CreateAsync(funcionario); // Chama ApiService para criar o funcionario
                 Console.WriteLine("Retornou de ApiService");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("Navegando para /fornecedores");
-                    // Redireciona para a página de fornecedores e exibe mensagem de sucesso
-                    NavigationManager.NavigateTo("/fornecedores");
-                    NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Fornecedor cadastrado com sucesso!", duration: 5000);
+                    Console.WriteLine("Navegando para /Funcionarios");
+                    // Redireciona para a página de funcionarios e exibe mensagem de sucesso
+                    NavigationManager.NavigateTo("/funcionarios");
+                    NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Funcionario cadastrado com sucesso!", duration: 5000);
                 }
                 else
                 {
                     // Exibe mensagem de erro caso o status não seja de sucesso
                     var errorMessage = await response.Content.ReadAsStringAsync();
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao cadastrar fornecedor: {errorMessage}", duration: 5000);
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao cadastrar funcionario: {errorMessage}", duration: 5000);
                 }
             }
             catch (Exception ex)
             {
                 errorVisible = true; // Exibe mensagem de erro
-                Console.WriteLine($"Erro ao cadastrar fornecedor: {ex.Message}");
+                Console.WriteLine($"Erro ao cadastrar funcionario: {ex.Message}");
             }
         }
 
 
         protected async Task CancelButtonClick()
         {
-            // Redireciona para a página de fornecedores
-            NavigationManager.NavigateTo("/fornecedores");
+            // Redireciona para a página de funcionarios
+            NavigationManager.NavigateTo("/funcionarios");
         }
 
 
-        private string FormatCNPJ(string cnpj)
+        private string FormatCPF(string cpf)
         {
-            // Remove caracteres não numéricos e retorna o CNPJ formatado
-            return new string(cnpj.Where(char.IsDigit).ToArray());
+            // Remove caracteres não numéricos e retorna o CPF formatado
+            return new string(cpf.Where(char.IsDigit).ToArray());
         }
 
         private string FormatTelefone(string telefone)
@@ -107,7 +109,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
             try
             {
                 // Limpa o formato do CEP (remove o hífen)
-                string cepFormatado = FormatCEP(fornecedor.Endereco.CEP);
+                string cepFormatado = FormatCEP(funcionario.Endereco.CEP);
 
                 // Chama o CepApiService para buscar o endereço
                 var endereco = await CepApiService.GetEnderecoViaCep(cepFormatado);
@@ -115,11 +117,11 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
                 if (endereco != null)
                 {
                     // Preenche os campos de endereço com os dados retornados
-                    fornecedor.Endereco.Logradouro = endereco.Logradouro;
-                    fornecedor.Endereco.Bairro = endereco.Bairro;
-                    fornecedor.Endereco.Cidade = endereco.Cidade;
-                    fornecedor.Endereco.UF = endereco.UF;
-                    fornecedor.Endereco.Complemento = endereco.Complemento ?? string.Empty; // Complemento pode ser nulo
+                    funcionario.Endereco.Logradouro = endereco.Logradouro;
+                    funcionario.Endereco.Bairro = endereco.Bairro;
+                    funcionario.Endereco.Cidade = endereco.Cidade;
+                    funcionario.Endereco.UF = endereco.UF;
+                    funcionario.Endereco.Complemento = endereco.Complemento ?? string.Empty; // Complemento pode ser nulo
                 }
                 else
                 {
@@ -131,6 +133,25 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
             {
                 // Caso ocorra algum erro na consulta, exibe mensagem de erro
                 NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Erro ao consultar o CEP: {ex.Message}");
+            }
+        }
+
+        private string confirmaSenha;
+
+        private bool senhasCoincidem;
+        private string mensagemErroSenha;
+
+        private void VerificarSenhasCoincidem()
+        {
+            if (funcionario.Senha != confirmaSenha)
+            {
+                senhasCoincidem = false;
+                mensagemErroSenha = "As senhas não coincidem.";
+            }
+            else
+            {
+                senhasCoincidem = true;
+                mensagemErroSenha = string.Empty;
             }
         }
 
