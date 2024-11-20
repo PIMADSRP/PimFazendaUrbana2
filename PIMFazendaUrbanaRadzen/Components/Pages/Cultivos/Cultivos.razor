@@ -23,30 +23,36 @@
             </HeaderTemplate>
             <ChildContent>
                 <div style="margin-bottom: 15px;">
-                    <RadzenRow Gap="5" RowGap="5">
-                        <RadzenLabel Text="Nome" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px;" />
-                        <RadzenTextBox @bind-Value="cultivoCadastrarOuEditar.Nome" Style="height: 40px; flex: 1; min-width: 150px;" />
+                    <RadzenRow Gap="0.5" RowGap="0.5">
+                        <RadzenLabel Text="Nome:" Style="flex: 0 0 100%; min-width: 150px; margin-top: 5px; margin-bottom: 5px;" />
+                        <RadzenTextBox Name="Nome" @bind-Value="cultivoCadastrarOuEditar.Nome" 
+                                       Style="width: 100%;" 
+                                       title="Nome é obrigatório e deve ter ao menos 3 caracteres" />
+                        <RadzenRequiredValidator Component="Nome" Text="Nome é obrigatório e deve ter ao menos 3 caracteres" />
                     </RadzenRow>
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <RadzenRow Gap="5" RowGap="5">
-                        <RadzenLabel Text="Variedade" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px;" />
-                        <RadzenTextBox @bind-Value="cultivoCadastrarOuEditar.Variedade" Style="height: 40px; flex: 1; min-width: 150px;" />
+                    <RadzenRow Gap="0.5" RowGap="0.5">
+                        <RadzenLabel Text="Variedade:" Style="flex: 0 0 100%; min-width: 150px; margin-top: 5px; margin-bottom: 5px;" />
+                        <RadzenTextBox Name="Variedade" @bind-Value="cultivoCadastrarOuEditar.Variedade"
+                                       Style="width: 100%;"
+                                       title="Variedade é obrigatória e deve ter ao menos 3 caracteres" />
+                        <RadzenRequiredValidator Component="Variedade" Text="Variedade é obrigatória e deve ter ao menos 3 caracteres" />
                     </RadzenRow>
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <RadzenRow Gap="5" RowGap="5">
-                        <RadzenLabel Text="Categoria" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px;" />
-                        <RadzenTextBox @bind-Value="cultivoCadastrarOuEditar.Categoria" Style="height: 40px; flex: 1; min-width: 150px;" />
-                    </RadzenRow>
-                </div>
-
-                <div style="margin-bottom: 15px;">
-                    <RadzenRow Gap="5" RowGap="5">
-                        <RadzenLabel Text="Tempo de Prod. Tradicional (Dias)" Style="flex: 0 0 50%; min-width: 150px;" />
-                        <RadzenNumeric ShowUpDown="false" @bind-Value="cultivoCadastrarOuEditar.TempoProdTradicional" Min="0" Style="height: 40px; flex: 1; min-width: 150px;" />
+                    <RadzenRow Gap="0.5" RowGap="0.5">
+                        <RadzenLabel Text="Categoria:" Style="flex: 0 0 100%; min-width: 150px; margin-top: 5px; margin-bottom: 5px;" />
+                        <RadzenDropDown style="width: 100%"
+                                    @bind-Value="@cultivoCadastrarOuEditar.Categoria"
+                                    Name="Categoria"
+                                    Placeholder="Selecione uma categoria"
+                                    Data="@categorias"
+                                    TValue="string" 
+                                    title="Categoria é obrigatória, selecione uma da lista" />
+                        <RadzenRequiredValidator Component="Categoria" Text="Categoria é obrigatória, selecione uma da lista" />
                     </RadzenRow>
                 </div>
 
@@ -61,9 +67,12 @@
                 </div>
 
                 <div style="margin-bottom: 15px;">
-                    <RadzenRow Gap="5" RowGap="5">
-                        <RadzenLabel Text="Tempo de Prod. Controlado (Dias)" Style="flex: 0 0 50%; min-width: 150px;" />
-                        <RadzenNumeric ShowUpDown="false" @bind-Value="cultivoCadastrarOuEditar.TempoProdControlado" Min="0" Style="height: 40px; flex: 1; min-width: 150px;" />
+                    <RadzenRow Gap="0.5" RowGap="0.5">
+                        <RadzenLabel Text="Tempo de Prod. Controlado (Dias):" Style="flex: 0 0 100%; min-width: 150px; margin-top: 5px; margin-bottom: 5px;" />
+                        <RadzenNumeric Name="TempoProdCtrl" ShowUpDown="false" @bind-Value="cultivoCadastrarOuEditar.TempoProdControlado"
+                                       Min="0" Style="width: 100%;"
+                                       title="Tempo de Produção Controlado é obrigatório e deve ser um número inteiro maior que 0" />
+                        <RadzenRequiredValidator Component="TempoProdCtrl" Text="Tempo de Produção Controlado é obrigatório e deve ser um número inteiro maior que 0" />
                     </RadzenRow>
                 </div>
 
@@ -85,7 +94,7 @@
     </div>
 
     <!-- DataGrid (lado direito) -->
-    <div style="flex: 1; min-width: 300px; margin-top: 10px;">
+    <div style="flex: 2; min-width: 300px; margin-top: 10px;">
 
         <RadzenColumn>
             <RadzenRow Style="margin-bottom: 10px;">

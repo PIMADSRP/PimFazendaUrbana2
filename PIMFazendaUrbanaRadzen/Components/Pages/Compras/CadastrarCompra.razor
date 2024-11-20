@@ -58,7 +58,8 @@
                 <div style="margin-bottom: 10px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
                         <RadzenText Text="Quantidade" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px; margin-bottom: 5px;" />
-                        <RadzenTextBox Style="width: 100%;" />
+                        <RadzenNumeric @bind-Value="quantidade" Style="width: 100%;" Min="0" Name="Quantidade" title="Quantidade é obrigatória e deve ser um número inteiro maior que zero" />
+                        <RadzenRequiredValidator Component="Quantidade" Text="Quantidade é obrigatória e deve ser um número inteiro maior que zero" />
                     </RadzenRow>
                 </div>
 
@@ -98,6 +99,7 @@
                                           Variant="Variant.Flat"
                                           @onclick:stopPropagation="true"
                                           Style="color: #ffffff; background-color: rgba(66, 154, 255, 0.68); min-width: 95px;" Text="Editar" />
+
                             <RadzenButton id="botao-menor"
                                           ButtonStyle="ButtonStyle.Danger"
                                           Icon="delete"
@@ -114,7 +116,7 @@
     </div>
 
     <!-- DataGrid (lado direito) -->
-    <div style="flex: 1; min-width: 300px; margin-top: 10px;">
+    <div style="flex: 1.5; min-width: 300px; margin-top: 10px;">
         <RadzenColumn Size="7">
 
             <!-- DataGrid -->
@@ -156,42 +158,39 @@
 
             </div>
 
-
         </RadzenColumn>
     </div>
-
 </div>
 
 @code {
     private string selectedClient;
     private string selectedProduct;
+    private int quantidade;
 
-    // Dados para os ComboBoxes
-    private List<Item> comboBoxClients = new List<Item>
+    // Mock de dados para o ComboBox
+    private List<ComboBoxItem> comboBoxClients = new List<ComboBoxItem>
     {
-        new Item { Text = "Mercado São João", Value = "1" }
-        ,
-        // Outras opções...
+        new ComboBoxItem { Value = "1", Text = "Fornecedor 1" },
+        new ComboBoxItem { Value = "2", Text = "Fornecedor 2" },
+        new ComboBoxItem { Value = "3", Text = "Fornecedor 3" }
     };
 
-    private List<Item> comboBoxProducts = new List<Item>
+    private List<ComboBoxItem> comboBoxProducts = new List<ComboBoxItem>
     {
-        new Item { Text = "Algodão BRS 368", Value = "1" },
-        new Item { Text = "Alface Americana", Value = "2" },
-        // Outras opções...
+        new ComboBoxItem { Value = "1", Text = "Produto 1" },
+        new ComboBoxItem { Value = "2", Text = "Produto 2" },
+        new ComboBoxItem { Value = "3", Text = "Produto 3" }
     };
 
-    // Dados para o DataGrid
     private List<dynamic> dataGridItems = new List<dynamic>
     {
-        new { ProductName = "Abóbora Japonesa", Quantity = 10, Unit = "kg", UnitPrice = "R$ 3,00", TotalPrice = "R$ 30,00" },
-        new { ProductName = "Banana Prata", Quantity = 10, Unit = "kg", UnitPrice = "R$ 2,00", TotalPrice = "R$ 20,00" },
-        // Outros itens...
+        new { ProductName = "Produto 1", Quantity = 10, Unit = "kg", UnitPrice = 2.50, TotalPrice = 25.00 },
+        new { ProductName = "Produto 2", Quantity = 5, Unit = "kg", UnitPrice = 3.00, TotalPrice = 15.00 }
     };
 
-    public class Item
+    public class ComboBoxItem
     {
-        public string Text { get; set; }
         public string Value { get; set; }
+        public string Text { get; set; }
     }
 }

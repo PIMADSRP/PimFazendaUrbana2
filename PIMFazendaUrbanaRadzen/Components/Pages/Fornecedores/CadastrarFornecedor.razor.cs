@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using PIMFazendaUrbanaAPI.DTOs;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
@@ -51,9 +50,9 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
 
                 fornecedor.StatusAtivo = true; // Define StatusAtivo como true por padrão
 
-                Console.WriteLine("Chamando ApiService");
+                Console.WriteLine($"Chamando ApiService: CreateAsync" + " hora atual: " + DateTime.Now);
                 var response = await FornecedorApiService.CreateAsync(fornecedor); // Chama ApiService para criar o fornecedor
-                Console.WriteLine("Retornou de ApiService");
+                Console.WriteLine("Retornou de ApiService: Create Async" + " hora atual: " + DateTime.Now);
 
                 if (response.IsSuccessStatusCode)
                 {

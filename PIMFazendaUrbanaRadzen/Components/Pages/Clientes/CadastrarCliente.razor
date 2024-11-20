@@ -79,7 +79,7 @@
                     <RadzenRow>
                         <RadzenColumn Width="50%">
                             <RadzenFormField Text="Número:" Variant="Variant.Outlined">
-                                <RadzenNumeric ShowUpDown="false" style="width: 100%" @bind-Value="@cliente.Endereco.Numero" Name="Numero" title="Número é obrigatório e deve ter apenas caracteres numéricos" />
+                                <RadzenNumeric Min="0" ShowUpDown="false" style="width: 100%" @bind-Value="@cliente.Endereco.Numero" Name="Numero" title="Número é obrigatório e deve ter apenas caracteres numéricos" />
                                 <RadzenRequiredValidator Component="Numero" Text="Número é obrigatório e deve ter apenas caracteres numéricos" />
                             </RadzenFormField>
                         </RadzenColumn>

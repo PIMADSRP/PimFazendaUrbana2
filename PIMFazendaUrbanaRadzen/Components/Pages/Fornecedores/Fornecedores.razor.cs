@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using PIMFazendaUrbanaAPI.DTOs;
-using PIMFazendaUrbanaRadzen.Components.Pages.Clientes;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
 using Radzen.Blazor;
@@ -11,39 +10,69 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
     public partial class Fornecedores
     {
         [Inject]
-        public FornecedorApiService<FornecedorDTO> FornecedorApiService { get; set; }
+        public FornecedorApiService<FornecedorDTO> FornecedorApiService { get; set; } // serviço que chama a API
 
         [Inject]
-        public NavigationManager NavigationManager { get; set; } // Inject NavigationManager
+        public NavigationManager NavigationManager { get; set; } // serviço de navegação
 
         [Inject]
-        public NotificationService NotificationService { get; set; }
+        public NotificationService NotificationService { get; set; } // serviço de notificação
 
         [Inject]
-        private ExportacaoApiService<object> exportacaoApiService { get; set; }
+        private ExportacaoApiService<object> exportacaoApiService { get; set; } // serviço de exportação para xlsx e csv
 
         [Inject]
-        public IJSRuntime JSRuntime { get; set; }
+        public IJSRuntime JSRuntime { get; set; } // para chamadas JavaScript
 
-        protected List<FornecedorDTO> fornecedores;
-        protected string errorMessage = string.Empty;
-        protected string searchQuery = string.Empty;
+        protected List<FornecedorDTO> fornecedores; // lista de fornecedores
 
-        protected RadzenDataGrid<FornecedorDTO> grid0;
+        protected string errorMessage = string.Empty; // mensagem de erro
+
+        protected string searchQuery = string.Empty; // query da barra pesquisar
+
+        protected RadzenDataGrid<FornecedorDTO> grid0; // grid de fornecedores
+
+        protected string enderecoFiltro = string.Empty; // filtro para todos as propriedades de endereço, que o usuário pode digitar
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadFornecedores(); // Carrega clientes inicialmente
+            await LoadFornecedores(); // Carrega fornecedores inicialmente
+        }
+
+        protected async Task OnEnderecoFilterChanged()
+        {
+            await LoadFornecedores(); // Recarrega os dados aplicando o filtro de endereço
+        }
+
+        protected async Task OnEnderecoFilterClear()
+        {
+            enderecoFiltro = string.Empty; // Limpa o filtro
+            await LoadFornecedores();          // Recarrega os dados sem filtro
         }
 
         protected async Task LoadFornecedores()
         {
             try
             {
-                fornecedores = string.IsNullOrWhiteSpace(searchQuery)
-                    ? await FornecedorApiService.GetAllAsync() // Carrega todos os fornecedores
-                    : await FornecedorApiService.GetFornecedoresFiltradosAsync(searchQuery); // Busca fornecedores filtrados
+                var todosFornecedores = string.IsNullOrWhiteSpace(searchQuery)
+                    ? await FornecedorApiService.GetAllAsync()
+                    : await FornecedorApiService.GetFornecedoresFiltradosAsync(searchQuery);
 
+                // Filtro de endereço personalizado
+                if (!string.IsNullOrWhiteSpace(enderecoFiltro))
+                {
+                    todosFornecedores = todosFornecedores.Where(fornecedor =>
+                        fornecedor.Endereco != null && (
+                            (fornecedor.Endereco.Logradouro?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                            (fornecedor.Endereco.Numero?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                            (fornecedor.Endereco.Bairro?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                            (fornecedor.Endereco.Cidade?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                            (fornecedor.Endereco.UF?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false)
+                        )
+                    ).ToList();
+                }
+
+                fornecedores = todosFornecedores;
                 errorMessage = string.Empty; // Limpa mensagens de erro
             }
             catch (Exception ex)
@@ -52,6 +81,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
                 Console.WriteLine(errorMessage);
             }
         }
+
 
         protected async Task OnSearch(string search)
         {
@@ -78,6 +108,46 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
         protected void ExcluirFornecedor(FornecedorDTO fornecedor)
         {
             // Implementar lógica de exclusão de fornecedor
+        }
+
+        protected string FormatarTelefone(string ddd, string numero)
+        {
+            if (numero.Length == 8)
+            {
+                return $"({ddd}) {numero.Substring(0, 4)}-{numero.Substring(4)}";
+            }
+            else if (numero.Length == 9)
+            {
+                return $"({ddd}) {numero.Substring(0, 5)}-{numero.Substring(5)}";
+            }
+            else
+            {
+                return "Telefone inválido";
+            }
+        }
+
+        protected string FormatarCNPJ(string cnpj)
+        {
+            if (cnpj.Length == 14)
+            {
+                return $"{cnpj.Substring(0, 2)}.{cnpj.Substring(2, 3)}.{cnpj.Substring(5, 3)}/{cnpj.Substring(8, 4)}-{cnpj.Substring(12)}";
+            }
+            else
+            {
+                return "CNPJ inválido";
+            }
+        }
+
+        protected string FormatarCEP(string cep)
+        {
+            if (cep.Length == 8)
+            {
+                return $"{cep.Substring(0, 5)}-{cep.Substring(5)}";
+            }
+            else
+            {
+                return "CEP inválido";
+            }
         }
 
         protected async Task OnExportarClick(RadzenSplitButtonItem args)
@@ -118,6 +188,5 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
                 NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message);
             }
         }
-
     }
 }

@@ -50,7 +50,7 @@ namespace PIMFazendaUrbanaAPI.Services
                         if (property.Name.Equals("StatusAtivo", StringComparison.OrdinalIgnoreCase) || property.Name.Equals("Senha", StringComparison.OrdinalIgnoreCase))
                             continue;
 
-                        // Se a propriedade for um JsonObject (compoesto), desmembra em várias colunas
+                        // Se a propriedade for um JsonObject (composto), desmembra em várias colunas
                         if (property.Value.ValueKind == JsonValueKind.Object)
                         {
                             var nestedProperties = MapearDadosDinamicos(new[] { property.Value }.Cast<object>()).First();

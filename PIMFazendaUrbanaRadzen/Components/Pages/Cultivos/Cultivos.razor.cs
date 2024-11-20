@@ -37,6 +37,14 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
 
         protected string textoCadastrarOuEditar = "Cadastrar Cultivo";
 
+        protected List<string> categorias = new List<string>
+        {
+            "Verdura",
+            "Legume",
+            "Fruta",
+            "Outro"
+        };
+
         protected override async Task OnInitializedAsync()
         {
             await LoadCultivos(); // Carrega cultivos inicialmente

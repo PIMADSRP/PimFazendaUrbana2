@@ -73,7 +73,7 @@
     </div>
 
     <!-- DataGrid (lado direito) -->
-    <div style="flex: 1; min-width: 300px; margin-top: 10px;">
+    <div style="flex: 1.5; min-width: 300px; margin-top: 10px;">
         <RadzenRow>
             <RadzenDataGrid Data="@dataGridItems" 
                             TItem="CultivoDTO"
@@ -83,13 +83,14 @@
                             AllowColumnResize="true"
                             class="data-grid-com-poucas-colunas">
                 <Columns>
+                    <RadzenDataGridColumn TItem="CultivoDTO" Property="Id" Title="Id" Width="7%" Filterable="false" />
                     <!-- Comentei a coluna Nome para ver se fica menos apertado
                         <RadzenDataGridColumn TItem="CultivoDTO" Property="Nome" Title="Nome" Width="20%" />
                     -->
-                    <RadzenDataGridColumn TItem="CultivoDTO" Property="Variedade" Title="Variedade" Width="45%" />
-                    <RadzenDataGridColumn TItem="CultivoDTO" Property="Categoria" Title="Categoria" Width="25%" />
+                    <RadzenDataGridColumn TItem="CultivoDTO" Property="Variedade" Title="Variedade" Width="42%" />
+                    <RadzenDataGridColumn TItem="CultivoDTO" Property="Categoria" Title="Categoria" Width="23%" Filterable="false" />
                     <!-- Coluna de Tempo de Produção com template condicional usando selectedAmbienteControladoBool -->
-                    <RadzenDataGridColumn TItem="CultivoDTO" Title="Tempo médio de produção (dias)" Width="30%">
+                    <RadzenDataGridColumn TItem="CultivoDTO" Title="Tempo médio de produção (dias)" Width="28%">
                         <HeaderTemplate>
                             <div style="text-align: center;">
                                 <div>Tempo médio de</div>
@@ -99,11 +100,15 @@
                         <Template Context="cultivo">
                             @if (selectedAmbienteControladoBool)
                             {
-                                @cultivo.TempoProdControlado
+                                <span title="@cultivo.TempoProdControlado">
+                                    @cultivo.TempoProdControlado
+                                </span>
                             }
                             else
                             {
-                                @cultivo.TempoProdTradicional
+                                <span title="@cultivo.TempoProdTradicional">
+                                    @cultivo.TempoProdTradicional
+                                </span>
                             }
                         </Template>
                     </RadzenDataGridColumn>

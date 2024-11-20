@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using PIMFazendaUrbanaAPI.DTOs;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
@@ -32,6 +31,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
 
         private List<string> generos = new List<string> { "M", "F", "Outro" };
 
+        private List<string> cargos = new List<string> { "Funcionário", "Gerente" };
 
         protected override async Task OnInitializedAsync()
         {
@@ -53,13 +53,13 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
 
                 funcionario.StatusAtivo = true; // Define StatusAtivo como true por padrão
 
-                Console.WriteLine("Chamando ApiService");
+                Console.WriteLine($"Chamando ApiService: CreateAsync" + " hora atual: " + DateTime.Now);
                 var response = await FuncionarioApiService.CreateAsync(funcionario); // Chama ApiService para criar o funcionario
-                Console.WriteLine("Retornou de ApiService");
+                Console.WriteLine("Retornou de ApiService: Create Async" + " hora atual: " + DateTime.Now);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine("Navegando para /Funcionarios");
+                    Console.WriteLine("Navegando para /funcionarios");
                     // Redireciona para a página de funcionarios e exibe mensagem de sucesso
                     NavigationManager.NavigateTo("/funcionarios");
                     NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Funcionario cadastrado com sucesso!", duration: 5000);

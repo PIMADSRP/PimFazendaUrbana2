@@ -58,7 +58,8 @@
                 <div style="margin-bottom: 10px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
                         <RadzenText Text="Quantidade" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px; margin-bottom: 5px;" />
-                        <RadzenTextBox Style="width: 100%;" />
+                        <RadzenNumeric @bind-Value="quantidade" Style="width: 100%;" Min="0" Name="Quantidade" title="Quantidade é obrigatória e deve ser um número inteiro maior que zero" />
+                        <RadzenRequiredValidator Component="Quantidade" Text="Quantidade é obrigatória e deve ser um número inteiro maior que zero" />
                     </RadzenRow>
                 </div>
 
@@ -115,7 +116,7 @@
     </div>
 
     <!-- DataGrid (lado direito) -->
-    <div style="flex: 1; min-width: 300px; margin-top: 10px;">
+    <div style="flex: 1.5; min-width: 300px; margin-top: 10px;">
         <RadzenColumn Size="7">
 
             <!-- DataGrid -->
@@ -167,6 +168,7 @@
 @code {
     private string selectedClient;
     private string selectedProduct;
+    private int quantidade;
 
     // Dados para os ComboBoxes
     private List<Item> comboBoxClients = new List<Item>

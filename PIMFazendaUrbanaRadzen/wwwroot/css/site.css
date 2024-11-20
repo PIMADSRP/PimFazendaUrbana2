@@ -142,49 +142,53 @@ a:focus {
 }
 
 /* CUSTOM */
-    /* Layout para telas grandes (largura maior que 1200px) */
-    @media (min-width: 1200px) {
-        .responsive-layout {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            gap: 1rem;
-        }
 
-        #carousel-column {
-            flex: 0 0 70%; /* O carousel ocupa 70% da largura */
-        }
-
-        #notes-and-news-column {
-            flex: 0 0 30%; /* As colunas de anotações e notícias ocupam 30% */
-            display: flex;
-            flex-direction: column;
-        }
-
-        #notes-column {
-            margin-bottom: 1rem; /* Adiciona espaço entre anotações e notícias */
-        }
+/* Layout para telas grandes (largura maior que 1200px) */
+@media (min-width: 1200px) {
+    .responsive-layout {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
     }
-    /* Layout para telas menores (largura menor que 1200px) */
-    @media (max-width: 1200px) {
-        .responsive-layout {
-            flex-direction: column; /* Coloca as colunas em formato de coluna */
-            align-items: flex-start;
-            overflow-y: auto; /* Habilita rolagem vertical */
-            height: auto; /* Remove a restrição de altura */
-        }
 
-        #carousel-column, #notes-and-news-column {
-            width: 100%; /* Todos ocupam 100% da largura */
-        }
-
-        #notes-column, #news-column {
-            width: 100%; /* Garantir que ambos ocupem toda a largura */
-        }
+    #carousel-column {
+        flex: 0 0 70%; /* O carousel ocupa 70% da largura */
     }
-    /* SPLITBUTTON */
-    /* cor de fundo */
-    .rz-button.rz-secondary.rz-shade-lighter {
+
+    #notes-and-news-column {
+        flex: 0 0 30%; /* As colunas de anotações e notícias ocupam 30% */
+        display: flex;
+        flex-direction: column;
+    }
+
+    #notes-column {
+        margin-bottom: 1rem; /* Adiciona espaço entre anotações e notícias */
+    }
+}
+
+/* Layout para telas menores (largura menor que 1200px) */
+@media (max-width: 1200px) {
+    .responsive-layout {
+        flex-direction: column; /* Coloca as colunas em formato de coluna */
+        align-items: flex-start;
+        overflow-y: auto; /* Habilita rolagem vertical */
+        height: auto; /* Remove a restrição de altura */
+    }
+
+    #carousel-column, #notes-and-news-column {
+        width: 100%; /* Todos ocupam 100% da largura */
+    }
+
+    #notes-column, #news-column {
+        width: 100%; /* Garantir que ambos ocupem toda a largura */
+    }
+}
+
+
+/* SPLITBUTTON */
+/* cor de fundo */
+.rz-button.rz-secondary.rz-shade-lighter {
     background-color: #9475cd !important;
 }
 
