@@ -159,8 +159,11 @@
         Console.WriteLine("Exportando para CSV...");
     }
 
+    [Inject]
+    public NavigationManager NavigationManager { get; set; } // serviço de navegação
+
     private void AddButtonClick()
     {
-        Console.WriteLine("Adicionando novo item...");
+        NavigationManager.NavigateTo("/cadastrar-compra");
     }
 }

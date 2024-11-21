@@ -36,15 +36,15 @@ namespace PIMFazendaUrbanaRadzen.Services
                 Console.WriteLine($"\nToken a ser armazenado no localStorage: {token}");
 
                 /*
-                var funcionario = JsonSerializer.Deserialize<FuncionarioDTO>(result["funcionario"].ToString());
+                var funcionario = JsonSerializer.Deserialize<FuncionarioSessionDTO>(result["funcionario"].ToString());
                 Console.WriteLine($"Funcionario retornado do backend: {JsonSerializer.Serialize(funcionario)}");
                 */
 
                 var funcionarioJson = result["funcionario"].ToString();
                 Console.WriteLine($"\nFuncionario JSON: {funcionarioJson}");
 
-                //var funcionario = JsonSerializer.Deserialize<FuncionarioDTO>(funcionarioJson);
-                var funcionario = JsonConvert.DeserializeObject<FuncionarioDTO>(funcionarioJson);
+                //var funcionario = JsonSerializer.Deserialize<FuncionarioSessionDTO>(funcionarioJson);
+                var funcionario = JsonConvert.DeserializeObject<FuncionarioSessionDTO>(funcionarioJson);
                 Console.WriteLine($"\nFuncionario Deserializado: {JsonConvert.SerializeObject(funcionario)}");
 
                 Console.WriteLine($"\nToken a ser armazenado no localStorage: {token}");
@@ -77,14 +77,14 @@ namespace PIMFazendaUrbanaRadzen.Services
             _authenticationStateProvider.NotifyUserLogout();
         }
 
-        public async Task<FuncionarioDTO> GetCurrentUserAsync()
+        public async Task<FuncionarioSessionDTO> GetCurrentUserAsync()
         {
             var funcionarioJson = await _localStorage.GetItemAsync<string>("funcionario");
 
             Console.WriteLine($"\nConteúdo do LocalStorage (funcionario): {funcionarioJson}");
 
             return funcionarioJson != null
-                ? JsonConvert.DeserializeObject<FuncionarioDTO>(funcionarioJson)
+                ? JsonConvert.DeserializeObject<FuncionarioSessionDTO>(funcionarioJson)
                 : null;
         }
 

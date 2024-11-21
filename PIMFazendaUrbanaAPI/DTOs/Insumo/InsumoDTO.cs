@@ -1,4 +1,4 @@
-﻿namespace PIMFazendaUrbPIMFazendaUrbanaAPI.DTOs
+﻿namespace PIMFazendaUrbanaAPI.DTOs
 {
     public class InsumoDTO
     {

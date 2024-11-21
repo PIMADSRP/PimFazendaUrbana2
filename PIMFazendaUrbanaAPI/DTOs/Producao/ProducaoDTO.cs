@@ -1,6 +1,4 @@
-﻿using PIMFazendaUrbanaAPI.DTOs;
-
-namespace PIMFazendaUrbanaLib
+﻿namespace PIMFazendaUrbanaAPI.DTOs
 {
     public class ProducaoDTO
     {

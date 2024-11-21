@@ -39,11 +39,11 @@ namespace PIMFazendaUrbanaAPI.Controllers
                 }
 
                 // Mapeia Funcionario para FuncionarioDTO usando AutoMapper
-                var funcionarioDto = _mapper.Map<FuncionarioDTO>(funcionario);
+                var funcionarioSessionDto = _mapper.Map<FuncionarioSessionDTO>(funcionario);
 
                 // Gerar um token JWT
-                var token = GerarToken(funcionario);
-                return Ok(new { Token = token, Funcionario = funcionarioDto }); // Retorna código 200 com token e funcionário
+                var token = GerarToken(funcionarioSessionDto);
+                return Ok(new { Token = token, Funcionario = funcionarioSessionDto }); // Retorna código 200 com token e funcionário
             }
             catch (AuthenticationException ex)
             {
@@ -62,13 +62,13 @@ namespace PIMFazendaUrbanaAPI.Controllers
         }
 
         // Método para gerar um token JWT
-        private string GerarToken(Funcionario funcionario)
+        private string GerarToken(FuncionarioSessionDTO funcionarioSessionDto)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, funcionario.Usuario),
+                new Claim(JwtRegisteredClaimNames.Sub, funcionarioSessionDto.Usuario),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.Role, funcionario.Cargo) // Adiciona o cargo como uma claim
+                new Claim(ClaimTypes.Role, funcionarioSessionDto.Cargo) // Adiciona o cargo como uma claim
             };
 
             // Use a chave do appsettings.json

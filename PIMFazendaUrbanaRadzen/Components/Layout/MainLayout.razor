@@ -24,7 +24,7 @@
                             <RadzenProfileMenuItem Text="Logout" Value="Logout" Icon="power_settings_new" />
                         </ChildContent>
                         <Template>
-                            <RadzenLabel Text="Bem vindo(a), " />
+                            <RadzenLabel Text="@bemvindo" />
                             <RadzenLabel Text="@usuario" />
                         </Template>
                     </RadzenProfileMenu>
@@ -147,6 +147,7 @@
     }
 
     private string usuario { get; set; } = "Carregando...";
+    private string bemvindo { get; set; } = "Bem vindo(a), ";
 
     private bool isInitialized = false;
 
@@ -156,6 +157,20 @@
         {
             var user = await AuthService.GetCurrentUserAsync();
             usuario = user?.Nome ?? "Usuário não encontrado";
+
+            if (user?.Sexo == "F")
+            {
+                bemvindo = "Bem vinda, ";
+            }
+            else if (user?.Sexo == "M")
+            {
+                bemvindo = "Bem vindo, ";
+            }
+            else
+            {
+                bemvindo = "Bem vindo(a), ";
+            }
+
             isInitialized = true;
             StateHasChanged(); // Atualiza a interface
         }

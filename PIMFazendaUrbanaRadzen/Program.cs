@@ -122,6 +122,16 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.Use(async (context, next) =>
+{
+    await next();
+
+    if (context.Response.StatusCode == 404 && !context.Request.Path.Value.Contains("_framework"))
+    {
+        context.Response.Redirect("/not-found");
+    }
+});
+
 app.UseHttpsRedirection(); // Redireciona HTTP para HTTPS
 app.MapControllers(); // Mapeia as controllers
 app.UseStaticFiles(); // Habilita o uso de arquivos estáticos
