@@ -28,10 +28,17 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages
             }
         }
 
-        private async Task LoginParaAdmin()
+        private async Task LoginParaTesteGerente()
         {
             loginDto.UserName = "isabela.f";
             loginDto.Password = "I9#bE2%mN";
+            await OnLoginClick();
+        }
+
+        private async Task LoginParaTesteFuncionario()
+        {
+            loginDto.UserName = "alice.s";
+            loginDto.Password = "A1!eB3@cD";
             await OnLoginClick();
         }
 

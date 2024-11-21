@@ -23,13 +23,22 @@
                 <RadzenLink Text="Esqueceu sua senha?" Click="OnResetPassword" style="margin-top: 10px; position: static; float: right" />
             </RadzenRow>
             <RadzenRow>
-                <RadzenButton Text="Login para teste"
-                              ButtonStyle="ButtonStyle.Danger"
-                              Icon="launch"
-                              Size="ButtonSize.Large"
-                              Shade="Shade.Lighter"
-                              Variant="Variant.Filled"
-                              Click="LoginParaAdmin" style="margin-top: 20px; position: static; float: right" />
+                <RadzenStack Gap="1rem">
+                    <RadzenButton Text="Login para teste (gerente)"
+                                  ButtonStyle="ButtonStyle.Danger"
+                                  Icon="launch"
+                                  Size="ButtonSize.Large"
+                                  Shade="Shade.Lighter"
+                                  Variant="Variant.Filled"
+                                  Click="LoginParaTesteGerente" style="margin-top: 20px; position: static; float: right" />
+                    <RadzenButton Text="Login para teste (funcionário)"
+                                  ButtonStyle="ButtonStyle.Danger"
+                                  Icon="launch"
+                                  Size="ButtonSize.Large"
+                                  Shade="Shade.Lighter"
+                                  Variant="Variant.Filled"
+                                  Click="LoginParaTesteFuncionario" style="margin-top: 20px; position: static; float: right" />
+                </RadzenStack>
             </RadzenRow>
         </RadzenTemplateForm>
     </RadzenColumn>
