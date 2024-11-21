@@ -25,6 +25,7 @@ namespace PIMFazendaUrbanaAPI
 
             // Adiciona a connection string do appsettings.json
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
             builder.Services.AddScoped<IClienteService>(provider => new ClienteService(connectionString));
             builder.Services.AddScoped<IFornecedorService>(provider => new FornecedorService(connectionString));
             builder.Services.AddScoped<IFuncionarioService>(provider => new FuncionarioService(connectionString));

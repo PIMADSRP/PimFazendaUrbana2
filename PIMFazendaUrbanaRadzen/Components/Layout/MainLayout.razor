@@ -1,6 +1,6 @@
 @inject CookieThemeService CookieThemeService
+@inject PIMFazendaUrbanaRadzen.Services.AuthService AuthService
 @inherits LayoutComponentBase
-@* @attribute [Authorize] *@
 
 <RadzenDialog />
 <RadzenNotification />
@@ -25,7 +25,7 @@
                         </ChildContent>
                         <Template>
                             <RadzenLabel Text="Bem vindo(a), " />
-                            <RadzenLabel Text="Isabela Fernandes" />
+                            <RadzenLabel Text="@usuario" />
                         </Template>
                     </RadzenProfileMenu>
                 </RadzenStack>
@@ -144,5 +144,20 @@
     protected override void OnInitialized()
     {
         Console.WriteLine("MainLayout initialized");
+    }
+
+    private string usuario { get; set; } = "Carregando...";
+
+    private bool isInitialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !isInitialized)
+        {
+            var user = await AuthService.GetCurrentUserAsync();
+            usuario = user?.Nome ?? "Usuário não encontrado";
+            isInitialized = true;
+            StateHasChanged(); // Atualiza a interface
+        }
     }
 }

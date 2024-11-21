@@ -1,4 +1,6 @@
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +15,11 @@
 </head>
 
 <body>
-    <Routes @rendermode="@InteractiveServer" />
+    <!-- CascadingAuthenticationState permite que a autenticação seja compartilhada nos componentes -->
+    <CascadingAuthenticationState>
+        <Routes @rendermode="@InteractiveServer" />
+    </CascadingAuthenticationState>
+
     <script src="_framework/blazor.web.js"></script>
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
 
@@ -26,9 +32,7 @@
             link.click();
         }
     </script>
-
 </body>
-
 </html>
 
 @code {

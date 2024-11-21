@@ -75,7 +75,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
 
         protected async Task FormSubmit()
         {
-            if (isModoEditar == false)
+            if (isModoEditar == false) // salvando um cadastro
             {
                 try
                 {
@@ -107,7 +107,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
                     Console.WriteLine($"Erro ao cadastrar cultivo: {ex.Message}");
                 }
             }
-            else
+            else if (isModoEditar == true) // salvando uma edição
             {
                 try
                 {
@@ -119,11 +119,8 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
                     {
                         NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Cultivo atualizado com sucesso!", duration: 5000);
 
-                        isModoEditar = false; // Volta para o modo de cadastro
-                        textoCadastrarOuEditar = "Cadastrar Cultivo"; // Altera o texto do botão
+                        AlternarModoEditar();
 
-                        cultivoCadastrarOuEditar = new CultivoDTO(); // Limpa o formulário
-                        
                         await LoadCultivos(); // atualizar datagrid
                     }
                     else
@@ -171,10 +168,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
 
         protected void EditarCultivo(CultivoDTO cultivo)
         {
-            // Implementar lógica de edição de cultivo
-            isModoEditar = true;
-
-            textoCadastrarOuEditar = "Editar Cultivo";
+            AlternarModoEditar();
 
             cultivoCadastrarOuEditar = cultivo;
         }
@@ -190,45 +184,23 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
 
         }
 
-        protected string FormatarTelefone(string ddd, string numero)
+        protected void AlternarModoEditar()
         {
-            if (numero.Length == 8)
+            if (isModoEditar == false) // se não estiver no modo de edição
             {
-                return $"({ddd}) {numero.Substring(0, 4)}-{numero.Substring(4)}";
+                // passar pro modo de edição
+                isModoEditar = true;
+                textoCadastrarOuEditar = "Editar Cultivo";
             }
-            else if (numero.Length == 9)
+            else // se estiver no modo de edição
             {
-                return $"({ddd}) {numero.Substring(0, 5)}-{numero.Substring(5)}";
-            }
-            else
-            {
-                return "Telefone inválido";
+                // passar pro modo de cadastro
+                isModoEditar = false;
+                textoCadastrarOuEditar = "Cadastrar Cultivo";
+                cultivoCadastrarOuEditar = new CultivoDTO(); // Limpa o formulário
             }
         }
 
-        protected string FormatarCNPJ(string cnpj)
-        {
-            if (cnpj.Length == 14)
-            {
-                return $"{cnpj.Substring(0, 2)}.{cnpj.Substring(2, 3)}.{cnpj.Substring(5, 3)}/{cnpj.Substring(8, 4)}-{cnpj.Substring(12)}";
-            }
-            else
-            {
-                return "CNPJ inválido";
-            }
-        }
-
-        protected string FormatarCEP(string cep)
-        {
-            if (cep.Length == 8)
-            {
-                return $"{cep.Substring(0, 5)}-{cep.Substring(5)}";
-            }
-            else
-            {
-                return "CEP inválido";
-            }
-        }
 
         protected async Task OnExportarClick(RadzenSplitButtonItem args)
         {

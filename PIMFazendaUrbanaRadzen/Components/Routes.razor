@@ -1,5 +1,6 @@
 <Router AppAssembly="@typeof(Program).Assembly">
     <Found Context="routeData">
+        <!-- Verifica se o usuário está autenticado antes de exibir a página -->
         <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
     </Found>
     <NotFound>
@@ -16,8 +17,28 @@
 </Router>
 
 @code {
-    protected override void OnInitialized()
+    [Inject]
+    private AuthenticationStateProvider AuthenticationStateProvider { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    private bool isInitialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        Console.WriteLine("Routes.razor initialized");
+        if (firstRender)
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+
+            if (!user.Identity.IsAuthenticated)
+            {
+                NavigationManager.NavigateTo("/login");
+            }
+
+            isInitialized = true;
+            StateHasChanged(); // Força a re-renderização se necessário
+        }
     }
 }

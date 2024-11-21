@@ -33,6 +33,7 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<CustomAuthenticationStateProvider>());
 
+// Registra o serviço de autenticação
 builder.Services.AddScoped<AuthService>(provider =>
     new AuthService(
         provider.GetRequiredService<HttpClient>(),
@@ -40,6 +41,18 @@ builder.Services.AddScoped<AuthService>(provider =>
         provider.GetRequiredService<ILocalStorageService>(),
         provider.GetRequiredService<CustomAuthenticationStateProvider>() // Passando o provedor aqui
     ));
+
+// Registra as roles/claims
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Funcionário", policy =>
+        policy.RequireClaim("role", "Funcionário", "Gerente")); // Funcionário e Gerente têm acesso
+
+    options.AddPolicy("Gerente", policy =>
+        policy.RequireClaim("role", "Gerente")); // Somente Gerente
+});
+
+
 
 // Registra o serviço CepApiService
 builder.Services.AddScoped<CepApiService>(provider =>

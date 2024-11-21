@@ -28,6 +28,13 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages
             }
         }
 
+        private async Task LoginParaAdmin()
+        {
+            loginDto.UserName = "isabela.f";
+            loginDto.Password = "I9#bE2%mN";
+            await OnLoginClick();
+        }
+
         private void OnResetPassword()
         {
             // Implementar lógica para redefinição de senha

@@ -1,13 +1,13 @@
-@page "/vendas"
+ï»¿@page "/compras"
 
-<PageTitle>Vendas</PageTitle>
+<PageTitle>Compras</PageTitle>
 
-<!-- Título na parte superior -->
+<!-- TÃ­tulo na parte superior -->
 <div style="text-align: left; margin-bottom: 20px;">
-    <RadzenText Text="Vendas" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-4" />
+    <RadzenText Text="Compras" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-4" />
 </div>
 
-<!-- Barra de busca e botão exportar -->
+<!-- Barra de busca e botÃ£o exportar -->
 <div style="display: flex; align-items: center; margin-bottom: 10px; gap: 10px;">
     <!-- Campo de busca -->
     <RadzenTextBox Placeholder="Procurar..."
@@ -15,7 +15,7 @@
                    @bind-Value="searchText"
                    @oninput="FilterData" />
 
-    <!-- Botão Exportar -->
+    <!-- BotÃ£o Exportar -->
     <RadzenSplitButton ButtonStyle="ButtonStyle.Secondary"
                        Icon="get_app"
                        Text="Exportar"
@@ -28,7 +28,7 @@
         <RadzenSplitButtonItem Text="CSV" Value="csv" />
     </RadzenSplitButton>
 
-    <!-- Botão Adicionar -->
+    <!-- BotÃ£o Adicionar -->
     <RadzenButton ButtonStyle="ButtonStyle.Primary"
                   Icon="add_circle_outline"
                   Text="Adicionar"
@@ -37,7 +37,7 @@
                   Shade="Radzen.Shade.Light" />
 </div>
 
-<!-- DataGrid 1: Registro de Venda de Produtos -->
+<!-- DataGrid 1: Registro de Compras de Insumos -->
 <div style="margin-top: 10px;">
     <RadzenRow>
         <RadzenDataGrid Data="@filteredData"
@@ -50,24 +50,24 @@
                         Style="border: 1px solid black; padding: 10px; width: 100%; height: auto; min-height: 300px; word-wrap: break-word; white-space: normal;">
             <HeaderTemplate>
                 <div>
-                    <RadzenText Text="Registro de Venda de Produtos" TextStyle="Radzen.Blazor.TextStyle.H6" />
+                    <RadzenText Text="Registro de Compras de Insumos" TextStyle="Radzen.Blazor.TextStyle.H6" />
                 </div>
             </HeaderTemplate>
             <Columns>
-                <RadzenDataGridColumn TItem="dynamic" Property="IDPedido" Title="ID Pedido" Filterable="true" Sortable="true" Width="10%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Produto" Title="Produto" Filterable="true" Sortable="true" Width="15%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="IDPedido" Title="ID do Pedido" Filterable="true" Sortable="true" Width="10%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="Insumo" Title="Insumo" Filterable="true" Sortable="true" Width="20%" />
                 <RadzenDataGridColumn TItem="dynamic" Property="Quantidade" Title="Quantidade" Filterable="true" Sortable="true" Width="10%" />
                 <RadzenDataGridColumn TItem="dynamic" Property="Unidade" Title="Unidade" Filterable="true" Sortable="true" Width="10%" />
                 <RadzenDataGridColumn TItem="dynamic" Property="Data" Title="Data" Filterable="true" Sortable="true" Width="15%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Cliente" Title="Cliente" Filterable="true" Sortable="true" Width="15%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="ValorUnitario" Title="Valor Unitário" Filterable="true" Sortable="true" Width="10%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Total" Title="Total" Filterable="true" Sortable="true" Width="15%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="Fornecedor" Title="Fornecedor" Filterable="true" Sortable="true" Width="15%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="ValorUnitario" Title="Valor UnitÃ¡rio" Filterable="true" Sortable="true" Width="10%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="Total" Title="Valor Total" Filterable="true" Sortable="true" Width="15%" />
             </Columns>
         </RadzenDataGrid>
     </RadzenRow>
 </div>
 
-<!-- DataGrid 2: Estoque de Produto -->
+<!-- DataGrid 2: Estoque de Insumos -->
 <div style="margin-top: 20px;">
     <RadzenRow>
         <RadzenDataGrid Data="@estoqueData"
@@ -80,17 +80,15 @@
                         Style="border: 1px solid black; padding: 10px; width: 100%; height: auto; min-height: 300px; word-wrap: break-word; white-space: normal;">
             <HeaderTemplate>
                 <div>
-                    <RadzenText Text="Estoque de Produto" TextStyle="Radzen.Blazor.TextStyle.H6" />
+                    <RadzenText Text="Estoque de Insumos" TextStyle="Radzen.Blazor.TextStyle.H6" />
                 </div>
             </HeaderTemplate>
             <Columns>
                 <RadzenDataGridColumn TItem="dynamic" Property="ID" Title="ID" Filterable="true" Sortable="true" Width="10%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Produto" Title="Produto" Filterable="true" Sortable="true" Width="20%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Categoria" Title="Categoria" Filterable="true" Sortable="true" Width="15%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Quantidade" Title="Quantidade" Filterable="true" Sortable="true" Width="10%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Unidade" Title="Unidade" Filterable="true" Sortable="true" Width="10%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="DataEntrada" Title="Data de Entrada" Filterable="true" Sortable="true" Width="20%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="IDProducao" Title="ID Produção" Filterable="true" Sortable="true" Width="15%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="Nome" Title="Nome" Filterable="true" Sortable="true" Width="25%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="Categoria" Title="Categoria" Filterable="true" Sortable="true" Width="20%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="Quantidade" Title="Quantidade" Filterable="true" Sortable="true" Width="15%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="Unidade" Title="Unidade" Filterable="true" Sortable="true" Width="15%" />
             </Columns>
         </RadzenDataGrid>
     </RadzenRow>
@@ -99,14 +97,14 @@
 @code {
     private List<dynamic> dataGridNovoItems = new List<dynamic>
     {
-        new { IDPedido = "1", Produto = "Alface", Quantidade = 10, Unidade = "kg", Data = "2024-11-01", Cliente = "João Silva", ValorUnitario = 2.50, Total = 25.00 },
-        new { IDPedido = "2", Produto = "Tomate", Quantidade = 15, Unidade = "kg", Data = "2024-11-02", Cliente = "Maria Oliveira", ValorUnitario = 3.00, Total = 45.00 }
+        new { IDPedido = "1", Insumo = "Adubo OrgÃ¢nico", Quantidade = 10, Unidade = "kg", Data = "2024-11-01", Fornecedor = "Fornecedor A", ValorUnitario = 5.00, Total = 50.00 },
+        new { IDPedido = "2", Insumo = "Sementes de Milho", Quantidade = 15, Unidade = "kg", Data = "2024-11-02", Fornecedor = "Fornecedor B", ValorUnitario = 2.50, Total = 37.50 }
     };
 
     private List<dynamic> estoqueData = new List<dynamic>
     {
-        new { ID = "1", Produto = "Alface", Categoria = "Hortaliças", Quantidade = 50, Unidade = "kg", DataEntrada = "2024-10-30", IDProducao = "P01" },
-        new { ID = "2", Produto = "Tomate", Categoria = "Hortaliças", Quantidade = 100, Unidade = "kg", DataEntrada = "2024-10-25", IDProducao = "P02" }
+        new { ID = "1", Nome = "Adubo OrgÃ¢nico", Categoria = "Fertilizantes", Quantidade = 50, Unidade = "kg" },
+        new { ID = "2", Nome = "Sementes de Milho", Categoria = "Sementes", Quantidade = 200, Unidade = "kg" }
     };
 
     private List<dynamic> filteredData;
@@ -128,11 +126,11 @@
             string searchLower = searchText.ToLower();
             filteredData = dataGridNovoItems.Where(item =>
                 item.IDPedido.ToString().ToLower().Contains(searchLower) ||
-                item.Produto.ToLower().Contains(searchLower) ||
+                item.Insumo.ToLower().Contains(searchLower) ||
                 item.Quantidade.ToString().ToLower().Contains(searchLower) ||
                 item.Unidade.ToLower().Contains(searchLower) ||
                 item.Data.ToLower().Contains(searchLower) ||
-                item.Cliente.ToLower().Contains(searchLower) ||
+                item.Fornecedor.ToLower().Contains(searchLower) ||
                 item.ValorUnitario.ToString().ToLower().Contains(searchLower) ||
                 item.Total.ToString().ToLower().Contains(searchLower)).ToList();
         }

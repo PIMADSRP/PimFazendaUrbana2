@@ -63,58 +63,76 @@ namespace PIMFazendaUrbanaAPI.Services
                                 // Verifica se a chave é "Numero" e, nesse caso, inverte a ordem: "Número (Objeto)"
                                 if (nestedProperty.Key.Equals("Numero", StringComparison.OrdinalIgnoreCase))
                                 {
-                                    newKey = $"{FormatarNomeObjeto(nestedProperty.Key)} ({FormatarNomeObjeto(property.Name)})"; // Exemplo: "Número (Endereço)" ou "Número (Telefone)"
+                                    newKey = $"{FormatarNomeObjeto(nestedProperty.Key)} ({FormatarNomeObjeto(property.Name)})";
                                 }
                                 else
                                 {
-                                    // Para outras propriedades, mantém o nome simples
                                     newKey = FormatarNomeObjeto(nestedProperty.Key);
                                 }
 
-                                linha[newKey] = nestedProperty.Value;
+                                // Aplica a formatação ao valor
+                                linha[newKey] = FormatarValor(newKey, nestedProperty.Value);
                             }
                         }
                         else
                         {
-                            // Caso contrário, adicione normalmente a propriedade
-                            linha[property.Name] = property.Value.ToString();
+                            // Adiciona a propriedade ao dicionário, aplicando a formatação
+                            var formattedValue = FormatarValor(property.Name, property.Value.ToString());
+                            linha[property.Name] = formattedValue;
                         }
                     }
                 }
                 else
                 {
-                    // Caso não seja JsonElement, lança um erro ou ignora o item
                     throw new ArgumentException($"Tipo de objeto não tratado: {item.GetType().Name}");
                 }
 
-                dadosMapeados.Add(linha);
-            }
-
-            // Capitalizar a primeira letra de todas as chaves (nomes das colunas), e garantir que as chaves StatusAtivo e Senha nunca sejam adicionadas
-            foreach (var linha in dadosMapeados)
-            {
+                // Formatar as chaves para capitalizar a primeira letra e remover chaves ignoradas
                 var keys = linha.Keys.ToList();
                 foreach (var key in keys)
                 {
-                    // Verifica se a chave é "StatusAtivo" e a ignora completamente
                     if (key.Equals("StatusAtivo", StringComparison.OrdinalIgnoreCase) || key.Equals("Senha", StringComparison.OrdinalIgnoreCase))
                     {
                         linha.Remove(key);
                         continue;
                     }
 
-                    var capitalizedKey = CapitalizarPrimeiraLetra(key);
+                    var capitalizedKey = key;
+
+                    if (key != "CNPJ" || key != "CPF")
+                    {
+                        capitalizedKey = CapitalizarPrimeiraLetra(key);
+                    }
+
                     if (capitalizedKey != key)
                     {
                         var value = linha[key];
                         linha.Remove(key);
                         linha.Add(capitalizedKey, value);
                     }
+
+                    if (capitalizedKey == "Número (Telefone)")
+                    {
+                        // formata o valor, adicionando "-" no meio do número do telefone, sem chamar outro método
+                        var stringValue = linha[capitalizedKey].ToString();
+                        if (stringValue.Length == 8)
+                        {
+                            linha[capitalizedKey] = string.Format("{0}-{1}", stringValue.Substring(0, 4), stringValue.Substring(4));
+                        }
+                        else if (stringValue.Length == 9)
+                        {
+                            linha[capitalizedKey] = string.Format("{0}-{1}", stringValue.Substring(0, 5), stringValue.Substring(5));
+                        }
+                    }
                 }
+
+                dadosMapeados.Add(linha);
             }
 
             return dadosMapeados;
         }
+
+
 
         // Função para formatar os nomes das propriedades de maneira personalizada
         private string FormatarNomeObjeto(string texto)
@@ -162,13 +180,6 @@ namespace PIMFazendaUrbanaAPI.Services
 
             switch (coluna.ToLower())
             {
-                case "telefone":
-                case "número de telefone":
-                    if (stringValue.Length == 10)
-                        return string.Format("({0}) {1}-{2}", stringValue.Substring(0, 2), stringValue.Substring(2, 4), stringValue.Substring(6));
-                    if (stringValue.Length == 11)
-                        return string.Format("({0}) {1}-{2}", stringValue.Substring(0, 2), stringValue.Substring(2, 5), stringValue.Substring(7));
-                    break;
                 case "cpf":
                     if (stringValue.Length == 11)
                         return string.Format("{0}.{1}.{2}-{3}", stringValue.Substring(0, 3), stringValue.Substring(3, 3), stringValue.Substring(6, 3), stringValue.Substring(9));

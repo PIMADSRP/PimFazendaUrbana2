@@ -4,6 +4,7 @@ using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using PIMFazendaUrbanaAPI.DTOs;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace PIMFazendaUrbanaRadzen.Services
 {
@@ -32,13 +33,31 @@ namespace PIMFazendaUrbanaRadzen.Services
                 var result = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
 
                 var token = result["token"].ToString();
+                Console.WriteLine($"\nToken a ser armazenado no localStorage: {token}");
+
+                /*
                 var funcionario = JsonSerializer.Deserialize<FuncionarioDTO>(result["funcionario"].ToString());
+                Console.WriteLine($"Funcionario retornado do backend: {JsonSerializer.Serialize(funcionario)}");
+                */
+
+                var funcionarioJson = result["funcionario"].ToString();
+                Console.WriteLine($"\nFuncionario JSON: {funcionarioJson}");
+
+                //var funcionario = JsonSerializer.Deserialize<FuncionarioDTO>(funcionarioJson);
+                var funcionario = JsonConvert.DeserializeObject<FuncionarioDTO>(funcionarioJson);
+                Console.WriteLine($"\nFuncionario Deserializado: {JsonConvert.SerializeObject(funcionario)}");
+
+                Console.WriteLine($"\nToken a ser armazenado no localStorage: {token}");
 
                 await _localStorage.SetItemAsync("authToken", token);
-                await _localStorage.SetItemAsync("funcionario", JsonSerializer.Serialize(funcionario));
+                //await _localStorage.SetItemAsync("funcionario", JsonSerializer.Serialize(funcionario));
+                await _localStorage.SetItemAsync("funcionario", funcionarioJson);
 
                 // notifica o provedor de autenticação sobre o login bem-sucedido
                 _authenticationStateProvider.NotifyUserAuthentication(token);
+
+                Console.WriteLine($"\nToken: {token}");
+                Console.WriteLine($"\nFuncionario salvo no LocalStorage: {JsonConvert.SerializeObject(funcionario)}");
 
                 return null; // retorna null se o login for bem-sucedido
             }
@@ -61,14 +80,38 @@ namespace PIMFazendaUrbanaRadzen.Services
         public async Task<FuncionarioDTO> GetCurrentUserAsync()
         {
             var funcionarioJson = await _localStorage.GetItemAsync<string>("funcionario");
+
+            Console.WriteLine($"\nConteúdo do LocalStorage (funcionario): {funcionarioJson}");
+
             return funcionarioJson != null
-                ? JsonSerializer.Deserialize<FuncionarioDTO>(funcionarioJson)
+                ? JsonConvert.DeserializeObject<FuncionarioDTO>(funcionarioJson)
                 : null;
+        }
+
+        public async Task<string> GetCurrentUserRole()
+        {
+            var funcionario = await GetCurrentUserAsync();
+
+            return funcionario != null
+                ? funcionario.Cargo
+                : "Anônimo";
+        }
+
+        public async Task<bool> IsAuthenticated()
+        {
+            var token = await GetAuthTokenAsync();
+            return token != null;
+        }
+
+        public async Task<bool> IsGerente()
+        {
+            var role = await GetCurrentUserRole();
+            return role == "Gerente";
         }
 
         public async Task<string> GetAuthTokenAsync()
         {
-            Console.WriteLine("GetAuthTokenAsync called");
+            Console.WriteLine("\nGetAuthTokenAsync called");
             return await _localStorage.GetItemAsync<string>("authToken");
         }
     }
