@@ -118,12 +118,18 @@ namespace PIMFazendaUrbanaAPI.Controllers
             try
             {
                 var cliente = _clienteService.ConsultarClientePorID(id);
+
+                if (cliente == null)
+                {
+                    return NotFound(new { message = "Cliente não encontrado." }); // Retorna 404
+                }
+
                 var clienteDto = _mapper.Map<ClienteDTO>(cliente); // Mapeia Cliente para ClienteDTO
                 return Ok(clienteDto);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" }); // Retorna 500 para erros internos
             }
         }
 

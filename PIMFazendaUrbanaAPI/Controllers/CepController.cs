@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using AutoMapper;
 
-namespace PIMFazendaUrbanaRadzen.Controllers
+namespace PIMFazendaUrbanaAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

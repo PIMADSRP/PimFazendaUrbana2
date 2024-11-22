@@ -100,6 +100,18 @@ builder.Services.AddScoped(provider =>
     ));
 
 builder.Services.AddScoped(provider =>
+    new ProducaoApiService<ProducaoDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/producao"
+    ));
+
+builder.Services.AddScoped(provider =>
+    new InsumoApiService<InsumoDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/insumos"
+    ));
+
+builder.Services.AddScoped(provider =>
     new RecomendacaoApiService<CultivoDTO>(
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/recomendacao"
@@ -122,6 +134,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.Use(async (context, next) =>
 {
     await next();
@@ -131,6 +144,7 @@ app.Use(async (context, next) =>
         context.Response.Redirect("/not-found");
     }
 });
+
 
 app.UseHttpsRedirection(); // Redireciona HTTP para HTTPS
 app.MapControllers(); // Mapeia as controllers

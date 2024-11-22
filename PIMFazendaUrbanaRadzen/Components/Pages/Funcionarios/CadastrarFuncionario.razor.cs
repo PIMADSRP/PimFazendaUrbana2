@@ -14,7 +14,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
         public CepApiService CepApiService { get; set; }
 
         [Inject]
-        public NavigationManager NavigationManager { get; set; }
+        public NavigationManager NavigationManager { get; set; } // Inject NavigationManager
 
         [Inject]
         public NotificationService NotificationService { get; set; }

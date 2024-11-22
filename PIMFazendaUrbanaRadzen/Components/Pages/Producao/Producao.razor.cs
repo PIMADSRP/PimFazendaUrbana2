@@ -9,10 +9,8 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
 {
     public partial class Producao
     {
-        //COMENTADO ENQUANTO NÃO COLOCA OS APISERVICE E CONTROLLERS
-        
-        //[Inject]
-        //public ProducaoApiService<ProducaoDTO> ProducaoApiService { get; set; } // serviço que chama a API
+        [Inject]
+        public ProducaoApiService<ProducaoDTO> ProducaoApiService { get; set; } // serviço que chama a API
 
         [Inject]
         public NavigationManager NavigationManager { get; set; } // serviço de navegação
@@ -43,14 +41,12 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
         {
             try
             {
-                /*
                 var todasProducoes = string.IsNullOrWhiteSpace(searchQuery)
                     ? await ProducaoApiService.GetAllAsync()
                     : await ProducaoApiService.GetProducoesFiltradasAsync(searchQuery);
 
                 producoes = todasProducoes;
                 errorMessage = string.Empty; // Limpa mensagens de erro
-                */
             }
             catch (Exception ex)
             {
@@ -77,12 +73,34 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
             // Ação ao selecionar uma linha
         }
 
-
-        protected void FinalizarProducao(ProducaoDTO producao)
+        protected async Task FinalizarProducao(ProducaoDTO producao)
         {
-            // Implementar lógica de finalizar produção
+            try
+            {
+                await ProducaoApiService.FinishAsync(producao.Id);
+                await LoadProducoes(); // Atualiza a lista após finalizar
+                NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Produção finalizada com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao finalizar", ex.Message);
+            }
         }
 
+        [Inject]
+        protected DialogService DialogService { get; set; }
+
+        private async Task ConfirmarFinalizacao(ProducaoDTO producao)
+        {
+            bool? confirm = await DialogService.Confirm($"Tem certeza que deseja finalizar a produção de {producao.Cultivo.Variedade} de {producao.Data}?",
+                                                         "Confirmação de Finalização",
+                                                         new ConfirmOptions { OkButtonText = "Finalizar", CancelButtonText = "Cancelar" });
+
+            if (confirm == true)
+            {
+                await FinalizarProducao(producao);
+            }
+        }
 
         protected async Task OnExportarClick(RadzenSplitButtonItem args)
         {

@@ -175,4 +175,23 @@
             StateHasChanged(); // Atualiza a interface
         }
     }
+
+    protected async Task ProfileMenuClick(RadzenProfileMenuItem args)
+    {
+
+        if (args.Value == "Logout")
+        {
+            //Security.Logout();
+
+            usuario = "Carregando...";
+            bemvindo = "";
+            await Task.Delay(50);
+            StateHasChanged(); // Atualiza a interface
+
+            await AuthService.LogoutAsync();
+
+            NavigationManager.NavigateTo("/login");
+        }
+
+    }
 }

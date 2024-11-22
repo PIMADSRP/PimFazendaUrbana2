@@ -102,12 +102,44 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
 
         protected void EditarCliente(ClienteDTO cliente)
         {
-            // Implementar lógica de edição de cliente
+            if (cliente?.Id != null)
+            {
+                NavigationManager.NavigateTo($"/editar-cliente/{cliente.Id}");
+            }
+            else
+            {
+                Console.WriteLine("Erro: ID do cliente é nulo.");
+            }
         }
 
-        protected void ExcluirCliente(ClienteDTO cliente)
+        protected async Task ExcluirCliente(ClienteDTO cliente)
         {
-            // Implementar lógica de exclusão de cliente
+            try
+            {
+                await ClienteApiService.DeleteAsync(cliente.Id);
+                await LoadClientes(); // Atualiza a lista após exclusão
+                NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Cliente excluído com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao excluir", ex.Message);
+            }
+            
+        }
+
+        [Inject]
+        protected DialogService DialogService { get; set; }
+
+        private async Task ConfirmarExclusao(ClienteDTO cliente)
+        {
+            bool? confirm = await DialogService.Confirm($"Tem certeza que deseja excluir {cliente.Nome}?",
+                                                         "Confirmação de Exclusão",
+                                                         new ConfirmOptions { OkButtonText = "Excluir", CancelButtonText = "Cancelar" });
+
+            if (confirm == true)
+            {
+                await ExcluirCliente(cliente);
+            }
         }
 
         protected string FormatarTelefone(string ddd, string numero)

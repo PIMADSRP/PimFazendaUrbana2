@@ -202,7 +202,7 @@
         <div style="color:red;">@errorMessage</div> <!-- Exibe erro em vermelho -->
     }
 }
-else
+else if (accessAllowed == false && isLoggedIn == true)
 {
     NavigationManager.NavigateTo("/acesso-negado");
 }
@@ -210,14 +210,22 @@ else
 @code {
 
     private bool accessAllowed = false;
+    private bool isLoggedIn = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var isGerente = await AuthService.IsGerente();
+        isLoggedIn = await AuthService.IsAuthenticated();
 
-        if (isGerente == true)
+        if (isLoggedIn)
         {
-            accessAllowed = true;
+            var isGerente = await AuthService.IsGerente();
+
+            if (isGerente == true)
+            {
+                accessAllowed = true;
+            }
         }
+
+        StateHasChanged();
     }
 }

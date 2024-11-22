@@ -1,6 +1,6 @@
 ﻿namespace PIMFazendaUrbanaAPI.DTOs
 {
-    public class FuncionarioSessionDTO
+    public class FuncionarioSessionDTO // DTO com os dados básicos do funcionário para a sessão
     {
         public int Id { get; set; }
         public string Nome { get; set; }

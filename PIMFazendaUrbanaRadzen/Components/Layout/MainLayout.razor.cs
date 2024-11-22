@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Radzen;
 using Radzen.Blazor;
+using PIMFazendaUrbanaRadzen.Services;
 
 namespace PIMFazendaUrbanaRadzen.Components.Layout
 {
@@ -32,14 +33,6 @@ namespace PIMFazendaUrbanaRadzen.Components.Layout
             sidebarExpanded = !sidebarExpanded;
         }
 
-        protected void ProfileMenuClick(RadzenProfileMenuItem args)
-        {
-            /*
-            if (args.Value == "Logout")
-            {
-                Security.Logout();
-            }
-            */
-        }
+
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using PIMFazendaUrbanaAPI.Mapping;
 using PIMFazendaUrbanaLib;
 using PIMFazendaUrbanaAPI.Services;
-using PIMFazendaUrbanaRadzen.Controllers;
+using PIMFazendaUrbanaAPI.Controllers;
 using System.Text;
 
 namespace PIMFazendaUrbanaAPI

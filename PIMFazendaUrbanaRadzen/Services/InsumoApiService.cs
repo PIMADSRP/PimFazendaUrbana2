@@ -1,17 +1,17 @@
 ﻿namespace PIMFazendaUrbanaRadzen.Services
 {
-    public class ClienteApiService<T>
+    public class InsumoApiService<T>
     {
         private readonly HttpClient _httpClient;
         private readonly string _endpointUrl;
 
-        public ClienteApiService(HttpClient httpClient, string endpointUrl)
+        public InsumoApiService(HttpClient httpClient, string endpointUrl)
         {
             _httpClient = httpClient;
             _endpointUrl = endpointUrl;
         }
 
-        public async Task<List<T>> GetClientesFiltradosAsync(string search)
+        public async Task<List<T>> GetInsumosFiltradosAsync(string search)
         {
             try
             {
@@ -51,21 +51,7 @@
 
         public async Task<T> GetByIdAsync(int id)
         {
-            var response = await _httpClient.GetAsync($"{_endpointUrl}/{id}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadFromJsonAsync<T>();
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
-            {
-                return default; // Retorna null para 404
-            }
-            else
-            {
-                // Lança exceção para outros erros
-                throw new Exception($"Erro ao buscar cliente: {response.ReasonPhrase}");
-            }
+            return await _httpClient.GetFromJsonAsync<T>($"{_endpointUrl}/{id}");
         }
 
         public async Task<HttpResponseMessage> CreateAsync(T entity)
