@@ -93,6 +93,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
                         NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Cultivo cadastrado com sucesso!", duration: 5000);
                         // atualizar datagrid
                         await LoadCultivos();
+                        cultivoCadastrarOuEditar = new CultivoDTO();
                     }
                     else
                     {
@@ -170,18 +171,47 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
         {
             AlternarModoEditar();
 
-            cultivoCadastrarOuEditar = cultivo;
+            // Cria uma cópia do cultivo para edição
+            cultivoCadastrarOuEditar = new CultivoDTO
+            {
+                Id = cultivo.Id,
+                Nome = cultivo.Nome,
+                Variedade = cultivo.Variedade,
+                Categoria = cultivo.Categoria,
+                TempoProdTradicional = cultivo.TempoProdTradicional,
+                TempoProdControlado = cultivo.TempoProdControlado,
+                StatusAtivo = cultivo.StatusAtivo
+            };
         }
 
-        protected void ExcluirCultivo(CultivoDTO cultivo)
+        protected async Task ExcluirCultivo(CultivoDTO cultivo)
         {
-            // Implementar lógica de exclusão de cultivo
+            try
+            {
+                await CultivoApiService.DeleteAsync(cultivo.Id);
+                await LoadCultivos(); // Atualiza a lista após exclusão
+                NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Cultivo excluído com sucesso!", duration: 3000);
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao excluir", ex.Message, duration: 5000);
+            }
 
-            // exibir popup de confirmação
+        }
 
+        [Inject]
+        protected DialogService DialogService { get; set; }
 
+        private async Task ConfirmarExclusao(CultivoDTO cultivo)
+        {
+            bool? confirm = await DialogService.Confirm($"Tem certeza que deseja excluir {cultivo.Variedade}?",
+                                                         "Confirmação de Exclusão",
+                                                         new ConfirmOptions { OkButtonText = "Excluir", CancelButtonText = "Cancelar" });
 
-
+            if (confirm == true)
+            {
+                await ExcluirCultivo(cultivo);
+            }
         }
 
         protected void AlternarModoEditar()
@@ -206,7 +236,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
         {
             if (args == null || string.IsNullOrEmpty(args.Value.ToString()))
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.");
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.", duration: 2000);
                 return;
             }
 
@@ -218,7 +248,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
                 // Verifique se há dados
                 if (cultivos == null || !cultivos.Any())
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.", duration: 2000);
                     return;
                 }
 
@@ -232,12 +262,12 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
                 }
                 else
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.", duration: 2000);
                 }
             }
             catch (Exception ex)
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message);
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message, duration: 5000);
             }
         }
     }

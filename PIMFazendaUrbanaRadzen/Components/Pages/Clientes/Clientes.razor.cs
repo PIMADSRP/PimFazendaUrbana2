@@ -120,11 +120,11 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
             {
                 await ClienteApiService.DeleteAsync(cliente.Id);
                 await LoadClientes(); // Atualiza a lista após exclusão
-                NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Cliente excluído com sucesso!");
+                NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Cliente excluído com sucesso!", duration: 3000);
             }
             catch (Exception ex)
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro ao excluir", ex.Message);
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao excluir", ex.Message, duration: 5000);
             }
             
         }
@@ -188,7 +188,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
         {
             if (args == null || string.IsNullOrEmpty(args.Value.ToString()))
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.");
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.", duration: 2000);
                 return;
             }
 
@@ -200,7 +200,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
                 // Verifique se há dados
                 if (clientes == null || !clientes.Any())
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.", duration: 2000);
                     return;
                 }
 
@@ -214,12 +214,12 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
                 }
                 else
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.", duration: 2000);
                 }
             }
             catch (Exception ex)
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message);
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message, duration: 5000);
             }
         }
     }

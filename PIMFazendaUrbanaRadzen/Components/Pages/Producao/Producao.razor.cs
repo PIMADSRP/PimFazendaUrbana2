@@ -79,11 +79,11 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
             {
                 await ProducaoApiService.FinishAsync(producao.Id);
                 await LoadProducoes(); // Atualiza a lista após finalizar
-                NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Produção finalizada com sucesso!");
+                NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Produção finalizada com sucesso!", duration: 3000);
             }
             catch (Exception ex)
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro ao finalizar", ex.Message);
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao finalizar", ex.Message, duration: 5000);
             }
         }
 
@@ -92,13 +92,20 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
 
         private async Task ConfirmarFinalizacao(ProducaoDTO producao)
         {
-            bool? confirm = await DialogService.Confirm($"Tem certeza que deseja finalizar a produção de {producao.Cultivo.Variedade} de {producao.Data}?",
-                                                         "Confirmação de Finalização",
-                                                         new ConfirmOptions { OkButtonText = "Finalizar", CancelButtonText = "Cancelar" });
-
-            if (confirm == true)
+            if (producao.StatusFinalizado == false)
             {
-                await FinalizarProducao(producao);
+                bool? confirm = await DialogService.Confirm($"Tem certeza que deseja finalizar a produção de {producao.Cultivo.Variedade} de {producao.Data}?",
+                                                             "Confirmação de Finalização",
+                                                             new ConfirmOptions { OkButtonText = "Finalizar", CancelButtonText = "Cancelar" });
+
+                if (confirm == true)
+                {
+                    await FinalizarProducao(producao);
+                }
+            }
+            else
+            {
+                NotificationService.Notify(NotificationSeverity.Info, "Produção já finalizada", duration: 2000);
             }
         }
 
@@ -106,7 +113,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
         {
             if (args == null || string.IsNullOrEmpty(args.Value.ToString()))
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.");
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.", duration: 2000);
                 return;
             }
 
@@ -118,7 +125,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
                 // Verifique se há dados
                 if (producoes == null || !producoes.Any())
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.", duration: 2000);
                     return;
                 }
 
@@ -132,12 +139,12 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
                 }
                 else
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.", duration: 2000);
                 }
             }
             catch (Exception ex)
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message);
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message, duration: 5000);
             }
         }
         

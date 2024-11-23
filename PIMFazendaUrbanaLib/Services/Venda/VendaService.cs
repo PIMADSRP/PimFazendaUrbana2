@@ -1,19 +1,20 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
 
 namespace PIMFazendaUrbanaLib
 {
     public class VendaService : IVendaService
     {
         private readonly IVendaDAO pedidoVendaDAO;
-        private readonly string connectionString;
+        //private readonly string connectionString;
 
         public VendaService(string connectionString)
         {
-            this.connectionString = connectionString;
+            //this.connectionString = connectionString;
             this.pedidoVendaDAO = new VendaDAO(connectionString);
         }
 
-        // Método para cadastrar um novo pedido de venda
+        // Método antigo para cadastrar um novo pedido de venda
+        /*
         public void CadastrarPedidoVendaComItens(PedidoVenda pedidoVenda, List<PedidoVendaItem> vendaItems)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -42,6 +43,38 @@ namespace PIMFazendaUrbanaLib
                         throw new Exception("Erro ao cadastrar pedido de venda: " + ex.Message);
                     }
                 }
+            }
+        }
+        */
+
+        public List<PedidoVendaItem> ListarPedidoVendaItensComFiltros(string search)
+        {
+            try
+            {
+                List<PedidoVendaItem> vendatens = pedidoVendaDAO.ListarPedidoVendaItensComFiltros(search);
+                return vendatens; // Retorna a lista filtrada de vendas
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao listar vendas filtradas: " + ex.Message); // Lança uma exceção indicando que ocorreu um erro ao listar vendas filtradas
+            }
+        }
+
+
+        public void CadastrarPedidoVenda(PedidoVenda pedidoVenda)
+        {
+            try
+            {
+                ValidarVenda(pedidoVenda);
+                pedidoVendaDAO.CadastrarPedidoVenda(pedidoVenda);
+            }
+            catch (ValidationException ex) // Se ocorrer uma exceção do tipo ValidationException
+            {
+                throw; // Repassa a exceção de validação para o Controller manipular
+            }
+            catch (Exception ex) // Se ocorrer uma exceção de qualquer outro tipo
+            {
+                throw new Exception("Erro ao cadastrar pedido de venda: " + ex.Message);
             }
         }
 
@@ -146,13 +179,13 @@ namespace PIMFazendaUrbanaLib
          * =-=-=-=-=-=-=-=-=-=-=-=- VALIDAÇÃO VENDA =-=-=-=-=-=-=-=-=-=-=-=-
          */
 
-        public void ValidarVenda(PedidoVenda pedidoVenda, List<PedidoVendaItem> vendaItems)
+        public void ValidarVenda(PedidoVenda pedidoVenda)
         {
             var erros = new List<ValidationError>();
 
             // validar quantidade, valor unitario, cliente e produto
 
-            if (vendaItems.Count <= 0) // Verifica se a quantidade de itens é maior que 0
+            if (pedidoVenda.Itens.Count <= 0) // Verifica se a quantidade de itens é maior que 0
             {
                 erros.Add((new ValidationError("Quantidade", "A venda deve conter pelo menos um item.")));
             }
@@ -164,7 +197,7 @@ namespace PIMFazendaUrbanaLib
             }
 
             // Valida cada item da compra
-            foreach (var item in vendaItems)
+            foreach (var item in pedidoVenda.Itens)
             {
                 // valida nome do produto
                 if (string.IsNullOrEmpty(item.NomeProduto))

@@ -119,9 +119,6 @@
                     <RadzenDataGridColumn TItem="FornecedorDTO" Property="CNPJ" Title="CNPJ" Width="10%" Sortable="false">
                         <Template Context="fornecedor">
                             @if (fornecedor.CNPJ != null)
-
-
-
                             {
                                 <span title="@FormatarCNPJ(fornecedor.CNPJ)">
                                     @FormatarCNPJ(fornecedor.CNPJ)
@@ -134,9 +131,6 @@
                     <RadzenDataGridColumn TItem="FornecedorDTO" Property="Telefone.Numero" Title="Telefone" Width="9%" Sortable="true">
                         <Template Context="fornecedor">
                             @if (fornecedor.Telefone != null)
-
-
-
                             {
                                 <span title="@FormatarTelefone(fornecedor.Telefone.DDD, fornecedor.Telefone.Numero)">
                                     @FormatarTelefone(fornecedor.Telefone.DDD, fornecedor.Telefone.Numero)
@@ -148,9 +142,6 @@
                     <RadzenDataGridColumn TItem="FornecedorDTO" Title="Endereço" Width="37%">
                         <Template Context="fornecedor">
                             @if (fornecedor.Endereco != null)
-
-
-
                             {
                                 <span title="@($"{fornecedor.Endereco.Logradouro}, {fornecedor.Endereco.Numero}, {fornecedor.Endereco.Bairro}, {fornecedor.Endereco.Cidade} - {fornecedor.Endereco.UF}")">
                                     @($"{fornecedor.Endereco.Logradouro}, {fornecedor.Endereco.Numero}, {fornecedor.Endereco.Bairro}, {fornecedor.Endereco.Cidade} - {fornecedor.Endereco.UF}")
@@ -182,9 +173,6 @@
                     <RadzenDataGridColumn TItem="FornecedorDTO" Title="CEP" Property="Endereco.CEP" Width="6%" Sortable="false">
                         <Template Context="fornecedor">
                             @if (fornecedor.Endereco.CEP != null)
-
-
-
                             {
                                 <span title="@FormatarCEP(fornecedor.Endereco.CEP)">
                                     @FormatarCEP(fornecedor.Endereco.CEP)
@@ -209,7 +197,7 @@
                                           Size="ButtonSize.Medium"
                                           Shade="Shade.Lighter"
                                           Variant="Variant.Flat"
-                                          Click="@(() => ExcluirFornecedor(fornecedor))"
+                                          Click="@(() => ConfirmarExclusao(fornecedor))"
                                           @onclick:stopPropagation="true" />
                         </Template>
                     </RadzenDataGridColumn>
@@ -220,9 +208,6 @@
 </RadzenStack>
 
 @if (!string.IsNullOrEmpty(errorMessage))
-
-
-
 {
     <div style="color:red;">@errorMessage</div> <!-- Exibe erro em vermelho -->
 }

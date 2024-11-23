@@ -58,13 +58,13 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Recomendacoes
                 // Verificar se os campos obrigatórios foram preenchidos antes de enviar a requisição
                 if (string.IsNullOrEmpty(selectedRegiao))
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione uma região.", duration: 2000);
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione uma região.", duration: 3000);
                     return;
                 }
 
                 if (string.IsNullOrEmpty(selectedEstacao))
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione uma estação.", duration: 2000);
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione uma estação.", duration: 3000);
                     return;
                 }
 
@@ -91,7 +91,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Recomendacoes
         {
             if (args == null || string.IsNullOrEmpty(args.Value.ToString()))
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.");
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Por favor, selecione um formato de exportação.", duration: 2000);
                 return;
             }
 
@@ -103,7 +103,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Recomendacoes
                 // Verifique se há dados
                 if (dataGridItems == null || !dataGridItems.Any())
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.", duration: 2000);
                     return;
                 }
 
@@ -117,12 +117,12 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Recomendacoes
                 }
                 else
                 {
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", "Nenhum arquivo foi gerado.", duration: 2000);
                 }
             }
             catch (Exception ex)
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message);
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message, duration: 5000);
             }
         }
 

@@ -1,5 +1,4 @@
 ﻿using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI;
 
 namespace PIMFazendaUrbanaLib
 {
@@ -12,7 +11,134 @@ namespace PIMFazendaUrbanaLib
             this.connectionString = connectionString;
         }
 
-        // Método para cadastrar um novo pedido de venda
+        // NOVO método para filtrar pedidos de venda e seus itens por uma query de busca
+        public List<PedidoVendaItem> ListarPedidoVendaItensComFiltros(string search)
+        {
+            List<PedidoVendaItem> pedidosVendaItem = new List<PedidoVendaItem>();
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT vi.id_vendaitem, vi.qtd_vendaitem, vi.unidqtd_vendaitem, vi.valor_vendaitem, vi.id_pedidovenda, vi.id_estoqueproduto, 
+                                cul.variedade_cultivo, pv.data_pedidovenda, cli.nome_cliente
+                                FROM vendaitem vi
+                                LEFT JOIN estoqueproduto ep ON vi.id_estoqueproduto = ep.id_estoqueproduto
+                                LEFT JOIN producao pr ON ep.id_producao = pr.id_producao
+                                LEFT JOIN cultivo cul ON pr.id_cultivo = cul.id_cultivo
+                                LEFT JOIN pedidovenda pv ON vi.id_pedidovenda = pv.id_pedidovenda
+                                LEFT JOIN cliente cli ON pv.id_cliente = cli.id_cliente
+                                WHERE cul.variedade_cultivo LIKE @search OR cli.nome_cliente LIKE @search
+                                OR pv.id_pedidovenda LIKE @search OR vi.id_vendaitem LIKE @search
+                                OR pv.data_pedidovenda LIKE @search";
+;
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@search", "%" + search + "%");
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PedidoVendaItem vendaItem = new PedidoVendaItem
+                            {
+                                Id = reader.GetInt32("id_vendaitem"),
+                                Qtd = reader.GetInt32("qtd_vendaitem"),
+                                UnidQtd = reader.GetString("unidqtd_vendaitem"),
+                                Valor = reader.GetDecimal("valor_vendaitem"),
+                                IdPedidoVenda = reader.GetInt32("id_pedidovenda"),
+                                IdProduto = reader.GetInt32("id_estoqueproduto"),
+                                NomeProduto = reader.GetString("variedade_cultivo"),
+                                Data = reader.GetDateTime("data_pedidovenda"),
+                                NomeCliente = reader.GetString("nome_cliente")
+                            };
+                            pedidosVendaItem.Add(vendaItem);
+                        }
+                    }
+                }
+            }
+
+            return pedidosVendaItem;
+        }
+
+        // NOVO Método para obter todos os pedidos de venda e seus itens
+        public List<PedidoVenda> ListarPedidosVendaComItems()
+        {
+            // cada PedidoVenda possui um List<PedidoVendaItem> Itens
+            List<PedidoVenda> pedidosVenda = new List<PedidoVenda>();
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT pv.id_pedidovenda, pv.data_pedidovenda, pv.id_cliente, c.nome_cliente 
+                                FROM pedidovenda pv
+                                LEFT JOIN cliente c ON pv.id_cliente = c.id_cliente";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PedidoVenda pedidoVenda = new PedidoVenda
+                            {
+                                Id = reader.GetInt32("id_pedidovenda"),
+                                Data = reader.GetDateTime("data_pedidovenda"),
+                                IdCliente = reader.GetInt32("id_cliente"),
+                                NomeCliente = reader.GetString("nome_cliente")
+                            };
+
+                            pedidoVenda.Itens = ListarItensPedidoVendaPorId(pedidoVenda.Id);
+                            pedidosVenda.Add(pedidoVenda);
+                        }
+                    }
+                }
+            }
+            return pedidosVenda;
+        }
+
+        // NOVO Método para listar os itens de venda de um pedido de venda por id
+        public List<PedidoVendaItem> ListarItensPedidoVendaPorId(int idPedidoVenda)
+        {
+            List<PedidoVendaItem> vendaItens = new List<PedidoVendaItem>();
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT vi.id_vendaitem, vi.qtd_vendaitem, vi.unidqtd_vendaitem, vi.valor_vendaitem, vi.id_pedidovenda, vi.id_estoqueproduto, 
+                                cul.variedade_cultivo
+                                FROM vendaitem vi
+                                LEFT JOIN estoqueproduto ep ON vi.id_estoqueproduto = ep.id_estoqueproduto
+                                LEFT JOIN producao pr ON ep.id_producao = pr.id_producao
+                                LEFT JOIN cultivo cul ON pr.id_cultivo = cul.id_cultivo
+                                WHERE vi.id_pedidovenda = @idPedidoVenda";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@idPedidoVenda", idPedidoVenda);
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            PedidoVendaItem vendaItem = new PedidoVendaItem
+                            {
+                                Id = reader.GetInt32("id_vendaitem"),
+                                Qtd = reader.GetInt32("qtd_vendaitem"),
+                                UnidQtd = reader.GetString("unidqtd_vendaitem"),
+                                Valor = reader.GetDecimal("valor_vendaitem"),
+                                IdPedidoVenda = reader.GetInt32("id_pedidovenda"),
+                                IdProduto = reader.GetInt32("id_estoqueproduto"),
+                                NomeProduto = reader.GetString("variedade_cultivo")
+                            };
+                            vendaItens.Add(vendaItem);
+                        }
+                    }
+                }
+
+            }
+            return vendaItens;
+        }
+
+
+        // Método antigo para cadastrar um novo pedido de venda
+        /*
         public void CadastrarPedidoVenda(PedidoVenda pedidoVenda, MySqlTransaction transaction)
         {
             string insertPedidoQuery = @"INSERT INTO pedidovenda (data_pedidovenda, id_cliente) 
@@ -27,7 +153,7 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        // Método para cadastrar um novo item de venda
+        // Método antigo para cadastrar um novo item de venda
         public void CadastrarVendaItem(PedidoVendaItem vendaItem, MySqlTransaction transaction)
         {
             string insertItemQuery = @"INSERT INTO vendaitem (qtd_vendaitem, unidqtd_vendaitem, valor_vendaitem, id_pedidovenda, id_estoqueproduto) 
@@ -42,6 +168,57 @@ namespace PIMFazendaUrbanaLib
                 insertItemCommand.ExecuteNonQuery();
             }
         }
+        */
+
+        // Método para cadastrar um novo pedido de venda com itens
+        public void CadastrarPedidoVenda(PedidoVenda pedidoVenda)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                using (MySqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Cadastrar PedidoVenda
+                        string insertPedidoQuery = @"INSERT INTO pedidovenda (data_pedidovenda, id_cliente) 
+                                 VALUES (@dataPedidoVenda, @idCliente);
+                                 SELECT LAST_INSERT_ID();";
+
+                        using (MySqlCommand insertPedidoCommand = new MySqlCommand(insertPedidoQuery, connection))
+                        {
+                            insertPedidoCommand.Parameters.AddWithValue("@dataPedidoVenda", pedidoVenda.Data);
+                            insertPedidoCommand.Parameters.AddWithValue("@idCliente", pedidoVenda.IdCliente);
+                            pedidoVenda.Id = Convert.ToInt32(insertPedidoCommand.ExecuteScalar());
+                        }
+
+                        // Cadastrar Itens de Venda
+                        foreach (var item in pedidoVenda.Itens)
+                        {
+                            item.IdPedidoVenda = pedidoVenda.Id;
+                            string insertItemQuery = @"INSERT INTO vendaitem (qtd_vendaitem, unidqtd_vendaitem, valor_vendaitem, id_pedidovenda, id_estoqueproduto) 
+                                                     VALUES (@qtdVendaItem, @unidQtdVendaItem, @valorVendaItem, @idPedidoVenda, @idEstoqueProduto)";
+                            using (MySqlCommand insertItemCommand = new MySqlCommand(insertItemQuery, connection))
+                            {
+                                insertItemCommand.Parameters.AddWithValue("@qtdVendaItem", item.Qtd);
+                                insertItemCommand.Parameters.AddWithValue("@unidQtdVendaItem", item.UnidQtd);
+                                insertItemCommand.Parameters.AddWithValue("@valorVendaItem", item.Valor);
+                                insertItemCommand.Parameters.AddWithValue("@idPedidoVenda", pedidoVenda.Id);
+                                insertItemCommand.Parameters.AddWithValue("@idEstoqueProduto", item.IdProduto);
+                                insertItemCommand.ExecuteNonQuery();
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Erro ao cadastrar pedido de venda: " + ex.Message);
+                    }
+                }
+            }
+        }
+
 
         // Método para listar todos os pedidos de venda
         public List<PedidoVenda> ListarPedidosVenda()
@@ -189,7 +366,9 @@ namespace PIMFazendaUrbanaLib
                             UnidQtd = reader.GetString("unidqtd_vendaitem"),
                             Valor = reader.GetDecimal("valor_vendaitem"),
                             IdPedidoVenda = reader.GetInt32("id_pedidovenda"),
-                            IdProduto = reader.GetInt32("id_estoqueproduto")
+                            IdProduto = reader.GetInt32("id_estoqueproduto"),
+                            NomeProduto = reader.GetString("variedade_cultivo"),
+
                         };
                     }
                 }
@@ -231,7 +410,7 @@ namespace PIMFazendaUrbanaLib
                                 IdProduto = reader.GetInt32("id_estoqueproduto"),
                                 NomeProduto = reader.GetString("variedade_cultivo"),
                                 Data = reader.GetDateTime("data_pedidovenda"),
-                                NomeCliente = reader.GetString("nome_cliente")
+                                //NomeCliente = reader.GetString("nome_cliente")
                             };
                             vendaItens.Add(vendaItem);
                         }
@@ -278,7 +457,7 @@ namespace PIMFazendaUrbanaLib
                                 IdProduto = reader.GetInt32("id_estoqueproduto"),
                                 NomeProduto = reader.GetString("variedade_cultivo"),
                                 Data = reader.GetDateTime("data_pedidovenda"),
-                                NomeCliente = reader.GetString("nome_cliente")
+                                //NomeCliente = reader.GetString("nome_cliente")
                             };
                             vendaItens.Add(vendaItem);
                         }

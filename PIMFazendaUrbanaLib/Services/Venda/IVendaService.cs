@@ -2,7 +2,11 @@
 {
     public interface IVendaService
     {
-        void CadastrarPedidoVendaComItens(PedidoVenda pedidoVenda, List<PedidoVendaItem> vendaItems);
+        List<PedidoVendaItem> ListarPedidoVendaItensComFiltros(string search);
+
+        //void CadastrarPedidoVendaComItens(PedidoVenda pedidoVenda, List<PedidoVendaItem> vendaItems);
+
+        void CadastrarPedidoVenda(PedidoVenda pedidoVenda);
 
         List<PedidoVenda> ListarPedidosVenda();
 
@@ -18,6 +22,7 @@
 
         List<PedidoVendaItem> FiltrarRegistrosDeVendaNome(string produtoNome);
 
-        void ValidarVenda(PedidoVenda pedidoVenda, List<PedidoVendaItem> vendaItems);
+        //void ValidarVenda(PedidoVenda pedidoVenda, List<PedidoVendaItem> vendaItems);
+        void ValidarVenda(PedidoVenda pedidoVenda);
     }
 }

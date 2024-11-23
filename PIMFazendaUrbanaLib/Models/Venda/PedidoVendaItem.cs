@@ -1,6 +1,6 @@
 ﻿namespace PIMFazendaUrbanaLib
 {
-    public class PedidoVendaItem  // precisa atualizar com composição
+    public class PedidoVendaItem
     {
         public int Id { get; set; }
         public int Qtd { get; set; }
@@ -11,6 +11,7 @@
         public string NomeProduto { get; set; }
         public DateTime Data { get; set; }
         public string NomeCliente { get; set; }
+        public decimal ValorTotal => Qtd * Valor;
     }
 }
 

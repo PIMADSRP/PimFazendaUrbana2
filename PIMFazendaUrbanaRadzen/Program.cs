@@ -67,20 +67,6 @@ builder.Services.AddScoped(provider =>
         $"{apiBaseUrl}/cliente"
     ));
 
-/*
-builder.Services.AddScoped(provider =>
-    new ClienteApiService<EnderecoDTO>(
-        provider.GetRequiredService<HttpClient>(),
-        $"{apiBaseUrl}/enderecos"
-    ));
-
-builder.Services.AddScoped(provider =>
-    new ClienteApiService<TelefoneDTO>(
-        provider.GetRequiredService<HttpClient>(),
-        $"{apiBaseUrl}/telefones"
-    ));
-*/
-
 builder.Services.AddScoped(provider =>
     new FornecedorApiService<FornecedorDTO>(
         provider.GetRequiredService<HttpClient>(),
@@ -118,6 +104,24 @@ builder.Services.AddScoped(provider =>
     ));
 
 builder.Services.AddScoped(provider =>
+    new EstoqueProdutoApiService<EstoqueProdutoDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/estoqueproduto"
+    ));
+
+builder.Services.AddScoped(provider =>
+    new CompraApiService<PedidoCompraItemDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/compra"
+    ));
+
+builder.Services.AddScoped(provider =>
+    new VendaApiService<PedidoVendaItemDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/venda"
+    ));
+
+builder.Services.AddScoped(provider =>
     new ExportacaoApiService<object>(
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/exportacao"
@@ -145,6 +149,9 @@ app.Use(async (context, next) =>
     }
 });
 */
+
+//app.MapBlazorHub(); // Configuração necessária
+//app.MapFallbackToPage("/not-found");
 
 app.UseHttpsRedirection(); // Redireciona HTTP para HTTPS
 app.MapControllers(); // Mapeia as controllers

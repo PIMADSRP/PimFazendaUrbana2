@@ -24,7 +24,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
         [Inject]
         public NotificationService NotificationService { get; set; }
 
-        protected ClienteDTO cliente = new ClienteDTO();
+        protected ClienteDTO cliente;
         protected bool errorVisible;
 
         protected List<string> estados = new List<string>
@@ -34,10 +34,12 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
             "RS", "RO", "RR", "SC", "SP", "SE", "TO"
         };
 
-
         protected override async Task OnInitializedAsync()
         {
-            
+            cliente = new ClienteDTO();
+            cliente.Telefone = new TelefoneDTO();
+            cliente.Endereco = new EnderecoDTO();
+
             if (cliente.Nome.IsNullOrEmpty() || cliente == null)
             {
                 Console.WriteLine("Cliente é nulo");
@@ -66,8 +68,6 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
                 NavigationManager.NavigateTo("/clientes");
             }
         }
-
-
 
         protected async Task FormSubmit()
         {
@@ -151,13 +151,13 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
                 else
                 {
                     // Se o endereço não for encontrado, exibe uma mensagem de erro
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "CEP não encontrado. Verifique o número do CEP e tente novamente.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "CEP não encontrado. Verifique o número do CEP e tente novamente.", duration: 5000);
                 }
             }
             catch (Exception ex)
             {
                 // Caso ocorra algum erro na consulta, exibe mensagem de erro
-                NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Erro ao consultar o CEP: {ex.Message}");
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Erro ao consultar o CEP: {ex.Message}", duration: 5000);
             }
         }
 

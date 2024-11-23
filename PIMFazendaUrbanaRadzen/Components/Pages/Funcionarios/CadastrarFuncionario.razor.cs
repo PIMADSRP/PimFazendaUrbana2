@@ -127,13 +127,13 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
                 else
                 {
                     // Se o endereço não for encontrado, exibe uma mensagem de erro
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "CEP não encontrado. Verifique o número do CEP e tente novamente.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "CEP não encontrado. Verifique o número do CEP e tente novamente.", duration: 5000);
                 }
             }
             catch (Exception ex)
             {
                 // Caso ocorra algum erro na consulta, exibe mensagem de erro
-                NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Erro ao consultar o CEP: {ex.Message}");
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Erro ao consultar o CEP: {ex.Message}", duration: 5000);
             }
         }
 
@@ -227,14 +227,14 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
                 {
                     usuarioDisponivel = false;
                     mensagemErroUsuarioIndisponivel = "Usuário indisponível";
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Nome de usuário já cadastrado. Por favor, escolha outro nome de usuário.");
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Nome de usuário já cadastrado. Por favor, escolha outro nome de usuário.", duration: 5000);
                 }
             }
             else
             {
                 usuarioDisponivel = true;
                 mensagemErroUsuarioIndisponivel = string.Empty;
-                NotificationService.Notify(NotificationSeverity.Success, "Usuário disponivel", "Nome de usuário disponível");
+                NotificationService.Notify(NotificationSeverity.Success, "Usuário disponivel", "Nome de usuário disponível", duration: 2000);
             }
         }
 

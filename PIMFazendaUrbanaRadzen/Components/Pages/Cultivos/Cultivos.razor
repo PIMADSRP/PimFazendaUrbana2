@@ -59,20 +59,20 @@
                 <div style="margin-bottom: 15px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
                         <RadzenLabel Text="Tempo de Prod. Tradicional (Dias):" Style="flex: 0 0 100%; min-width: 150px; margin-top: 5px; margin-bottom: 5px;" />
-                        <RadzenNumeric Name="TempoProdTrad" ShowUpDown="false" @bind-Value="cultivoCadastrarOuEditar.TempoProdTradicional"
+                        <RadzenNumeric Name="TempoProdTradicional" ShowUpDown="false" @bind-Value="cultivoCadastrarOuEditar.TempoProdTradicional"
                                        Min="0" Style="width: 100%;"
                                        title="Tempo de Produção Tradicional é obrigatório e deve ser um número inteiro maior que 0" />
-                        <RadzenRequiredValidator Component="TempoProdTrad" Text="Tempo de Produção Tradicional é obrigatório e deve ser um número inteiro maior que 0" />
+                        <RadzenRequiredValidator Component="TempoProdTradicional" Text="Tempo de Produção Tradicional é obrigatório e deve ser um número inteiro maior que 0" />
                     </RadzenRow>
                 </div>
 
                 <div style="margin-bottom: 15px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
                         <RadzenLabel Text="Tempo de Prod. Controlado (Dias):" Style="flex: 0 0 100%; min-width: 150px; margin-top: 5px; margin-bottom: 5px;" />
-                        <RadzenNumeric Name="TempoProdCtrl" ShowUpDown="false" @bind-Value="cultivoCadastrarOuEditar.TempoProdControlado"
+                        <RadzenNumeric Name="TempoProdControlado" ShowUpDown="false" @bind-Value="cultivoCadastrarOuEditar.TempoProdControlado"
                                        Min="0" Style="width: 100%;"
                                        title="Tempo de Produção Controlado é obrigatório e deve ser um número inteiro maior que 0" />
-                        <RadzenRequiredValidator Component="TempoProdCtrl" Text="Tempo de Produção Controlado é obrigatório e deve ser um número inteiro maior que 0" />
+                        <RadzenRequiredValidator Component="TempoProdControlado" Text="Tempo de Produção Controlado é obrigatório e deve ser um número inteiro maior que 0" />
                     </RadzenRow>
                 </div>
 
@@ -241,7 +241,7 @@
                                               Size="ButtonSize.Medium"
                                               Shade="Shade.Lighter"
                                               Variant="Variant.Flat"
-                                              Click="@(() => ExcluirCultivo(cultivo))"
+                                              Click="@(() => ConfirmarExclusao(cultivo))"
                                               @onclick:stopPropagation="true" />
                             </Template>
                         </RadzenDataGridColumn>

@@ -11,6 +11,51 @@ namespace PIMFazendaUrbanaLib
             this.connectionString = connectionString;
         }
 
+        // NOVO método para filtrar pedidos de compra e seus itens por uma query de busca
+        public List<PedidoCompra> ListarComprasComFiltros(string search)
+        {
+            List<PedidoCompra> pedidosCompra = new List<PedidoCompra>();
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = @"SELECT pc.id_pedidocompra, pc.data_pedidocompra, pc.id_fornecedor, f.nome_fornecedor 
+                                FROM pedidocompra pc
+                                LEFT JOIN compraitem ci ON pc.id_pedidocompra = ci.id_pedidocompra
+                                LEFT JOIN fornecedor f ON pc.id_fornecedor = f.id_fornecedor
+                                LEFT JOIN estoqueinsumo ei ON ci.id_insumo = ei.id_insumo
+                                WHERE f.nome_fornecedor LIKE @search OR pc.data_pedidocompra LIKE @search OR pc.id_pedidocompra LIKE @search
+                                OR ci.id_compraitem LIKE @search OR ei.nome_insumo LIKE @search";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@search", $"%{search}%");
+
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            int idPedidoCompra = reader.GetInt32("id_pedidocompra");
+
+                            PedidoCompra pedidoCompra = new PedidoCompra
+                            {
+                                Id = reader.GetInt32("id_pedidocompra"),
+                                Data = reader.GetDateTime("data_pedidocompra"),
+                                IdFornecedor = reader.GetInt32("id_fornecedor"),
+                                NomeFornecedor = reader.GetString("nome_fornecedor"),
+
+                                Itens = ListarItensPedidoCompraPorId(idPedidoCompra)
+
+                            };
+                            pedidosCompra.Add(pedidoCompra);
+                        }
+                    }
+                }
+            }
+            return pedidosCompra;
+        }
+
         // NOVO Método para obter todos os pedidos de compra e seus itens
         public List<PedidoCompra> ListarPedidosCompraComItems()
         {
@@ -23,6 +68,7 @@ namespace PIMFazendaUrbanaLib
                 string query = @"SELECT pc.id_pedidocompra, pc.data_pedidocompra, pc.id_fornecedor, f.nome_fornecedor 
                                 FROM pedidocompra pc
                                 LEFT JOIN fornecedor f ON pc.id_fornecedor = f.id_fornecedor";
+
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     using (MySqlDataReader reader = command.ExecuteReader())
@@ -84,7 +130,8 @@ namespace PIMFazendaUrbanaLib
         }
 
 
-        // Método para cadastrar um novo pedido de compra
+        // Método antigo para cadastrar um novo pedido de compra
+        /*
         public void CadastrarPedidoCompra(PedidoCompra pedidoCompra, MySqlTransaction transaction)
         {
             string insertPedidoQuery = @"INSERT INTO pedidocompra (data_pedidocompra, id_fornecedor) 
@@ -99,7 +146,7 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        // Método para cadastrar um novo item de compra
+        // Método antigo para cadastrar um novo item de compra
         public void CadastrarCompraItem(PedidoCompraItem compraItem, MySqlTransaction transaction)
         {
             string insertItemQuery = @"INSERT INTO compraitem (qtd_compraitem, unidqtd_compraitem, valor_compraitem, id_pedidocompra, id_insumo) 
@@ -112,6 +159,56 @@ namespace PIMFazendaUrbanaLib
                 insertItemCommand.Parameters.AddWithValue("@idPedidoCompra", compraItem.IdPedidoCompra);
                 insertItemCommand.Parameters.AddWithValue("@idInsumo", compraItem.IdInsumo);
                 insertItemCommand.ExecuteNonQuery();
+            }
+        }
+        */
+
+        // NOVO Método para cadastrar um novo pedido de compra e seus itens
+        public void CadastrarPedidoCompra(PedidoCompra pedidoCompra)
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                using (MySqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Cadastrar PedidoCompra
+                        string insertPedidoQuery = @"INSERT INTO pedidocompra (data_pedidocompra, id_fornecedor) 
+                                 VALUES (@dataPedidoCompra, @idFornecedor);
+                                 SELECT LAST_INSERT_ID();";
+
+                        using (MySqlCommand insertPedidoCommand = new MySqlCommand(insertPedidoQuery, connection, transaction))
+                        {
+                            insertPedidoCommand.Parameters.AddWithValue("@dataPedidoCompra", pedidoCompra.Data);
+                            insertPedidoCommand.Parameters.AddWithValue("@idFornecedor", pedidoCompra.IdFornecedor);
+                            pedidoCompra.Id = Convert.ToInt32(insertPedidoCommand.ExecuteScalar());
+                        }
+
+                        // Cadastrar Itens de Compra
+                        foreach (var item in pedidoCompra.Itens)
+                        {
+                            item.IdPedidoCompra = pedidoCompra.Id;
+                            string insertItemQuery = @"INSERT INTO compraitem (qtd_compraitem, unidqtd_compraitem, valor_compraitem, id_pedidocompra, id_insumo) 
+                                                     VALUES (@qtdCompraItem, @unidQtdCompraItem, @valorCompraItem, @idPedidoCompra, @idInsumo)";
+                            using (MySqlCommand insertItemCommand = new MySqlCommand(insertItemQuery, connection, transaction))
+                            {
+                                insertItemCommand.Parameters.AddWithValue("@qtdCompraItem", item.Qtd);
+                                insertItemCommand.Parameters.AddWithValue("@unidQtdCompraItem", item.UnidQtd);
+                                insertItemCommand.Parameters.AddWithValue("@valorCompraItem", item.Valor);
+                                insertItemCommand.Parameters.AddWithValue("@idPedidoCompra", item.IdPedidoCompra);
+                                insertItemCommand.Parameters.AddWithValue("@idInsumo", item.IdInsumo);
+                                insertItemCommand.ExecuteNonQuery();
+                            }
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Erro ao cadastrar pedido de compra: " + ex.Message);
+                    }
+                }
             }
         }
 

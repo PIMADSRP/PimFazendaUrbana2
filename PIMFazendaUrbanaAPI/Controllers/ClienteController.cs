@@ -118,7 +118,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
             Console.WriteLine($"Controller recebeu id: {id}");
             try
             {
-                Cliente? cliente = null;
+                Cliente? cliente = new Cliente();
                 cliente = _clienteService.ConsultarClientePorID(id);
                 Console.WriteLine($"No Controller: cliente: {cliente.Nome}");
                 if (cliente == null)

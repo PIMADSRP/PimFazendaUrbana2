@@ -1,4 +1,6 @@
 @page "/vendas"
+@using PIMFazendaUrbanaRadzen.Services
+@using PIMFazendaUrbanaAPI.DTOs
 
 <PageTitle>Vendas</PageTitle>
 
@@ -12,8 +14,7 @@
     <!-- Campo de busca -->
     <RadzenTextBox Placeholder="Procurar..."
                    Style="flex-grow: 1; width: auto; min-width: 100px;"
-                   @bind-Value="searchText"
-                   @oninput="FilterData" />
+                   @oninput="@(args => OnSearch(args.Value.ToString()))" />
 
     <!-- Botão Exportar -->
     <RadzenSplitButton ButtonStyle="ButtonStyle.Secondary"
@@ -22,7 +23,8 @@
                        Variant="Radzen.Variant.Filled"
                        Shade="Radzen.Shade.Lighter"
                        IconColor="black"
-                       Style="min-width: 140px;"
+                       Style="min-width: 140px; padding: 0px 0px !important;"
+                       class="split-button-menor"
                        Click="OnExportarClick">
         <RadzenSplitButtonItem Text="Excel" Value="xlsx" />
         <RadzenSplitButtonItem Text="CSV" Value="csv" />
@@ -34,39 +36,134 @@
                   Text="Adicionar"
                   Click="@AddButtonClick"
                   Variant="Radzen.Variant.Filled"
-                  Shade="Radzen.Shade.Light" />
+                  Shade="Radzen.Shade.Light"
+                  Style="min-width: 120px; padding: 0px 0px !important;"
+                  class="botao-menor"
+                  id="#botao-menor" />
 </div>
 
 <!-- DataGrid 1: Registro de Venda de Produtos -->
 <div style="margin-top: 10px;">
     <RadzenRow>
-        <RadzenDataGrid Data="@filteredData"
-                        TItem="dynamic"
+        <RadzenDataGrid @ref="grid0"
+                        Data="@vendaitens"
+                        TItem="PedidoVendaItemDTO"
                         AllowFiltering="true"
-                        AllowSorting="true"
+                        FilterMode="FilterMode.Advanced"
                         AllowPaging="true"
-                        AllowResizing="true"
+                        AllowSorting="true"
+                        ShowPagingSummary="true"
+                        PageSizeOptions="@(new int[]{5, 10, 20, 30})"
+                        AllowColumnResize="true"
+                        PageSizeText="Itens por página"
+                        PageTitleFormat="Página {0}"
+                        PagingSummaryFormat="Página {0} de {1} ({2} itens)"
+                        PrevPageAriaLabel="Ir para a página anterior"
+                        PrevPageTitle="Página anterior"
                         EmptyText="Sem itens para mostrar"
-                        Style="border: 1px solid black; padding: 10px; width: 100%; height: auto; min-height: 300px; word-wrap: break-word; white-space: normal;">
-            <HeaderTemplate>
-                <div>
-                    <RadzenText Text="Registro de Venda de Produtos" TextStyle="Radzen.Blazor.TextStyle.H6" />
-                </div>
-            </HeaderTemplate>
+                        PageAriaLabelFormat="Ir para a página {0}"
+                        NextPageAriaLabel="Ir para a próxima página"
+                        NextPageTitle="Próxima página"
+                        LastPageTitle="Última página"
+                        FirstPageTitle="Primeira página"
+                        EndsWithText="Termina com..."
+                        EnumFilterSelectText="Selecionar..."
+                        EqualsText="Igual a..."
+                        FilterText="Filtrar"
+                        FirstPageAriaLabel="Ir para a primeira página"
+                        GreaterThanText="Maior que..."
+                        GreaterThanOrEqualsText="Igual ou maior que..."
+                        IsNullText="Nulo"
+                        IsNotNullText="Não nulo"
+                        LastPageAriaLabel="Ir para a última página"
+                        LessThanText="Menor que..."
+                        LessThanOrEqualsText="Igual ou menor que..."
+                        OrOperatorText="Ou"
+                        AndOperatorText="E"
+                        ApplyFilterText="Aplicar"
+                        ClearFilterText="Limpar"
+                        ColumnsText="Colunas"
+                        ContainsText="Contém..."
+                        DoesNotContainText="Não contém..."
+                        StartsWithText="Começa com..."
+                        IsNotEmptyText="Não é vazio"
+                        IsEmptyText="É vazio"
+                        NotEqualsText="Não é igual a..."
+                        AllColumnsText="Todas"
+                        ColumnsShowingText="Exibir colunas"
+                        LogicalOperatorAriaLabel="Operador de filtro lógico"
+                        EnumNullFilterText="Sem valor"
+                        FilterToggleAriaLabel="Alternar"
+                        FilterOperatorAriaLabel="Filtrar operador"
+                        FilterValueAriaLabel="Filtrar valor"
+                        SecondFilterOperatorAriaLabel="Segundo operador de filtro"
+                        SecondFilterValueAriaLabel="Segundo valor de filtro"
+                        GroupPanelText="Arrastar cabeçalho de coluna"
+                        ExpandChildItemAriaLabel="Expandir item filho"
+                        ExpandGroupAriaLabel="Expandir grupo"
+                        RemoveGroupAriaLabel="Remover grupo"
+                        SelectVisibleColumnsAriaLabel="Selecionar colunas visíveis"
+                        Style="border: 1px solid black; padding: 5px; width: 100%;"
+                        class="data-grid-com-poucas-colunas">
             <Columns>
-                <RadzenDataGridColumn TItem="dynamic" Property="IDPedido" Title="ID Pedido" Filterable="true" Sortable="true" Width="10%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Produto" Title="Produto" Filterable="true" Sortable="true" Width="15%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Quantidade" Title="Quantidade" Filterable="true" Sortable="true" Width="10%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Unidade" Title="Unidade" Filterable="true" Sortable="true" Width="10%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Data" Title="Data" Filterable="true" Sortable="true" Width="15%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Cliente" Title="Cliente" Filterable="true" Sortable="true" Width="15%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="ValorUnitario" Title="Valor Unitário" Filterable="true" Sortable="true" Width="10%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="Total" Title="Total" Filterable="true" Sortable="true" Width="15%" />
+                <!-- Coluna para Id -->
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Id" Title="Id" Filterable="false" Sortable="true" Width="4%" MinWidth="35px">
+                </RadzenDataGridColumn>
+
+                <!-- Coluna para Produto com tooltip -->
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="NomeProduto" Title="Nome Produto" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                    <Template Context="vendaitem">
+                        <span title="@vendaitem.NomeProduto">@vendaitem.NomeProduto</span> <!-- Tooltip -->
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <!-- Coluna para Qtd com tooltip -->
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Qtd" Title="Quantidade" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                    <Template Context="vendaitem">
+                        <span title="@vendaitem.Qtd">@vendaitem.Qtd</span> <!-- Tooltip -->
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <!-- Coluna para Unidade com tooltip -->
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="UnidQtd" Title="Unidade" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                    <Template Context="vendaitem">
+                        <span title="@vendaitem.UnidQtd">@vendaitem.UnidQtd</span> <!-- Tooltip -->
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <!-- Coluna para Data com tooltip -->
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Data" Title="Data" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                    <Template Context="vendaitem">
+                        <span title="@vendaitem.Data">@vendaitem.Data</span> <!-- Tooltip -->
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <!-- Coluna para Cliente com tooltip -->
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="NomeCliente" Title="Cliente" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                    <Template Context="vendaitem">
+                        <span title="@vendaitem.NomeCliente">@vendaitem.NomeCliente</span> <!-- Tooltip -->
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <!-- Coluna para ValorUnitario com tooltip -->
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Valor" Title="Valor Unitário" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                    <Template Context="vendaitem">
+                        <span title="@vendaitem.Valor">@vendaitem.Valor</span> <!-- Tooltip -->
+                    </Template>
+                </RadzenDataGridColumn>
+
+                <!-- Coluna para ValorTotal com tooltip -->
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="ValorTotal" Title="Valor Total" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                    <Template Context="vendaitem">
+                        <span title="@vendaitem.ValorTotal">@vendaitem.ValorTotal</span> <!-- Tooltip -->
+                    </Template>
+                </RadzenDataGridColumn>
+
             </Columns>
         </RadzenDataGrid>
     </RadzenRow>
 </div>
-
+@*
 <!-- DataGrid 2: Estoque de Produto -->
 <div style="margin-top: 20px;">
     <RadzenRow>
@@ -95,77 +192,4 @@
         </RadzenDataGrid>
     </RadzenRow>
 </div>
-
-@code {
-    private List<dynamic> dataGridNovoItems = new List<dynamic>
-    {
-        new { IDPedido = "1", Produto = "Alface", Quantidade = 10, Unidade = "kg", Data = "2024-11-01", Cliente = "João Silva", ValorUnitario = 2.50, Total = 25.00 },
-        new { IDPedido = "2", Produto = "Tomate", Quantidade = 15, Unidade = "kg", Data = "2024-11-02", Cliente = "Maria Oliveira", ValorUnitario = 3.00, Total = 45.00 }
-    };
-
-    private List<dynamic> estoqueData = new List<dynamic>
-    {
-        new { ID = "1", Produto = "Alface", Categoria = "Hortaliças", Quantidade = 50, Unidade = "kg", DataEntrada = "2024-10-30", IDProducao = "P01" },
-        new { ID = "2", Produto = "Tomate", Categoria = "Hortaliças", Quantidade = 100, Unidade = "kg", DataEntrada = "2024-10-25", IDProducao = "P02" }
-    };
-
-    private List<dynamic> filteredData;
-    private string searchText = string.Empty;
-
-    protected override void OnInitialized()
-    {
-        filteredData = dataGridNovoItems;
-    }
-
-    private void FilterData()
-    {
-        if (string.IsNullOrWhiteSpace(searchText))
-        {
-            filteredData = dataGridNovoItems;
-        }
-        else
-        {
-            string searchLower = searchText.ToLower();
-            filteredData = dataGridNovoItems.Where(item =>
-                item.IDPedido.ToString().ToLower().Contains(searchLower) ||
-                item.Produto.ToLower().Contains(searchLower) ||
-                item.Quantidade.ToString().ToLower().Contains(searchLower) ||
-                item.Unidade.ToLower().Contains(searchLower) ||
-                item.Data.ToLower().Contains(searchLower) ||
-                item.Cliente.ToLower().Contains(searchLower) ||
-                item.ValorUnitario.ToString().ToLower().Contains(searchLower) ||
-                item.Total.ToString().ToLower().Contains(searchLower)).ToList();
-        }
-    }
-
-    private void OnExportarClick(object args)
-    {
-        string exportType = args.ToString()?.ToLower();
-        if (exportType == "xlsx")
-        {
-            ExportToExcel();
-        }
-        else if (exportType == "csv")
-        {
-            ExportToCsv();
-        }
-    }
-
-    private void ExportToExcel()
-    {
-        Console.WriteLine("Exportando para Excel...");
-    }
-
-    private void ExportToCsv()
-    {
-        Console.WriteLine("Exportando para CSV...");
-    }
-
-    [Inject]
-    public NavigationManager NavigationManager { get; set; } // serviço de navegação
-
-    private void AddButtonClick()
-    {
-        NavigationManager.NavigateTo("/cadastrar-venda");
-    }
-}
+*@

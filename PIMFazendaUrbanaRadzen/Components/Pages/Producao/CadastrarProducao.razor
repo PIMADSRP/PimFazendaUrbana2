@@ -1,59 +1,87 @@
 ﻿@page "/cadastrar-producao"
+@using PIMFazendaUrbanaRadzen.Services
+@using PIMFazendaUrbanaAPI.DTOs
+@* @attribute [Authorize] *@
 
 <PageTitle>Cadastrar Produção</PageTitle>
 
-<!-- Parte do formulário -->
 <RadzenCard Style="max-width: 800px; margin: 0 auto; padding: 20px;" class="rz-mt-2">
     <RadzenText Text="Cadastrar Produção" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-4" />
 
-    <RadzenTemplateForm TItem="ProducaoDTO" Submit="@OnConfirmarClick">
+    <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">
+        Erro ao cadastrar produção
+    </RadzenAlert>
+
+    <RadzenTemplateForm TItem="ProducaoDTO" Data="@producao" Submit="@FormSubmit">
         <RadzenStack>
             <!-- Campo Variedade -->
-            <div style="margin-bottom: 15px;">
-                <RadzenLabel Text="Variedade" />
-                <RadzenDropDown @bind-Value="producao.Variedade" Style="width: 100%;" Data="unidades" Placeholder="Selecione o cultivo" TValue="string" />
-            </div>
+            <RadzenDropDown style="width: 100%"
+                            @bind-Value="cultivoSelecionado"
+                            Name="Cultivo"
+                            Placeholder="Selecione o cultivo"
+                            Data="@cultivos"
+                            TextProperty="Variedade"
+                            ValueProperty="this"
+                            TValue="CultivoDTO"
+                            Change="@(args => AtualizarCultivoSelecionado((CultivoDTO)args))" />
+            <RadzenRequiredValidator Component="Cultivo" Text="Selecione uma variedade de cultivo" />
 
             <!-- Campo Categoria -->
             <div style="margin-bottom: 15px;">
                 <RadzenLabel Text="Categoria" />
-                <RadzenTextBox @bind-Value="producao.Categoria" Placeholder="Verdura" ReadOnly="true" Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
+                <RadzenTextBox Value="@(producao.Cultivo?.Categoria ?? "N/A")"
+                               ReadOnly="true"
+                               Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
             </div>
 
             <!-- Campo Quantidade -->
             <div style="margin-bottom: 15px;">
                 <RadzenLabel Text="Quantidade" />
-                <RadzenNumeric @bind-Value="producao.Quantidade" Min="0" Style="width: 100%;" />
+                <RadzenNumeric @bind-Value="producao.Qtd" Min="0" Style="width: 100%;" />
             </div>
 
             <!-- Campo Unidade -->
             <div style="margin-bottom: 15px;">
                 <RadzenLabel Text="Unidade" />
-                <RadzenDropDown @bind-Value="producao.Unidade" Name="Unidade" Placeholder="Selecione a unidade" Data="@unidades" TValue="string" Style="width: 100%;" />
+                <RadzenDropDown @bind-Value="producao.Unidqtd" Name="Unidade" Placeholder="Selecione a unidade" Data="@unidadesPermitidas" TValue="string" Style="width: 100%;" />
             </div>
 
             <!-- Campo Data -->
             <div style="margin-bottom: 15px;">
                 <RadzenLabel Text="Data" />
-                <RadzenDatePicker @bind-Value="producao.Data" Style="width: 100%;" DateFormat="dd/MM/yyyy" ShowTime="false" />
+                <RadzenDatePicker @bind-Value="producao.Data"
+                                  Change="@(args => { AtualizarDataColheita(); })"
+                                  Style="width: 100%;"
+                                  DateFormat="dd/MM/yyyy" ShowTime="false" />
             </div>
 
             <!-- Campo Tempo de Produção e Data Prevista Colheita -->
             <div style="margin-bottom: 15px; display: flex; flex-direction: row; justify-content: space-between; gap: 10px;">
+                <!-- Tempo de Produção -->
                 <div style="flex: 1;">
                     <RadzenLabel Text="Tempo de Produção" />
-                    <RadzenTextBox @bind-Value="producao.TempoProd" Placeholder="" ReadOnly="true" Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
+                    <RadzenTextBox Value="@(tempoProd.HasValue ? tempoProd.Value.ToString() : "N/A")"
+                                   Placeholder="Tempo de Produção"
+                                   ReadOnly="true"
+                                   Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
                 </div>
+
+                <!-- Data Prevista de Colheita -->
                 <div style="flex: 1;">
                     <RadzenLabel Text="Data Prevista Colheita" />
-                    <RadzenTextBox @bind-Value="producao.DataPrevistaColheita" Placeholder="" ReadOnly="true" Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
+                    <RadzenTextBox Value="@(producao.DataColheita != default ? producao.DataColheita.ToString("dd/MM/yyyy") : "N/A")"
+                                   Placeholder="Data de Colheita"
+                                   ReadOnly="true"
+                                   Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
                 </div>
             </div>
 
-            <!-- Campo Tempo de Produção Controlado -->
+            <!-- Campo Ambiente Controlado -->
             <div style="margin-bottom: 15px;">
-                <RadzenLabel Text="Tempo de Produção Controlado?" />
-                <RadzenSwitch @bind-Value="producao.TempoProdControlado" style="height: 24px; width: 20px; flex: 1; min-width: 40px;" />
+                <RadzenLabel Text="Ambiente Controlado?" />
+                <RadzenSwitch @bind-Value="producao.AmbienteControlado"
+                              Change="@(args => { AtualizarTempoProd(); })"
+                              style="height: 24px; width: 20px; flex: 1; min-width: 40px;" />
             </div>
 
             <!-- Botões Confirmar e Cancelar -->
@@ -68,27 +96,3 @@
         </RadzenStack>
     </RadzenTemplateForm>
 </RadzenCard>
-
-@code {
-    // Definindo o DTO para o formulário
-    public class ProducaoDTO
-    {
-        public string Variedade { get; set; }
-        public string Categoria { get; set; }
-        public int Quantidade { get; set; }
-        public string Unidade { get; set; }
-        public DateTime Data { get; set; }
-        public string TempoProd { get; set; }
-        public string DataPrevistaColheita { get; set; }
-        public bool TempoProdControlado { get; set; }
-    }
-
-    // Dados de exemplo para os campos
-    private ProducaoDTO producao = new ProducaoDTO();
-    private List<string> unidades = new List<string> { "kg", "un", "gr" };
-
-    private void OnConfirmarClick()
-    {
-        // Lógica para salvar ou processar os dados
-    }
-}

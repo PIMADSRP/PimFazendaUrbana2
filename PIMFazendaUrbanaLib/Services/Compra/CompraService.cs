@@ -1,19 +1,20 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
 
 namespace PIMFazendaUrbanaLib
 {
     public class CompraService : ICompraService
     {
         private readonly ICompraDAO pedidoCompraDAO;
-        private readonly string connectionString;
+        //private readonly string connectionString;
 
         public CompraService(string connectionString)
         {
-            this.connectionString = connectionString;
+            //this.connectionString = connectionString;
             this.pedidoCompraDAO = new CompraDAO(connectionString);
         }
 
-        // Método para cadastrar um novo pedido de compra
+        // Método antigo para cadastrar um novo pedido de compra
+        /*
         public void CadastrarPedidoCompraComItens(PedidoCompra pedidoCompra, List<PedidoCompraItem> compraItems)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -43,6 +44,39 @@ namespace PIMFazendaUrbanaLib
                     }
                 }
             }
+        }
+        */
+
+        public List<PedidoCompra> ListarComprasComFiltros(string search)
+        {
+            try
+            {
+                List<PedidoCompra> compras = pedidoCompraDAO.ListarComprasComFiltros(search);
+                return compras; // Retorna a lista filtrada de compras
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao listar compras filtradas: " + ex.Message); // Lança uma exceção indicando que ocorreu um erro ao listar compras filtradas
+            }
+        }
+
+        // Método para cadastrar um novo pedido de compra
+        public void CadastrarPedidoCompra(PedidoCompra pedidoCompra)
+        {
+            try
+            {
+                ValidarCompra(pedidoCompra);
+                pedidoCompraDAO.CadastrarPedidoCompra(pedidoCompra);
+            }
+            catch (ValidationException ex) // Se ocorrer uma exceção do tipo ValidationException
+            {
+                throw; // Repassa a exceção de validação para o Controller manipular
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao cadastrar pedido de compra: " + ex.Message);
+            }
+
         }
 
         // Método para listar todos os pedidos de compra
@@ -139,13 +173,13 @@ namespace PIMFazendaUrbanaLib
          * =-=-=-=-=-=-=-=-=-=-=-=- VALIDAÇÃO COMPRA =-=-=-=-=-=-=-=-=-=-=-=-
          */
 
-        public void ValidarCompra(PedidoCompra pedidoCompra, List<PedidoCompraItem> compraItems)
+        public void ValidarCompra(PedidoCompra pedidoCompra)
         {
             var erros = new List<ValidationError>();
 
             // validar quantidade, valor unitario, fornecedor e produto
 
-            if (compraItems.Count <= 0) // Verifica se a quantidade de itens é maior que 0
+            if (pedidoCompra.Itens.Count <= 0) // Verifica se a quantidade de itens é maior que 0
             {
                 erros.Add((new ValidationError("Quantidade", "A compra deve conter pelo menos um item.")));
             }
@@ -157,7 +191,7 @@ namespace PIMFazendaUrbanaLib
             }
 
             // Valida cada item da compra
-            foreach (var item in compraItems)
+            foreach (var item in pedidoCompra.Itens)
             {
                 // valida nome do produto
                 if (string.IsNullOrWhiteSpace(item.NomeInsumo))

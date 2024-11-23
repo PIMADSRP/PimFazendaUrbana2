@@ -58,15 +58,22 @@
                     <!-- CEP -->
                     <RadzenRow AlignItems="AlignItems.Center">
 
-                        <RadzenFormField Text="CEP:" Variant="Variant.Outlined">
-                            <RadzenMask Mask="*****-***" Pattern="[^0-9]" Placeholder="_____-___" style="width: 100%" @bind-Value="@fornecedor.Endereco.CEP" Name="CEP" title="CEP é obrigatório e deve ter 8 dígitos" />
-                            <RadzenRequiredValidator Component="CEP" Text="CEP é obrigatório e deve ter 8 dígitos" />
-                        </RadzenFormField>
+                        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" JustifyContent="JustifyContent.Start" style="width: 100%;">
+                            <RadzenFormField Text="CEP:" Variant="Variant.Outlined">
+                                <RadzenMask Mask="*****-***" Pattern="[^0-9]" Placeholder="_____-___" style="width: 100%" @bind-Value="@fornecedor.Endereco.CEP" Name="CEP" title="CEP é obrigatório e deve ter 8 dígitos" />
+                                <RadzenRequiredValidator Component="CEP" Text="CEP é obrigatório e deve ter 8 dígitos" />
+                            </RadzenFormField>
+                            <RadzenButton Style="padding-left: 6px; padding-right: 6px; padding-top: 0px; padding-bottom: 0px; width: 116px !important; height: 40px !important;"
+                                          class="rz-mt-2"
+                                          Text="Consultar CEP" Icon="add_location"
+                                          Size="Radzen.ButtonSize.Small"
+                                          ButtonStyle="ButtonStyle.Primary"
+                                          Variant="Radzen.Variant.Filled"
+                                          Shade="Radzen.Shade.Default"
+                                          Click="@BuscarEnderecoPorCEP" />
+                            <!-- Size="Radzen.ButtonSize.Small" -->
 
-                        <RadzenStack Style="margin-top: 0.3rem; margin-left: 0.3rem;" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
-                            <RadzenButton Icon="add_location" ButtonStyle="ButtonStyle.Primary" Text="Consultar CEP" Click="@BuscarEnderecoPorCEP" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Default" />
                         </RadzenStack>
-
                     </RadzenRow>
 
                     <!-- Logradouro -->
