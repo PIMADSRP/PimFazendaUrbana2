@@ -31,7 +31,7 @@ namespace PIMFazendaUrbanaRadzen.Services
                     // Verifica se há a propriedade "errors" na resposta
                     if (errorResponse.TryGetProperty("errors", out var errors))
                     {
-                        throw new Exception(string.Join(", ", errors.EnumerateArray().Select(e => e.GetString())));
+                        throw new Exception(string.Join("; ", errors.EnumerateArray().Select(e => e.GetString())));
                     }
 
                     throw new Exception("Erro desconhecido ao chamar a API");

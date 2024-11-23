@@ -6,7 +6,8 @@
 
 <PageTitle>Cadastrar Funcionário</PageTitle>
 
-@if (accessAllowed == true)
+@if (accessAllowed == true && hasChecked == true)
+
 {
     <RadzenCard Style="max-width: 800px; margin: 0 auto; padding: 20px;" class="rz-mt-2">
         <RadzenText Text="Cadastrar Funcionário" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-3" />
@@ -21,8 +22,13 @@
                     <RadzenStack Gap="0.4rem">
                         <!-- Usuário -->
                         <RadzenFormField Text="Usuário:" Variant="Variant.Outlined">
-                            <RadzenTextBox style="width: 100%" @bind-Value="@funcionario.Usuario" Name="Usuario" title="Usuário é obrigatório" />
+                            <RadzenTextBox style="width: 100%" @bind-Value="@funcionario.Usuario" Name="Usuario" title="Usuário é obrigatório"
+                                           @onblur="VerificarUsuarioDisponivel" />
                             <RadzenRequiredValidator Component="Usuario" Text="Usuário é obrigatório" />
+                            @if (!usuarioDisponivel)
+                        {
+                                <div style="color: red; font-size:small;">@mensagemErroUsuarioIndisponivel</div>
+                            }
                         </RadzenFormField>
 
                         <!-- Cargo -->
@@ -39,23 +45,51 @@
 
                         <!-- Senha e Confirmar Senha -->
                         <RadzenRow>
-                            <RadzenColumn Width="50%">
+                            @if (errorMessagesSenhaForte != null && errorMessagesSenhaForte.Any())
+                            {
+                                <div style="color: red;">
+                                    <ul style="margin: 0 0 0 0; padding-inline-start: 2rem;">
+                                        @foreach (var errorMessage in errorMessagesSenhaForte)
+                                        {
+                                            <li style="font-size:small;">@errorMessage</li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
+                        </RadzenRow>
+
+                        <RadzenRow>
+                            <RadzenColumn>
                                 <RadzenFormField Text="Senha:" Variant="Variant.Outlined">
-                                    <RadzenTextBox type="password" style="width: 100%" @bind-Value="@funcionario.Senha" Name="Senha" title="Senha obrigatória" @onblur="VerificarSenhasCoincidem" />
+                                    <RadzenTextBox type="@(exibirSenha ? "text" : "password")" style="width: 100%" @bind-Value="@funcionario.Senha" Name="Senha"
+                                                   title="A senha deve conter pelo menos 8 caracteres, uma letra minúscula e uma maiúscula, um número, e um caractere especial."
+                                                   @onblur="VerificarSenhas" />
                                     <RadzenRequiredValidator Component="Senha" Text="Senha obrigatória" />
                                 </RadzenFormField>
                             </RadzenColumn>
-                            <RadzenColumn Width="50%">
-                                <RadzenFormField Text="Confirma Senha:" Variant="Variant.Outlined">
-                                    <RadzenTextBox type="password" style="width: 100%" @bind-Value="@confirmaSenha" Name="ConfirmaSenha" title="Confirmação de senha obrigatória" @onblur="VerificarSenhasCoincidem" />
+                            <RadzenColumn>
+                                <RadzenFormField Text="Confirme a Senha:" Variant="Variant.Outlined">
+                                    <RadzenTextBox type="@(exibirSenha ? "text" : "password")" style="width: 100%" @bind-Value="@confirmaSenha" Name="ConfirmaSenha"
+                                                   title="A senha deve conter pelo menos 8 caracteres, uma letra minúscula e uma maiúscula, um número, e um caractere especial."
+                                                   @onblur="VerificarSenhas" />
                                     <RadzenRequiredValidator Component="ConfirmaSenha" Text="Confirmação de senha obrigatória" />
                                     @if (!senhasCoincidem)
                                     {
-                                        <div style="color: red;">@mensagemErroSenha</div>
+                                        <div style="color: red; font-size:small;">@mensagemErroSenha</div>
                                     }
                                 </RadzenFormField>
                             </RadzenColumn>
+                            <RadzenColumn>
+                                <!-- Botão para alternar a visibilidade das senhas -->
+                                <RadzenButton Icon="@(exibirSenha ? "visibility_off" : "visibility")"
+                                              Style="margin-top: 0.666rem;"
+                                              Size="Radzen.ButtonSize.Medium"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Variant="Radzen.Variant.Flat"
+                                              Click="@AlternarVisibilidadeSenha" />
+                            </RadzenColumn>
                         </RadzenRow>
+
                     </RadzenStack>
                 </RadzenFieldset>
 
@@ -93,19 +127,20 @@
 
                         <!-- DDD e Telefone -->
                         <RadzenRow>
-                            <RadzenColumn Width="20%">
+                            <RadzenColumn>
                                 <RadzenFormField Text="DDD:" Variant="Variant.Outlined">
                                     <RadzenMask Mask="**" Pattern="[^0-9]" Placeholder="__" style="width: 100%" @bind-Value="@funcionario.Telefone.DDD" Name="DDD" title="DDD é obrigatório e deve ter 2 dígitos" />
                                     <RadzenRequiredValidator Component="DDD" Text="DDD é obrigatório e deve ter 2 dígitos" />
                                 </RadzenFormField>
                             </RadzenColumn>
-                            <RadzenColumn Width="80%">
+                            <RadzenColumn>
                                 <RadzenFormField Text="Telefone:" Variant="Variant.Outlined">
                                     <RadzenMask Mask="*****-****" Pattern="[^0-9]" Placeholder="_____-____" style="width: 100%" @bind-Value="@funcionario.Telefone.Numero" Name="Telefone" title="Número de telefone é obrigatório" />
                                     <RadzenRequiredValidator Component="Telefone" Text="Número de telefone é obrigatório" />
                                 </RadzenFormField>
                             </RadzenColumn>
                         </RadzenRow>
+
                     </RadzenStack>
                 </RadzenFieldset>
 
@@ -114,16 +149,25 @@
                         <!-- CEP -->
                         <RadzenRow AlignItems="AlignItems.Center">
 
-                            <RadzenFormField Text="CEP:" Variant="Variant.Outlined">
-                                <RadzenMask Mask="*****-***" Pattern="[^0-9]" Placeholder="_____-___" style="width: 100%" @bind-Value="@funcionario.Endereco.CEP" Name="CEP" title="CEP é obrigatório e deve ter 8 dígitos" />
-                                <RadzenRequiredValidator Component="CEP" Text="CEP é obrigatório e deve ter 8 dígitos" />
-                            </RadzenFormField>
+                            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" JustifyContent="JustifyContent.Start"  style="width: 100%;">
+                                <RadzenFormField Text="CEP:" Variant="Variant.Outlined">
+                                    <RadzenMask Mask="*****-***" Pattern="[^0-9]" Placeholder="_____-___" style="width: 100%" @bind-Value="@funcionario.Endereco.CEP" Name="CEP" title="CEP é obrigatório e deve ter 8 dígitos" />
+                                    <RadzenRequiredValidator Component="CEP" Text="CEP é obrigatório e deve ter 8 dígitos" />
+                                </RadzenFormField>
+                                <RadzenButton Style="padding-left: 6px; padding-right: 6px; padding-top: 0px; padding-bottom: 0px; width: 116px !important; height: 40px !important;"
+                                            class="rz-mt-2"
+                                                Text="Consultar CEP" Icon="add_location"
+                                                Size="Radzen.ButtonSize.Small"
+                                                ButtonStyle="ButtonStyle.Primary"
+                                                Variant="Radzen.Variant.Filled"
+                                                Shade="Radzen.Shade.Default"
+                                                Click="@BuscarEnderecoPorCEP" />
+                                <!-- Size="Radzen.ButtonSize.Small" -->
 
-                            <RadzenStack Style="margin-top: 0.3rem; margin-left: 0.3rem;" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
-                                <RadzenButton Icon="add_location" ButtonStyle="ButtonStyle.Primary" Text="Consultar CEP" Click="@BuscarEnderecoPorCEP" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Default" />
                             </RadzenStack>
-
                         </RadzenRow>
+
+
 
                         <!-- Logradouro -->
                         <RadzenFormField Text="Logradouro:" Variant="Variant.Outlined">
@@ -133,13 +177,13 @@
 
                         <!-- Número e Complemento em uma linha -->
                         <RadzenRow>
-                            <RadzenColumn Width="50%">
+                            <RadzenColumn >
                                 <RadzenFormField Text="Número:" Variant="Variant.Outlined">
                                     <RadzenNumeric Min="0" ShowUpDown="false" style="width: 100%" @bind-Value="@funcionario.Endereco.Numero" Name="Numero" title="Número é obrigatório e deve ter apenas caracteres numéricos" />
                                     <RadzenRequiredValidator Component="Numero" Text="Número é obrigatório e deve ter apenas caracteres numéricos" />
                                 </RadzenFormField>
                             </RadzenColumn>
-                            <RadzenColumn Width="50%">
+                            <RadzenColumn >
                                 <RadzenFormField Text="Complemento:" Variant="Variant.Outlined">
                                     <RadzenTextBox style="width: 100%" @bind-Value="@funcionario.Endereco.Complemento" Name="Complemento" title="Complemento é opcional" />
                                 </RadzenFormField>
@@ -183,7 +227,8 @@
         </RadzenTemplateForm>
     </RadzenCard>
 }
-else if (accessAllowed == false && isLoggedIn == true)
+
+else if (accessAllowed == false && isLoggedIn == true && hasChecked == true)
 {
     NavigationManager.NavigateTo("/acesso-negado");
 }
@@ -191,24 +236,26 @@ else if (accessAllowed == false && isLoggedIn == true)
 @code {
 
     private bool accessAllowed = false;
-
     private bool isLoggedIn = false;
+    private bool hasChecked = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        isLoggedIn = await AuthService.IsAuthenticated();
-
-        if (isLoggedIn)
+        if (firstRender == true)
         {
-            var isGerente = await AuthService.IsGerente();
+            isLoggedIn = await AuthService.IsAuthenticated();
 
-            if (isGerente == true)
+            if (isLoggedIn)
             {
-                accessAllowed = true;
+                var isGerente = await AuthService.IsGerente();
+
+                if (isGerente == true)
+                {
+                    accessAllowed = true;
+                }
             }
+            hasChecked = true;
+            StateHasChanged();
         }
-
-        StateHasChanged();
-
     }
 }

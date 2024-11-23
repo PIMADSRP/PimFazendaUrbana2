@@ -52,9 +52,15 @@
         public async Task<T> GetByIdAsync(int id)
         {
             var response = await _httpClient.GetAsync($"{_endpointUrl}/{id}");
+            // loga a resposta
+            Console.WriteLine($"Resposta da API: {response.StatusCode}");
 
             if (response.IsSuccessStatusCode)
             {
+                // loga o conteúdo da resposta
+                Console.WriteLine($"Conteúdo da resposta: {await response.Content.ReadAsStringAsync()}");
+
+
                 return await response.Content.ReadFromJsonAsync<T>();
             }
             else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)

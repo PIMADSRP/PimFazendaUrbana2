@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.IdentityModel.Tokens;
 using PIMFazendaUrbanaAPI.DTOs;
+using PIMFazendaUrbanaRadzen.Components.Pages.Cultivos;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
 
@@ -22,7 +24,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
         [Inject]
         public NotificationService NotificationService { get; set; }
 
-        protected ClienteDTO cliente;
+        protected ClienteDTO cliente = new ClienteDTO();
         protected bool errorVisible;
 
         protected List<string> estados = new List<string>
@@ -35,10 +37,22 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
 
         protected override async Task OnInitializedAsync()
         {
+            
+            if (cliente.Nome.IsNullOrEmpty() || cliente == null)
+            {
+                Console.WriteLine("Cliente é nulo");
+            }
+            await LoadCliente();
+        }
+
+        protected async Task LoadCliente()
+        {
             Console.WriteLine($"Inicializando componente EditarCliente para ClienteId: {ClienteId}");
             try
             {
+                Console.WriteLine($"Chamando ApiService com {ClienteId}");
                 cliente = await ClienteApiService.GetByIdAsync(ClienteId);
+                Console.WriteLine("Retornou de ApiService");
 
                 if (cliente == null)
                 {
@@ -77,9 +91,9 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
                 }
                 else
                 {
-                    // Exibe mensagem de erro caso o status não seja de sucesso
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao atualizar cliente: {errorMessage}", duration: 5000);
+                    // Usando ApiResponseHelper apenas para processar resposta de erro
+                    var errorMessage = await ApiResponseHelper.HandleErrorResponseAsync(response);
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao atualizar cliente: {errorMessage}", duration: 10000);
                 }
             }
             catch (Exception ex)

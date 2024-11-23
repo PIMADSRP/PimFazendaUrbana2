@@ -6,7 +6,7 @@
 
 <PageTitle>Funcionários</PageTitle>
 
-@if (accessAllowed == true)
+@if (accessAllowed == true && hasChecked == true)
 {
     <RadzenStack>
         <RadzenRow AlignItems="AlignItems.Center" Style="width: 100%; padding: 0; margin: 0;">
@@ -101,78 +101,105 @@
 
                     <Columns>
                         <!-- Coluna para Id -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Id" Title="Id" Width="6%">
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Id" Title="Id" Width="5%">
                         </RadzenDataGridColumn>
 
                         <!-- Coluna para Nome com tooltip -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Nome" Title="Nome" Width="13%">
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Nome" Title="Nome" Width="11%">
                             <Template Context="funcionario">
                                 <span title="@funcionario.Nome">@funcionario.Nome</span> <!-- Tooltip com o nome completo -->
                             </Template>
                         </RadzenDataGridColumn>
 
                         <!-- Coluna para Usuario com tooltip -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Usuário" Title="Usuário" Width="13%">
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Usuário" Title="Usuário" Width="8%">
                             <Template Context="funcionario">
                                 <span title="@funcionario.Usuario">@funcionario.Usuario</span> <!-- Tooltip com o usuário completo -->
                             </Template>
                         </RadzenDataGridColumn>
 
                         <!-- Coluna para Cargo com tooltip -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Cargo" Title="Cargo" Width="13%">
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Cargo" Title="Cargo" Width="8%" Filterable="false">
                             <Template Context="funcionario">
                                 <span title="@funcionario.Cargo">@funcionario.Cargo</span> <!-- Tooltip com o Cargo completo -->
                             </Template>
                         </RadzenDataGridColumn>
 
                         <!-- Coluna para Email com tooltip -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Email" Title="Email" Width="17%">
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Email" Title="Email" Width="14%">
                             <Template Context="funcionario">
                                 <span title="@funcionario.Email">@funcionario.Email</span> <!-- Tooltip com o email completo -->
                             </Template>
                         </RadzenDataGridColumn>
 
                         <!-- Coluna para CPF com tooltip -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="CPF" Title="CPF" Width="10%">
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="CPF" Title="CPF" Width="9%" Sortable="false">
                             <Template Context="funcionario">
-                                <span title="@funcionario.CPF">@funcionario.CPF</span> <!-- Tooltip com o CPF completo -->
+                                @if (funcionario.CPF != null)
+                                {
+                                    <span title="@FormatarCPF(funcionario.CPF)">
+                                        @FormatarCPF(funcionario.CPF)
+                                    </span> <!-- Tooltip com o CPF completo -->
+                                }
                             </Template>
                         </RadzenDataGridColumn>
 
                         <!-- Coluna customizada para Telefone -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Title="Telefone" Width="10%">
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Telefone.Numero" Title="Telefone" Width="10%" Sortable="true">
                             <Template Context="funcionario">
                                 @if (funcionario.Telefone != null)
                                 {
-                                    <span title="@($"({funcionario.Telefone.DDD}) {funcionario.Telefone.Numero}")">
-                                        @($"({funcionario.Telefone.DDD}) {funcionario.Telefone.Numero}")
+                                    <span title="@FormatarTelefone(funcionario.Telefone.DDD, funcionario.Telefone.Numero)">
+                                        @FormatarTelefone(funcionario.Telefone.DDD, funcionario.Telefone.Numero)
                                     </span> <!-- Tooltip com o telefone completo -->
                                 }
                             </Template>
                         </RadzenDataGridColumn>
 
-                        <!-- Coluna customizada para Endereço -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Title="Endereço" Width="30%">
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Title="Endereço" Width="37%">
                             <Template Context="funcionario">
                                 @if (funcionario.Endereco != null)
-
                                 {
                                     <span title="@($"{funcionario.Endereco.Logradouro}, {funcionario.Endereco.Numero}, {funcionario.Endereco.Bairro}, {funcionario.Endereco.Cidade} - {funcionario.Endereco.UF}")">
                                         @($"{funcionario.Endereco.Logradouro}, {funcionario.Endereco.Numero}, {funcionario.Endereco.Bairro}, {funcionario.Endereco.Cidade} - {funcionario.Endereco.UF}")
-                                    </span> <!-- Tooltip com o endereço completo -->
+                                    </span>
+                                }
+                            </Template>
+                            <FilterTemplate>
+                                <RadzenCard>
+                                    <RadzenRow>
+                                        <RadzenTextBox @bind-Value="enderecoFiltro" Placeholder="Filtrar endereço..." Style="flex: 1;" />
+                                    </RadzenRow>
+                                    <RadzenRow>
+                                        <RadzenStack Orientation="Orientation.Horizontal" Gap="1rem" JustifyContent="JustifyContent.Center" class="rz-mt-2" Style="width: 100%;">
+                                            <!-- Botão Confirmar -->
+                                            <RadzenButton Text="Aplicar" Click="@OnEnderecoFilterChanged"
+                                                          ButtonStyle="ButtonStyle.Primary"
+                                                          Style="width: 50%;" />
+                                            <!-- Botão Cancelar -->
+                                            <RadzenButton Text="Limpar" Click="@OnEnderecoFilterClear"
+                                                          ButtonStyle="ButtonStyle.Light"
+                                                          Style="width: 50%;" />
+                                        </RadzenStack>
+                                    </RadzenRow>
+                                </RadzenCard>
+                            </FilterTemplate>
+                        </RadzenDataGridColumn>
+
+                        <!-- Coluna para CEP com tooltip -->
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Title="CEP" Property="Endereco.CEP" Width="8%" Sortable="false">
+                            <Template Context="funcionario">
+                                @if (funcionario.Endereco.CEP != null)
+                                {
+                                    <span title="@FormatarCEP(funcionario.Endereco.CEP)">
+                                        @FormatarCEP(funcionario.Endereco.CEP)
+                                    </span> <!-- Tooltip com o CEP completo -->
                                 }
                             </Template>
                         </RadzenDataGridColumn>
 
-                        <!-- Coluna para CEP com tooltip -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Property="Endereco.CEP" Title="CEP" Width="7%">
-                            <Template Context="funcionario">
-                                <span title="@funcionario.Endereco.CEP">@funcionario.Endereco.CEP</span> <!-- Tooltip com o CEP completo -->
-                            </Template>
-                        </RadzenDataGridColumn>
-
                         <!-- Coluna customizada para botões de ação -->
-                        <RadzenDataGridColumn TItem="FuncionarioDTO" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="7%" MinWidth="110px">
+                        <RadzenDataGridColumn TItem="FuncionarioDTO" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="5%" MinWidth="110px">
                             <Template Context="funcionario">
                                 <RadzenButton ButtonStyle="ButtonStyle.Primary"
                                               Icon="edit"
@@ -187,10 +214,11 @@
                                               Size="ButtonSize.Medium"
                                               Shade="Shade.Lighter"
                                               Variant="Variant.Flat"
-                                              Click="@(() => ExcluirFuncionario(funcionario))"
+                                              Click="@(() => ConfirmarExclusao(funcionario))"
                                               @onclick:stopPropagation="true" />
                             </Template>
                         </RadzenDataGridColumn>
+
                     </Columns>
                 </RadzenDataGrid>
             </RadzenColumn>
@@ -202,7 +230,7 @@
         <div style="color:red;">@errorMessage</div> <!-- Exibe erro em vermelho -->
     }
 }
-else if (accessAllowed == false && isLoggedIn == true)
+else if (accessAllowed == false && isLoggedIn == true && hasChecked == true)
 {
     NavigationManager.NavigateTo("/acesso-negado");
 }
@@ -211,21 +239,25 @@ else if (accessAllowed == false && isLoggedIn == true)
 
     private bool accessAllowed = false;
     private bool isLoggedIn = false;
+    private bool hasChecked = false;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        isLoggedIn = await AuthService.IsAuthenticated();
-
-        if (isLoggedIn)
+        if (firstRender == true)
         {
-            var isGerente = await AuthService.IsGerente();
+            isLoggedIn = await AuthService.IsAuthenticated();
 
-            if (isGerente == true)
+            if (isLoggedIn)
             {
-                accessAllowed = true;
-            }
-        }
+                var isGerente = await AuthService.IsGerente();
 
-        StateHasChanged();
+                if (isGerente == true)
+                {
+                    accessAllowed = true;
+                }
+            }
+            hasChecked = true;
+            StateHasChanged();
+        }
     }
 }

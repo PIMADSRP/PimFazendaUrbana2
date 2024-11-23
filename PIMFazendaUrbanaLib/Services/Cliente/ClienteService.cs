@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using DocumentFormat.OpenXml.Office2010.Excel;
+using System.Text.RegularExpressions;
 
 namespace PIMFazendaUrbanaLib
 {
@@ -96,11 +97,14 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public Cliente ConsultarClientePorID(int clienteId)
+        public Cliente? ConsultarClientePorID(int clienteId)
         {
             try
             {
-                Cliente cliente = clienteDAO.ConsultarClientePorID(clienteId); // Chama o método ConsultarCliente da classe ClienteDAO para obter os dados de um cliente pelo ID
+                Console.WriteLine($"Service recebeu id: {clienteId}");
+                Cliente? cliente = null;
+                cliente = clienteDAO.ConsultarClientePorID(clienteId); // Chama o método ConsultarCliente da classe ClienteDAO para obter os dados de um cliente pelo ID
+                Console.WriteLine($"cliente: {cliente.Nome}");
                 return cliente; // Retorna o cliente encontrado
             }
             catch (Exception ex)
@@ -163,7 +167,7 @@ namespace PIMFazendaUrbanaLib
             }
             if (!Regex.IsMatch(cliente.Email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
             {
-                erros.Add(new ValidationError("Email", "Email inválido. O email deve ter o formato exemplo@exemplo.exeplo"));
+                erros.Add(new ValidationError("Email", "Email inválido. O email deve ter o formato exemplo@exemplo.exemplo"));
             }
             TelefoneValidation telefoneValidation = new TelefoneValidation();
             telefoneValidation.ValidarTelefone(cliente.Telefone, erros);

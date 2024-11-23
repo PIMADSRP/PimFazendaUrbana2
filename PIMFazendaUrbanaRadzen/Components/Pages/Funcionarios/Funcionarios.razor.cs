@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using PIMFazendaUrbanaAPI.DTOs;
+using PIMFazendaUrbanaLib;
+using PIMFazendaUrbanaRadzen.Components.Pages.Clientes;
 using PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
@@ -11,44 +13,74 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
     public partial class Funcionarios
     {
         [Inject]
-        public FuncionarioApiService<FuncionarioDTO> FuncionarioApiService { get; set; }
+        public FuncionarioApiService<FuncionarioDTO> FuncionarioApiService { get; set; } // serviço que chama a API
 
         [Inject]
-        public NavigationManager NavigationManager { get; set; } // Inject NavigationManager
+        public NavigationManager NavigationManager { get; set; } // serviço de navegação
 
         [Inject]
-        public NotificationService NotificationService { get; set; }
+        public NotificationService NotificationService { get; set; } // serviço de notificação
 
         [Inject]
-        private ExportacaoApiService<object> exportacaoApiService { get; set; }
+        private ExportacaoApiService<object> exportacaoApiService { get; set; } // serviço de exportação para xlsx e csv
 
         [Inject]
-        public IJSRuntime JSRuntime { get; set; }
+        public IJSRuntime JSRuntime { get; set; } // para chamadas JavaScript
 
-        protected List<FuncionarioDTO> funcionarios;
-        protected string errorMessage = string.Empty;
-        protected string searchQuery = string.Empty;
+        protected List<FuncionarioDTO> funcionarios; // lista de funcionarios
 
-        protected RadzenDataGrid<FuncionarioDTO> grid0;
+        protected string errorMessage = string.Empty; // mensagem de erro
+
+        protected string searchQuery = string.Empty; // query da barra pesquisar
+
+        protected RadzenDataGrid<FuncionarioDTO> grid0; // grid de funcionarios
+
+        protected string enderecoFiltro = string.Empty; // filtro para todos as propriedades de endereço, que o usuário pode digitar
 
         protected override async Task OnInitializedAsync()
         {
             await LoadFuncionarios(); // Carrega funcionarios inicialmente
         }
 
+        protected async Task OnEnderecoFilterChanged()
+        {
+            await LoadFuncionarios(); // Recarrega os dados aplicando o filtro de endereço
+        }
+
+        protected async Task OnEnderecoFilterClear()
+        {
+            enderecoFiltro = string.Empty; // Limpa o filtro
+            await LoadFuncionarios();          // Recarrega os dados sem filtro
+        }
+
         protected async Task LoadFuncionarios()
         {
             try
             {
-                funcionarios = string.IsNullOrWhiteSpace(searchQuery)
-                    ? await FuncionarioApiService.GetAllAsync() // Carrega todos os funcionarios
-                    : await FuncionarioApiService.GetFuncionariosFiltradosAsync(searchQuery); // Busca funcionarios filtrados
+                var todosFuncionarios = string.IsNullOrWhiteSpace(searchQuery)
+                    ? await FuncionarioApiService.GetAllAsync()
+                    : await FuncionarioApiService.GetFuncionariosFiltradosAsync(searchQuery);
 
+                // Filtro de endereço personalizado
+                if (!string.IsNullOrWhiteSpace(enderecoFiltro))
+                {
+                    todosFuncionarios = todosFuncionarios.Where(funcionario =>
+                        funcionario.Endereco != null && (
+                            (funcionario.Endereco.Logradouro?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                            (funcionario.Endereco.Numero?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                            (funcionario.Endereco.Bairro?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                            (funcionario.Endereco.Cidade?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                            (funcionario.Endereco.UF?.Contains(enderecoFiltro, StringComparison.OrdinalIgnoreCase) ?? false)
+                        )
+                    ).ToList();
+                }
+
+                funcionarios = todosFuncionarios;
                 errorMessage = string.Empty; // Limpa mensagens de erro
             }
             catch (Exception ex)
             {
-                errorMessage = $"Erro ao carregar funcionarios: {ex.Message}";
+                errorMessage = $"Erro ao carregar funcionários: {ex.Message}";
                 Console.WriteLine(errorMessage);
             }
         }
@@ -72,12 +104,44 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
 
         protected void EditarFuncionario(FuncionarioDTO funcionario)
         {
-            // Implementar lógica de edição de funcionario
+            if (funcionario?.Id != null)
+            {
+                NavigationManager.NavigateTo($"/editar-funcionario/{funcionario.Id}");
+            }
+            else
+            {
+                Console.WriteLine("Erro: ID do funcionário é nulo.");
+            }
         }
 
-        protected void ExcluirFuncionario(FuncionarioDTO funcionario)
+        protected async Task ExcluirFuncionario(FuncionarioDTO funcionario)
         {
-            // Implementar lógica de exclusão de funcionario
+            try
+            {
+                await FuncionarioApiService.DeleteAsync(funcionario.Id);
+                await LoadFuncionarios(); // Atualiza a lista após exclusão
+                NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Funcionário excluído com sucesso!");
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Erro ao excluir", ex.Message);
+            }
+
+        }
+
+        [Inject]
+        protected DialogService DialogService { get; set; }
+
+        private async Task ConfirmarExclusao(FuncionarioDTO funcionario)
+        {
+            bool? confirm = await DialogService.Confirm($"Tem certeza que deseja excluir {funcionario.Nome}?",
+                                                         "Confirmação de Exclusão",
+                                                         new ConfirmOptions { OkButtonText = "Excluir", CancelButtonText = "Cancelar" });
+
+            if (confirm == true)
+            {
+                await ExcluirFuncionario(funcionario);
+            }
         }
 
         protected string FormatarTelefone(string ddd, string numero)

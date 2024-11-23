@@ -3,7 +3,7 @@
 
 <PageTitle>Index</PageTitle>
 
-<RadzenRow Style="height: 4vh;">
+<RadzenRow Style="height: 35px;">
     <RadzenStack Orientation="Orientation.Horizontal" Style="width: 100%;" Gap="1rem">
         <RadzenText TextStyle="TextStyle.H6" Style="font-weight: bold;">
             @dataAtual
@@ -14,7 +14,7 @@
     </RadzenStack>
 </RadzenRow>
 
-<RadzenRow Style="height: 17vh; margin-bottom: 1rem;">
+<RadzenRow Style="height: 150px; margin-bottom: 1rem;">
     <RadzenCard Style="width: 100%; margin-bottom: 0.5rem;">
         <RadzenText Style="margin-bottom: 0.5rem; font-weight: bold">Previsão do tempo</RadzenText>
         <div style="max-height: 150px;">
@@ -23,7 +23,7 @@
                data-language="PT"
                data-theme="original"
                style="display: block; width: 100%; text-align: center; max-height: 100px !important">
-                Ribeirão Preto
+                <RadzenProgressBarCircular ShowValue="false" Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Medium" />
             </a>
             <script>
                 !function (d, s, id) {

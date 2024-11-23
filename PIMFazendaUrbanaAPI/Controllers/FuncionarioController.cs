@@ -125,5 +125,40 @@ namespace PIMFazendaUrbanaAPI.Controllers
             }
         }
 
+        // Método para verificar se uma senha é forte
+        [HttpGet("senha-forte/{senha}")]
+        public IActionResult VerificarSenhaForte(string senha)
+        {
+            try
+            {
+                var forte = false;
+                forte = _funcionarioService.VerificarSenhaForte(senha);
+                return Ok(new { forte });
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { errors = ex.Errors });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
+        }
+
+        // Método para verificar se o nome de usuario está disponível
+        [HttpGet("usuario-disponivel/{usuario}")]
+        public IActionResult VerificarUsuarioDisponivel(string usuario)
+        {
+            try
+            {
+                var disponivel = false;
+                disponivel = _funcionarioService.VerificarUsuarioDisponivel(usuario);
+                return Ok(new { disponivel });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
+        }
     }
 }

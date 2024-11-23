@@ -111,7 +111,7 @@ namespace PIMFazendaUrbanaRadzen.Services
 
         public async Task<string> GetAuthTokenAsync()
         {
-            Console.WriteLine("\nGetAuthTokenAsync called");
+            Console.WriteLine("\nGetAuthTokenAsync called" + DateTime.Now);
             return await _localStorage.GetItemAsync<string>("authToken");
         }
     }

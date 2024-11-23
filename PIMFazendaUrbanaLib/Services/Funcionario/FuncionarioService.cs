@@ -120,7 +120,7 @@ namespace PIMFazendaUrbanaLib
             // Verifica se a senha tem pelo menos 8 caracteres
             if (senha.Length < 8)
             {
-                erros.Add(new ValidationError("Senha", "a senha tem pelo menos 8 caracteres"));
+                erros.Add(new ValidationError("Senha", "A senha deve conter pelo menos 8 caracteres."));
             }
 
             // Verifica se a senha contém pelo menos um número
@@ -328,7 +328,7 @@ namespace PIMFazendaUrbanaLib
             }
             if (!Regex.IsMatch(funcionario.Email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
             {
-                erros.Add(new ValidationError("Email", "Email inválido. O email deve ter o formato exemplo@exemplo.exeplo"));
+                erros.Add(new ValidationError("Email", "Email inválido. O email deve ter o formato exemplo@exemplo.exemplo"));
             }
             if (funcionario.Cargo != "Funcionário" && funcionario.Cargo != "Gerente")
             {
@@ -368,7 +368,7 @@ namespace PIMFazendaUrbanaLib
             // Verifica se a senha tem pelo menos 8 caracteres
             if (senha.Length < 8)
             {
-                erros.Add(new ValidationError("Senha", "a senha tem pelo menos 8 caracteres"));
+                erros.Add(new ValidationError("Senha", "A senha deve conter pelo menos 8 caracteres."));
             }
 
             // Verifica se a senha contém pelo menos um número

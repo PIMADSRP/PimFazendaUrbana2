@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.IdentityModel.Tokens;
 using PIMFazendaUrbanaAPI.DTOs;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
@@ -66,9 +67,9 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
                 }
                 else
                 {
-                    // Exibe mensagem de erro caso o status não seja de sucesso
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao cadastrar funcionario: {errorMessage}", duration: 5000);
+                    // Usando ApiResponseHelper apenas para processar resposta de erro
+                    var errorMessage = await ApiResponseHelper.HandleErrorResponseAsync(response);
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao cadastrar funcionário: {errorMessage}", duration: 10000);
                 }
             }
             catch (Exception ex)
@@ -141,17 +142,99 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
         private bool senhasCoincidem;
         private string mensagemErroSenha;
 
-        private void VerificarSenhasCoincidem()
+        private bool exibirSenha = false; // Variável para controlar a visibilidade das senhas
+
+        private async Task AlternarVisibilidadeSenha()
+        {
+            exibirSenha = !exibirSenha; // Alterna o valor de exibirSenha
+        }
+
+        private async Task VerificarSenhas()
+        {
+            if (!VerificarSenhasCoincidem())
+            {
+                return;
+            }
+            await VerificarSenhaForte();
+        }
+
+        private bool VerificarSenhasCoincidem()
         {
             if (funcionario.Senha != confirmaSenha)
             {
                 senhasCoincidem = false;
-                mensagemErroSenha = "As senhas não coincidem.";
+                mensagemErroSenha = "Senhas não coincidem";
+                return false;
             }
             else
             {
                 senhasCoincidem = true;
                 mensagemErroSenha = string.Empty;
+                return true;
+            }
+        }
+
+        protected List<string> errorMessagesSenhaForte = new List<string>();
+
+        protected async Task VerificarSenhaForte()
+        {
+            string senha = funcionario.Senha;
+
+            if (senha.IsNullOrEmpty())
+            {
+                return;
+            }
+
+            // Chamar VerificarSenhaForteAsync de FuncionarioApiService
+            var (isStrong, errorMessages) = await FuncionarioApiService.VerificarSenhaForteAsync(senha);
+
+            if (isStrong)
+            {
+                // Limpa as mensagens de erro
+                errorMessagesSenhaForte.Clear();
+            }
+            else
+            {
+                // Define a lista de mensagens de erro
+                errorMessagesSenhaForte = errorMessages;
+            }
+
+            // Atualiza a interface (Blazor)
+            StateHasChanged();
+        }
+
+        private bool usuarioDisponivel;
+        private string mensagemErroUsuarioIndisponivel;
+        protected async Task VerificarUsuarioDisponivel()
+        {
+            if (funcionario.Usuario.IsNullOrEmpty())
+            {
+                usuarioDisponivel = true;
+                mensagemErroUsuarioIndisponivel = string.Empty;
+            }
+
+            // Chamar VerificarUsuarioDisponivelAsync de FuncionarioApiService
+            var isAvailable = await FuncionarioApiService.VerificarUsuarioDisponivelAsync(funcionario.Usuario);
+
+            if (isAvailable == false)
+            {
+                if (funcionario.Usuario.IsNullOrEmpty())
+                {
+                    usuarioDisponivel = true;
+                    mensagemErroUsuarioIndisponivel = string.Empty;
+                }
+                else
+                {
+                    usuarioDisponivel = false;
+                    mensagemErroUsuarioIndisponivel = "Usuário indisponível";
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", "Nome de usuário já cadastrado. Por favor, escolha outro nome de usuário.");
+                }
+            }
+            else
+            {
+                usuarioDisponivel = true;
+                mensagemErroUsuarioIndisponivel = string.Empty;
+                NotificationService.Notify(NotificationSeverity.Success, "Usuário disponivel", "Nome de usuário disponível");
             }
         }
 

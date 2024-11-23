@@ -163,7 +163,7 @@ namespace PIMFazendaUrbanaLib
             }
             if (!Regex.IsMatch(fornecedor.Email, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
             {
-                erros.Add(new ValidationError("Email", "Email inválido. O email deve ter o formato exemplo@exemplo.exeplo"));
+                erros.Add(new ValidationError("Email", "Email inválido. O email deve ter o formato exemplo@exemplo.exemplo"));
             }
             TelefoneValidation telefoneValidation = new TelefoneValidation();
             telefoneValidation.ValidarTelefone(fornecedor.Telefone, erros);

@@ -25,6 +25,10 @@ namespace PIMFazendaUrbanaLib
 
                 return recomendacoes;
             }
+            catch (ValidationException ex) // Se ocorrer uma exceção do tipo ValidationException
+            {
+                throw; // Repassa a exceção de validação para o Controller manipular
+            }
             catch (Exception ex)
             {
                 throw new Exception("Erro ao listar cultivos: " + ex.Message);

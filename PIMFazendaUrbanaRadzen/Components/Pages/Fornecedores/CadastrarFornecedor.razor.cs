@@ -63,9 +63,9 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
                 }
                 else
                 {
-                    // Exibe mensagem de erro caso o status não seja de sucesso
-                    var errorMessage = await response.Content.ReadAsStringAsync();
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao cadastrar fornecedor: {errorMessage}", duration: 5000);
+                    // Usando ApiResponseHelper apenas para processar resposta de erro
+                    var errorMessage = await ApiResponseHelper.HandleErrorResponseAsync(response);
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao cadastrar fornecedor: {errorMessage}", duration: 10000);
                 }
             }
             catch (Exception ex)
