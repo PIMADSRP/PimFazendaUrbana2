@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using PIMFazendaUrbanaAPI.DTOs;
-using PIMFazendaUrbanaRadzen.Components.Pages.Cultivos;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
 

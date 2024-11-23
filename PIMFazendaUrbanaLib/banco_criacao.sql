@@ -185,7 +185,7 @@ INSERT INTO `cultivo` (
 (52, 'Repolho', 'Repolho Roxo de Inverno', 100, 60, 'Legume'),
 (53, 'Rúcula', 'Rúcula Cultivada', 45, 25, 'Verdura'),
 (54, 'Salsa', 'Salsa Gigante de Itália', 80, 50, 'Verdura'),
-(55, 'Salsinha', 'Salsinha Crespa', 80, 50, 'Tempero'),
+(55, 'Salsinha', 'Salsinha Crespa', 80, 50, 'Verdura'),
 (56, 'Soja', 'Soja BRS 369', 150, 100, 'Legume'),
 (57, 'Tomate', 'Tomate Cereja', 75, 46, 'Fruta'),
 (58, 'Tomate', 'Tomate Italiano', 79, 48, 'Fruta'),
@@ -323,7 +323,7 @@ CREATE TABLE `estoqueinsumo` (
 	`nome_insumo` varchar(100) NOT NULL,
 	`categoria_insumo` varchar(50) NOT NULL,
     `qtd_insumo` int DEFAULT 0,
-    `unidqtd_insumo` varchar(10) DEFAULT 'Kg',
+    `unidqtd_insumo` varchar(10) DEFAULT 'kg',
 	`ativo_insumo` boolean DEFAULT true,
 	PRIMARY KEY (`id_insumo`)
 );
@@ -331,7 +331,7 @@ CREATE TABLE `estoqueinsumo` (
 ## PedidoCompra
 CREATE TABLE `pedidocompra` (
 	`id_pedidocompra` int NOT NULL AUTO_INCREMENT,
-	`data_pedidocompra` timestamp NOT NULL,
+	`data_pedidocompra` timestamp DEFAULT CURRENT_TIMESTAMP,
 	`id_fornecedor` int NOT NULL,
 	PRIMARY KEY (`id_pedidocompra`),
 	KEY `id_fornecedor` (`id_fornecedor`),
@@ -342,7 +342,7 @@ CREATE TABLE `pedidocompra` (
 CREATE TABLE `compraitem` (
 	`id_compraitem` int NOT NULL AUTO_INCREMENT,
 	`qtd_compraitem` int DEFAULT 0,
-	`unidqtd_compraitem` varchar(10) DEFAULT 'Kg',
+	`unidqtd_compraitem` varchar(10) DEFAULT 'kg',
     `valor_compraitem` decimal(9,3) NOT NULL,
 	`id_pedidocompra` int NOT NULL,
 	`id_insumo` int NOT NULL,
@@ -353,12 +353,24 @@ CREATE TABLE `compraitem` (
 	CONSTRAINT `compraitem_ibfk_2` FOREIGN KEY (`id_insumo`) REFERENCES `estoqueinsumo` (`id_insumo`)
 );
 
+-- Criar Trigger para atualizar qtd_insumo após inserir em compraitem
+DELIMITER //
+CREATE TRIGGER after_insert_compraitem
+AFTER INSERT ON compraitem
+FOR EACH ROW
+BEGIN
+    UPDATE estoqueinsumo
+    SET qtd_insumo = qtd_insumo + NEW.qtd_compraitem
+    WHERE id_insumo = NEW.id_insumo;
+END //
+DELIMITER ;
+
 ## SaidaInsumo
 CREATE TABLE `saidainsumo` (
 	`id_saidainsumo` int NOT NULL AUTO_INCREMENT,
 	`qtd_saidainsumo` int DEFAULT 0,
-	`unidqtd_saidainsumo` varchar(10) DEFAULT 'Kg',
-	`data_saidainsumo` timestamp NOT NULL,
+	`unidqtd_saidainsumo` varchar(10) DEFAULT 'kg',
+	`data_saidainsumo` timestamp DEFAULT CURRENT_TIMESTAMP,
 	`id_insumo` int NOT NULL,
 	PRIMARY KEY (`id_saidainsumo`, `id_insumo`),
 	KEY `id_insumo` (`id_insumo`),
@@ -369,10 +381,10 @@ CREATE TABLE `saidainsumo` (
 CREATE TABLE `producao` (
 	`id_producao` int NOT NULL AUTO_INCREMENT,
 	`qtd_producao` int NOT NULL,
-	`unidqtd_producao` varchar(10) DEFAULT 'Kg',
-	`data_producao` timestamp NOT NULL,
+	`unidqtd_producao` varchar(10) DEFAULT 'kg',
+	`data_producao` timestamp DEFAULT CURRENT_TIMESTAMP,
     `datacolheita_producao` timestamp,
-    `ambientectrl_producao` boolean,
+    `ambientectrl_producao` boolean DEFAULT true,
     `finalizado_producao` boolean DEFAULT false,
 	`id_cultivo` int NOT NULL,
 	PRIMARY KEY (`id_producao`),
@@ -384,8 +396,8 @@ CREATE TABLE `producao` (
 CREATE TABLE `estoqueproduto` (
 	`id_estoqueproduto` int NOT NULL AUTO_INCREMENT,
 	`qtd_estoqueproduto` int NOT NULL,
-	`unidqtd_estoqueproduto` varchar(10) DEFAULT 'Kg',
-	`dataentrada_estoqueproduto` timestamp NOT NULL,
+	`unidqtd_estoqueproduto` varchar(10) DEFAULT 'kg',
+	`dataentrada_estoqueproduto` timestamp DEFAULT CURRENT_TIMESTAMP,
 	`ativo_estoqueproduto` boolean DEFAULT true,
 	`id_producao` int NOT NULL,
 	PRIMARY KEY (`id_estoqueproduto`),
@@ -393,10 +405,23 @@ CREATE TABLE `estoqueproduto` (
 	CONSTRAINT `estoqueproduto_ibfk_1` FOREIGN KEY (`id_producao`) REFERENCES `producao` (`id_producao`)
 );
 
+-- Criar Trigger para atualizar estoqueproduto após finalizar produção
+DELIMITER //
+CREATE TRIGGER after_update_producao
+AFTER UPDATE ON producao
+FOR EACH ROW
+BEGIN
+    IF NEW.finalizado_producao = true AND OLD.finalizado_producao = false THEN
+        INSERT INTO estoqueproduto (qtd_estoqueproduto, unidqtd_estoqueproduto, id_producao)
+        VALUES (NEW.qtd_producao, NEW.unidqtd_producao, NEW.id_producao);
+    END IF;
+END //
+DELIMITER ;
+
 ## PedidoVenda
 CREATE TABLE `pedidovenda` (
 	`id_pedidovenda` int NOT NULL AUTO_INCREMENT,
-	`data_pedidovenda` timestamp NOT NULL,
+	`data_pedidovenda` timestamp DEFAULT CURRENT_TIMESTAMP,
 	`id_cliente` int NOT NULL,
 	PRIMARY KEY (`id_pedidovenda`),
 	KEY `id_cliente` (`id_cliente`),
@@ -407,7 +432,7 @@ CREATE TABLE `pedidovenda` (
 CREATE TABLE `vendaitem` (
 	`id_vendaitem` int NOT NULL AUTO_INCREMENT,
 	`qtd_vendaitem` int NOT NULL,
-	`unidqtd_vendaitem` varchar(10) DEFAULT 'Kg',
+	`unidqtd_vendaitem` varchar(10) DEFAULT 'kg',
     `valor_vendaitem` decimal(9,3) NOT NULL,
     `desconto_vendaitem` decimal(9,3),
 	`id_pedidovenda` int NOT NULL,
@@ -418,5 +443,17 @@ CREATE TABLE `vendaitem` (
 	KEY `id_estoqueproduto` (`id_estoqueproduto`),
 	CONSTRAINT `vendaitem_ibfk_2` FOREIGN KEY (`id_estoqueproduto`) REFERENCES `estoqueproduto` (`id_estoqueproduto`)
 );
-commit;
 
+-- Criar Trigger para atualizar estoqueproduto após cadastrar venda
+DELIMITER //
+CREATE TRIGGER after_insert_vendaitem
+AFTER INSERT ON vendaitem
+FOR EACH ROW
+BEGIN
+    UPDATE estoqueproduto
+    SET qtd_estoqueproduto = qtd_estoqueproduto - NEW.qtd_vendaitem
+    WHERE id_estoqueproduto = NEW.id_estoqueproduto;
+END //
+DELIMITER ;
+
+commit;

@@ -38,14 +38,6 @@ INSERT INTO `telefonefuncionario` (`ddd_telfuncionario`, `numero_telfuncionario`
 ('16', '909876543', true, 9),
 ('16', '898765432', true, 10);
 commit;
-SELECT f.id_funcionario, f.nome_funcionario, f.cpf_funcionario, f.sexo_funcionario, f.email_funcionario,
-       f.cargo_funcionario, f.usuario_funcionario, f.senha_funcionario, f.ativo_funcionario,
-       ef.logradouro_endfuncionario, ef.numero_endfuncionario, ef.complemento_endfuncionario, ef.bairro_endfuncionario,
-       ef.cidade_endfuncionario, ef.uf_endfuncionario, ef.cep_endfuncionario,
-       tf.ddd_telfuncionario, tf.numero_telfuncionario
-FROM funcionario f
-JOIN enderecofuncionario ef ON f.id_funcionario = ef.id_funcionario
-JOIN telefonefuncionario tf ON f.id_funcionario = tf.id_funcionario;
 
 ## Cliente
 begin;
@@ -85,13 +77,6 @@ INSERT INTO `telefonecliente` (`ddd_telcliente`, `numero_telcliente`, `ativo_tel
 ('16', '990123456', true, 9),
 ('16', '901234567', true, 10);
 commit;
-SELECT c.id_cliente, c.nome_cliente, c.email_cliente, c.cnpj_cliente, c.ativo_cliente,
-       ec.logradouro_endcliente, ec.numero_endcliente, ec.complemento_endcliente, ec.bairro_endcliente,
-       ec.cidade_endcliente, ec.uf_endcliente, ec.cep_endcliente,
-       tc.ddd_telcliente, tc.numero_telcliente
-FROM cliente c
-JOIN enderecocliente ec ON c.id_cliente = ec.id_cliente
-JOIN telefonecliente tc ON c.id_cliente = tc.id_cliente;
 
 ## Fornecedor
 begin;
@@ -133,6 +118,63 @@ INSERT INTO `telefonefornecedor` (`ddd_telfornecedor`, `numero_telfornecedor`, `
 commit;
 
 begin;
+INSERT INTO `estoqueinsumo` (`nome_insumo`, `categoria_insumo`, `qtd_insumo`, `unidqtd_insumo`, `ativo_insumo`) VALUES
+('Nitrato de amônio', 'Fertilizantes', 0, 'kg', true),
+('Fosfato diamônico', 'Fertilizantes', 0, 'kg', true),
+('Sulfato de potássio', 'Fertilizantes', 0, 'kg', true),
+('Calcário dolomítico', 'Fertilizantes', 0, 'kg', true),
+('Uréia', 'Fertilizantes', 0, 'kg', true),
+('Superfosfato simples', 'Fertilizantes', 0, 'kg', true),
+('Cloreto de potássio', 'Fertilizantes', 0, 'kg', true),
+('Fertilizante líquido NPK 10-10-10', 'Fertilizantes', 0, 'l', true),
+('Fertilizante líquido NPK 20-5-10', 'Fertilizantes', 0, 'l', true),
+('Fertilizante líquido NPK 15-30-15', 'Fertilizantes', 0, 'l', true),
+('Fertilizante líquido NPK 12-0-12', 'Fertilizantes', 0, 'l', true),
+('Fertilizante granulado NPK 20-10-10', 'Fertilizantes', 0, 'kg', true),
+('Fertilizante granulado NPK 15-15-15', 'Fertilizantes', 0, 'kg', true),
+('Fertilizante granulado NPK 10-20-10', 'Fertilizantes', 0, 'kg', true),
+('Fertilizante granulado NPK 10-10-20', 'Fertilizantes', 0, 'kg', true),
+('Abacaxi Pérola', 'Sementes', 0, 'kg', true),
+('Abóbora Japonesa', 'Sementes', 0, 'kg', true),
+('Abobrinha Menina Brasileira', 'Sementes', 0, 'kg', true),
+('Acelga Verde de Verão', 'Sementes', 0, 'kg', true),
+('Agrião de Água', 'Sementes', 0, 'kg', true),
+('Alface Crespa', 'Sementes', 0, 'kg', true),
+('Alface Americana', 'Sementes', 0, 'kg', true),
+('Algodão BRS 368', 'Sementes', 0, 'kg', true),
+('Alho Roxo', 'Sementes', 0, 'kg', true),
+('Alho-poró Porto Rico', 'Sementes', 0, 'kg', true),
+('Banana Prata', 'Sementes', 0, 'kg', true),
+('Batata-doce Beauregard', 'Sementes', 0, 'kg', true),
+('Beterraba Detroit Dark Red', 'Sementes', 0, 'kg', true),
+('Beterraba Early Wonder', 'Sementes', 0, 'kg', true),
+('Berinjela Roxa', 'Sementes', 0, 'kg', true),
+('Brócolis Calabrês', 'Sementes', 0, 'kg', true),
+('Caju Anão Precoce', 'Sementes', 0, 'kg', true),
+('Cebola Baia Periforme', 'Sementes', 0, 'kg', true),
+('Cebolinha Verde Todo o Ano', 'Sementes', 0, 'kg', true),
+('Cenoura Brasília', 'Sementes', 0, 'kg', true),
+('Cenoura Nantes', 'Sementes', 0, 'kg', true),
+('Chicória Catalonha', 'Sementes', 0, 'kg', true),
+('Coentro Português', 'Sementes', 0, 'kg', true),
+('Couve Manteiga', 'Sementes', 0, 'kg', true),
+('Couve-de-bruxelas Menina', 'Sementes', 0, 'kg', true),
+('Couve-flor de Inverno', 'Sementes', 0, 'kg', true),
+('Cupuaçuzeiro', 'Sementes', 0, 'kg', true),
+('Erva-doce de Mesa', 'Sementes', 0, 'kg', true),
+('Ervilha Douce Provence', 'Sementes', 0, 'kg', true),
+('Ervilha Early Frosty', 'Sementes', 0, 'kg', true);
+commit;
+
+begin;
+INSERT INTO saidainsumo (qtd_saidainsumo, unidqtd_saidainsumo, data_saidainsumo, id_insumo) 
+VALUES
+(20, 'Kg', '2024-11-21 08:00:00', 1),
+(15, 'Unidade', '2024-11-22 09:00:00', 2),
+(5, 'Litros', '2024-11-23 10:00:00', 3);
+commit;
+
+begin;
 ## Producao
 INSERT INTO `producao` 
 (`qtd_producao`, `unidqtd_producao`, `data_producao`, `datacolheita_producao`, `ambientectrl_producao`, `finalizado_producao`, `id_cultivo`) 
@@ -141,3 +183,39 @@ VALUES
 (20, 'Kg', '2024-10-10 14:00:00', '2024-11-10 16:00:00', false, true, 2),
 (100, 'Unid', '2024-09-05 09:30:00', '2024-10-05 11:45:00', true, false, 3);
 commit;
+
+begin;
+INSERT INTO estoqueproduto (qtd_estoqueproduto, unidqtd_estoqueproduto, dataentrada_estoqueproduto, ativo_estoqueproduto, id_producao) 
+VALUES
+(150, 'Kg', '2024-11-22 20:00:00', true, 1),
+(100, 'Kg', '2024-11-23 21:00:00', true, 2),
+(50, 'Kg', '2024-11-24 22:00:00', false, 3);
+commit;
+
+begin;
+INSERT INTO pedidocompra (data_pedidocompra, id_fornecedor) 
+VALUES
+('2024-11-20 10:30:00', 1),
+('2024-11-21 11:00:00', 2),
+('2024-11-22 12:00:00', 3);
+
+INSERT INTO compraitem (qtd_compraitem, unidqtd_compraitem, valor_compraitem, id_pedidocompra, id_insumo) 
+VALUES
+(100, 'Kg', 500.000, 1, 1),
+(50, 'Unidade', 200.000, 1, 2),
+(20, 'Litros', 300.000, 2, 3);
+
+INSERT INTO pedidovenda (data_pedidovenda, id_cliente) 
+VALUES
+('2024-11-22 12:00:00', 1),
+('2024-11-23 13:00:00', 2),
+('2024-11-24 14:00:00', 3);
+
+INSERT INTO vendaitem (qtd_vendaitem, unidqtd_vendaitem, valor_vendaitem, desconto_vendaitem, id_pedidovenda, id_estoqueproduto) 
+VALUES
+(20, 'Kg', 300.000, 10.000, 1, 1),
+(10, 'Kg', 150.000, 5.000, 1, 2),
+(5, 'Kg', 100.000, NULL, 2, 3);
+commit;
+
+
