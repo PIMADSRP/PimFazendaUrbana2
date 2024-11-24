@@ -9,10 +9,10 @@
         List<Insumo> ListarInsumosAtivos();
         List<Insumo> ListarInsumosEmEstoque();
         List<SaidaInsumo> ListarSaidaInsumos();
-        List<SaidaInsumo> FiltrarSaidaInsumosNome(string insumoNome);
+        List<SaidaInsumo> FiltrarSaidaInsumosPorNome(string insumoNome);
         List<Insumo> ListarInsumosInativos();
-        Insumo ConsultarInsumoPorID(int idInsumo);
-        List<Insumo> FiltrarInsumosNome(string insumoNome);
+        Insumo ConsultarInsumoPorId(int idInsumo);
+        List<Insumo> FiltrarInsumosPorNome(string insumoNome);
         List<Insumo> FiltrarInsumosPorUnidade(string unidade);
         string ObterCategoriaPorNomeInsumo(string nomeInsumo);
         void CadastrarSaidaInsumo(SaidaInsumo saidainsumo, Insumo insumo);

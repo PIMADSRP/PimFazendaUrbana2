@@ -229,7 +229,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 5.1 - MÉTODO CONSULTAR CULTIVO NO BANCO POR ID (somente cultivos ativos)
-        public Cultivo ConsultarCultivoPorID(int cultivoId)
+        public Cultivo ConsultarCultivoPorId(int cultivoId)
         {
             Cultivo cultivo = null;
 
@@ -264,7 +264,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 5.2 - MÉTODO CONSULTAR CULTIVO NO BANCO POR NOME (somente cultivos ativos)
-        public Cultivo ConsultarCultivoNome(string cultivoNome)
+        public Cultivo ConsultarCultivoPorNome(string cultivoNome)
         {
             Cultivo cultivo = null;
 
@@ -299,7 +299,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 6- MÉTODO FILTRAR LISTA DE CULTIVOS POR NOME
-        public List<Cultivo> FiltrarCultivosNome(string cultivoNome)
+        public List<Cultivo> FiltrarCultivosPorNome(string cultivoNome)
         {
             List<Cultivo> cultivos = new List<Cultivo>();
 

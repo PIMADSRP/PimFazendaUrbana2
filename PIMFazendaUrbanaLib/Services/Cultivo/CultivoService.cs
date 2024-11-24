@@ -107,12 +107,12 @@
         }
 
         // 5- Consulta
-        // 5.1 - Consultar Cultivo por ID
-        public Cultivo ConsultarCultivoPorID(int cultivoId)
+        // 5.1 - Consultar Cultivo por Id
+        public Cultivo ConsultarCultivoPorId(int cultivoId)
         {
             try
             {
-                Cultivo cultivo = cultivoDAO.ConsultarCultivoPorID(cultivoId); // Chama o método ConsultarCultivoID do DAO para obter os dados de um cultivo pelo ID
+                Cultivo cultivo = cultivoDAO.ConsultarCultivoPorId(cultivoId); // Chama o método ConsultarCultivoID do DAO para obter os dados de um cultivo pelo ID
                 return cultivo; // Retorna o cultivo encontrado
             }
             catch (Exception ex)
@@ -122,11 +122,11 @@
         }
 
         // 5.2 - Consultar Cultivo por nome
-        public Cultivo ConsultarCultivoNome(string cultivoNome)
+        public Cultivo ConsultarCultivoPorNome(string cultivoNome)
         {
             try
             {
-                Cultivo cultivo = cultivoDAO.ConsultarCultivoNome(cultivoNome); // Chama o método ConsultarCultivoNome do DAO para obter os dados de um cultivo pelo nome
+                Cultivo cultivo = cultivoDAO.ConsultarCultivoPorNome(cultivoNome); // Chama o método ConsultarCultivoNome do DAO para obter os dados de um cultivo pelo nome
                 return cultivo; // Retorna o cultivo encontrado
             }
             catch (Exception ex)
@@ -137,11 +137,11 @@
 
         // 6- Filtragem
         // 6.1 - Filtrar lista de cultivos por nome
-        public List<Cultivo> FiltrarCultivosNome(string cultivoNome)
+        public List<Cultivo> FiltrarCultivosPorNome(string cultivoNome)
         {
             try
             {
-                return cultivoDAO.FiltrarCultivosNome(cultivoNome);
+                return cultivoDAO.FiltrarCultivosPorNome(cultivoNome);
             }
             catch (Exception ex)
             {

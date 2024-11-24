@@ -107,11 +107,11 @@
         }
 
         // 5 - MÉTODO CONSULTAR PRODUCAO POR ID
-        public Producao ConsultarProducaoPorID(int producaoId)
+        public Producao ConsultarProducaoPorId(int producaoId)
         {
             try
             {
-                Producao producao = producaoDAO.ConsultarProducaoPorID(producaoId);
+                Producao producao = producaoDAO.ConsultarProducaoPorId(producaoId);
                 return producao;
             }
             catch (Exception ex)

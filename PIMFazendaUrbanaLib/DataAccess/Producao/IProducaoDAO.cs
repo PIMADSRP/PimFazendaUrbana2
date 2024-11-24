@@ -10,6 +10,6 @@
         List<Producao> ListarProducoesNaoFinalizadas();
         List<Producao> FiltrarProducoesPorNome(string cultivoNome);
         List<Producao> FiltrarProducoesPorNomeEPeriodo(string cultivoNome, DateTime dataInicio, DateTime dataFim);
-        Producao ConsultarProducaoPorID(int producaoId);
+        Producao ConsultarProducaoPorId(int producaoId);
     }
 }

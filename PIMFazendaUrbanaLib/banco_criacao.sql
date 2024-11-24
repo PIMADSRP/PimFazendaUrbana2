@@ -331,7 +331,7 @@ CREATE TABLE `estoqueinsumo` (
 ## PedidoCompra
 CREATE TABLE `pedidocompra` (
 	`id_pedidocompra` int NOT NULL AUTO_INCREMENT,
-	`data_pedidocompra` timestamp DEFAULT CURRENT_TIMESTAMP,
+	`data_pedidocompra` DATE,
 	`id_fornecedor` int NOT NULL,
 	PRIMARY KEY (`id_pedidocompra`),
 	KEY `id_fornecedor` (`id_fornecedor`),
@@ -370,7 +370,7 @@ CREATE TABLE `saidainsumo` (
 	`id_saidainsumo` int NOT NULL AUTO_INCREMENT,
 	`qtd_saidainsumo` int DEFAULT 0,
 	`unidqtd_saidainsumo` varchar(10) DEFAULT 'kg',
-	`data_saidainsumo` timestamp DEFAULT CURRENT_TIMESTAMP,
+	`data_saidainsumo` DATE,
 	`id_insumo` int NOT NULL,
 	PRIMARY KEY (`id_saidainsumo`, `id_insumo`),
 	KEY `id_insumo` (`id_insumo`),
@@ -382,8 +382,8 @@ CREATE TABLE `producao` (
 	`id_producao` int NOT NULL AUTO_INCREMENT,
 	`qtd_producao` int NOT NULL,
 	`unidqtd_producao` varchar(10) DEFAULT 'kg',
-	`data_producao` timestamp DEFAULT CURRENT_TIMESTAMP,
-    `datacolheita_producao` timestamp,
+	`data_producao` DATE,
+    `datacolheita_producao` DATE,
     `ambientectrl_producao` boolean DEFAULT true,
     `finalizado_producao` boolean DEFAULT false,
 	`id_cultivo` int NOT NULL,
@@ -397,7 +397,7 @@ CREATE TABLE `estoqueproduto` (
 	`id_estoqueproduto` int NOT NULL AUTO_INCREMENT,
 	`qtd_estoqueproduto` int NOT NULL,
 	`unidqtd_estoqueproduto` varchar(10) DEFAULT 'kg',
-	`dataentrada_estoqueproduto` timestamp DEFAULT CURRENT_TIMESTAMP,
+	`dataentrada_estoqueproduto` DATE,
 	`ativo_estoqueproduto` boolean DEFAULT true,
 	`id_producao` int NOT NULL,
 	PRIMARY KEY (`id_estoqueproduto`),
@@ -421,7 +421,7 @@ DELIMITER ;
 ## PedidoVenda
 CREATE TABLE `pedidovenda` (
 	`id_pedidovenda` int NOT NULL AUTO_INCREMENT,
-	`data_pedidovenda` timestamp DEFAULT CURRENT_TIMESTAMP,
+	`data_pedidovenda` DATE,
 	`id_cliente` int NOT NULL,
 	PRIMARY KEY (`id_pedidovenda`),
 	KEY `id_cliente` (`id_cliente`),

@@ -93,11 +93,11 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para consultar um pedido de compra pelo ID
-        public PedidoCompra ConsultarPedidoCompra(int idPedidoCompra)
+        public PedidoCompra ConsultarPedidoCompraPorId(int idPedidoCompra)
         {
             try
             {
-                return pedidoCompraDAO.ConsultarPedidoCompra(idPedidoCompra);
+                return pedidoCompraDAO.ConsultarPedidoCompraPorId(idPedidoCompra);
             }
             catch (Exception ex)
             {
@@ -131,11 +131,11 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public List<PedidoCompraItem> FiltrarRegistrosDeCompraNome(string insumoNome)
+        public List<PedidoCompraItem> FiltrarRegistrosDeCompraPorNome(string insumoNome)
         {
             try
             {
-                List<PedidoCompraItem> compraItems = pedidoCompraDAO.FiltrarRegistrosDeCompraNome(insumoNome);
+                List<PedidoCompraItem> compraItems = pedidoCompraDAO.FiltrarRegistrosDeCompraPorNome(insumoNome);
                 return compraItems;
             }
             catch (Exception ex)
@@ -145,11 +145,11 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para consultar um item de compra pelo ID
-        public PedidoCompraItem ConsultarCompraItem(int idCompraItem)
+        public PedidoCompraItem ConsultarCompraItemPorId(int idCompraItem)
         {
             try
             {
-                return pedidoCompraDAO.ConsultarCompraItem(idCompraItem);
+                return pedidoCompraDAO.ConsultarCompraItemPorId(idCompraItem);
             }
             catch (Exception ex)
             {

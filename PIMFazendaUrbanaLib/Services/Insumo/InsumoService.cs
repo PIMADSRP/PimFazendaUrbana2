@@ -48,16 +48,16 @@
             }
         }
 
-        public Insumo ConsultarInsumoPorID(int insumoID)
+        public Insumo ConsultarInsumoPorId(int insumoID)
         {
             try
             {
-                Insumo insumo = insumoDAO.ConsultarInsumoPorID(insumoID);
+                Insumo insumo = insumoDAO.ConsultarInsumoPorId(insumoID);
                 return insumo;
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro ao consultar insumo por ID: " + ex.Message);
+                throw new Exception("Erro ao consultar insumo por Id: " + ex.Message);
             }
         }
 
@@ -112,11 +112,11 @@
             }
         }
 
-        public List<Insumo> FiltrarInsumosNome(string insumoNome)
+        public List<Insumo> FiltrarInsumosPorNome(string insumoNome)
         {
             try
             {
-                List<Insumo> insumos = insumoDAO.FiltrarInsumosNome(insumoNome);
+                List<Insumo> insumos = insumoDAO.FiltrarInsumosPorNome(insumoNome);
                 return insumos;
             }
             catch (Exception ex)
@@ -138,11 +138,11 @@
             }
         }
 
-        public List<SaidaInsumo> FiltrarSaidaInsumosNome(string insumoNome)
+        public List<SaidaInsumo> FiltrarSaidaInsumosPorNome(string insumoNome)
         {
             try
             {
-                List<SaidaInsumo> saidainsumos = insumoDAO.FiltrarSaidaInsumosNome(insumoNome);
+                List<SaidaInsumo> saidainsumos = insumoDAO.FiltrarSaidaInsumosPorNome(insumoNome);
                 return saidainsumos;
             }
             catch (Exception ex)

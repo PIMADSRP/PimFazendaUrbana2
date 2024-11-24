@@ -8,7 +8,7 @@
         void ExcluirFornecedor(int id);
         List<Fornecedor> ListarFornecedoresAtivos();
         List<Fornecedor> ListarFornecedoresInativos();
-        Fornecedor ConsultarFornecedorPorID(int fornecedorId);
+        Fornecedor ConsultarFornecedorPorId(int fornecedorId);
         Fornecedor ConsultarFornecedorPorNome(string fornecedorNome);
         Fornecedor ConsultarFornecedorPorCNPJ(string fornecedorCNPJ);
         List<Fornecedor> FiltrarFornecedoresPorNome(string fornecedorNome);

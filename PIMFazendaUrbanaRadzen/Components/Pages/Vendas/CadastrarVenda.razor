@@ -1,6 +1,7 @@
 @page "/cadastrar-venda"
 @using PIMFazendaUrbanaRadzen.Services
 @using PIMFazendaUrbanaAPI.DTOs
+@using System.Globalization
 @* @attribute [Authorize] *@
 
 <PageTitle>Cadastrar Venda</PageTitle>
@@ -22,19 +23,36 @@
                 </div>
             </HeaderTemplate>
             <ChildContent>
-                <!-- Combo Box Cliente -->
+
+                <!-- Campo Cliente -->
                 <div style="margin-bottom: 10px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
                         <RadzenText Text="Cliente" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px; margin-bottom: 5px;" />
-                        <RadzenDropDown TValue="string" @bind-Value="selectedClient" Data="@comboBoxClients" TextProperty="Text" ValueProperty="Value" Style="width: 100%;" />
+                        <RadzenDropDown style="width: 100%"
+                                @bind-Value="clienteSelecionado"
+                                Name="Cliente"
+                                Placeholder="Selecione o cliente"
+                                Data="@clientes"
+                                TextProperty="Nome"
+                                TValue="ClienteDTO"
+                                Change="@(args => AtualizarClienteSelecionado((ClienteDTO)args))" />
+                        <RadzenRequiredValidator Component="Cliente" Text="Selecione um cliente" />
                     </RadzenRow>
                 </div>
 
-                <!-- Combo Box Produto -->
+                <!-- Campo Produto -->
                 <div style="margin-bottom: 10px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
                         <RadzenText Text="Produto" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px; margin-bottom: 5px;" />
-                        <RadzenDropDown TValue="string" @bind-Value="selectedProduct" Data="@comboBoxProducts" TextProperty="Text" ValueProperty="Value" Style="width: 100%;" />
+                        <RadzenDropDown style="width: 100%"
+                                @bind-Value="estoqueProdutoSelecionado"
+                                Name="Cultivo"
+                                Placeholder="Selecione o produto"
+                                Data="@estoqueProdutos"
+                                TextProperty="Producao.Cultivo.Variedade"
+                                TValue="EstoqueProdutoDTO"
+                                Change="@(args => AtualizarEstoqueProdutoSelecionado((EstoqueProdutoDTO)args))" />
+                        <RadzenRequiredValidator Component="Cultivo" Text="Selecione um produto" />
                     </RadzenRow>
                 </div>
 
@@ -42,7 +60,9 @@
                 <div style="margin-bottom: 10px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
                         <RadzenText Text="Categoria" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px; margin-bottom: 5px; margin-bottom: 5px;" />
-                        <RadzenTextBox Placeholder="Verdura" ReadOnly="true" Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
+                        <RadzenTextBox Value="@(estoqueProdutoSelecionado.Producao.Cultivo?.Categoria ?? "N/A")"
+                                   ReadOnly="true"
+                                   Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
                     </RadzenRow>
                 </div>
 
@@ -50,7 +70,9 @@
                 <div style="margin-bottom: 10px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
                         <RadzenText Text="Unidade" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px; margin-bottom: 5px; margin-bottom: 5px;" />
-                        <RadzenTextBox Placeholder="kg" ReadOnly="true" Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
+                        <RadzenTextBox Value="@(estoqueProdutoSelecionado.Unidqtd ?? "N/A")"
+                                   ReadOnly="true"
+                                   Style="width: 100%; background-color: rgba(161, 161, 161, 0.15);" />
                     </RadzenRow>
                 </div>
 
@@ -63,11 +85,17 @@
                     </RadzenRow>
                 </div>
 
-                <!-- Text Box Valor Unitário -->
+                <!-- Campo Valor Unitário -->
                 <div style="margin-bottom: 10px;">
                     <RadzenRow Gap="0.5" RowGap="0.5">
                         <RadzenText Text="Valor Unitário" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px; margin-bottom: 5px;" />
-                        <RadzenTextBox Style="width: 100%;" />
+                        <RadzenNumeric @bind-Value="valorUnitario"
+                                       Placeholder="Ex: 25,00"
+                                       Min="0"
+                                       Step="0.01"
+                                       Style="width: 100%;"
+                                       Format="C2"
+                                        />
                     </RadzenRow>
                 </div>
 
@@ -115,6 +143,7 @@
         </RadzenFieldset>
     </div>
 
+    @*
     <!-- DataGrid (lado direito) -->
     <div style="flex: 1.5; min-width: 300px; margin-top: 10px;">
         <RadzenColumn Size="7">
@@ -163,40 +192,5 @@
 
         </RadzenColumn>
     </div>
-
+    *@
 </div>
-
-@code {
-    private string selectedClient;
-    private string selectedProduct;
-    private int quantidade;
-
-    // Dados para os ComboBoxes
-    private List<Item> comboBoxClients = new List<Item>
-    {
-        new Item { Text = "Mercado São João", Value = "1" }
-        ,
-        // Outras opções...
-    };
-
-    private List<Item> comboBoxProducts = new List<Item>
-    {
-        new Item { Text = "Algodão BRS 368", Value = "1" },
-        new Item { Text = "Alface Americana", Value = "2" },
-        // Outras opções...
-    };
-
-    // Dados para o DataGrid
-    private List<dynamic> dataGridItems = new List<dynamic>
-    {
-        new { ProductName = "Abóbora Japonesa", Quantity = 10, Unit = "kg", UnitPrice = "R$ 3,00", TotalPrice = "R$ 30,00" },
-        new { ProductName = "Banana Prata", Quantity = 10, Unit = "kg", UnitPrice = "R$ 2,00", TotalPrice = "R$ 20,00" },
-        // Outros itens...
-    };
-
-    public class Item
-    {
-        public string Text { get; set; }
-        public string Value { get; set; }
-    }
-}

@@ -118,7 +118,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
             try
             {
                 Fornecedor? fornecedor = new Fornecedor();
-                fornecedor = _fornecedorService.ConsultarFornecedorPorID(id);
+                fornecedor = _fornecedorService.ConsultarFornecedorPorId(id);
                 if (fornecedor == null)
                 {
                     return NotFound(new { message = "Fornecedor não encontrado." }); // Retorna 404

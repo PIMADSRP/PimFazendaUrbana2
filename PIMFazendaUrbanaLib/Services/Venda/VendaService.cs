@@ -92,11 +92,11 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para consultar um pedido de venda pelo ID
-        public PedidoVenda ConsultarPedidoVenda(int idPedidoVenda)
+        public PedidoVenda ConsultarPedidoVendaPorId(int idPedidoVenda)
         {
             try
             {
-                return pedidoVendaDAO.ConsultarPedidoVenda(idPedidoVenda);
+                return pedidoVendaDAO.ConsultarPedidoVendaPorId(idPedidoVenda);
             }
             catch (Exception ex)
             {
@@ -131,11 +131,11 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para consultar um item de venda pelo ID
-        public PedidoVendaItem ConsultarVendaItem(int idVendaItem)
+        public PedidoVendaItem ConsultarVendaItemPorId(int idVendaItem)
         {
             try
             {
-                return pedidoVendaDAO.ConsultarVendaItem(idVendaItem);
+                return pedidoVendaDAO.ConsultarVendaItemPorId(idVendaItem);
             }
             catch (Exception ex)
             {
@@ -160,11 +160,11 @@ namespace PIMFazendaUrbanaLib
         }
         
 
-        public List<PedidoVendaItem> FiltrarRegistrosDeVendaNome(string produtoNome)
+        public List<PedidoVendaItem> FiltrarRegistrosDeVendaPorNome(string produtoNome)
         {
             try
             {
-                List<PedidoVendaItem> vendaItems = pedidoVendaDAO.FiltrarRegistrosDeVendaNome(produtoNome);
+                List<PedidoVendaItem> vendaItems = pedidoVendaDAO.FiltrarRegistrosDeVendaPorNome(produtoNome);
                 return vendaItems;
             }
             catch (Exception ex)

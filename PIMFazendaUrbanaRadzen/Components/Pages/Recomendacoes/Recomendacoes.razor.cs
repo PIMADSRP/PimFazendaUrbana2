@@ -16,21 +16,14 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Recomendacoes
         private string selectedAmbienteControlado = "Sim"; // Definindo "Sim" como padrão
         private bool selectedAmbienteControladoBool;
 
-        private List<Item> comboBoxRegiaoItems = new List<Item>
+        List<string> comboBoxRegiaoItems = new List<string>
         {
-            new Item { Text = "Norte", Value = "Norte" },
-            new Item { Text = "Nordeste", Value = "Nordeste" },
-            new Item { Text = "Centro-Oeste", Value = "Centro-Oeste" },
-            new Item { Text = "Sudeste", Value = "Sudeste" },
-            new Item { Text = "Sul", Value = "Sul" }
+            "Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"
         };
 
-        private List<Item> comboBoxEstacaoItems = new List<Item>
+        List<string> comboBoxEstacaoItems = new List<string>
         {
-            new Item { Text = "Verão", Value = "Verão" },
-            new Item { Text = "Outono", Value = "Outono" },
-            new Item { Text = "Inverno", Value = "Inverno" },
-            new Item { Text = "Primavera", Value = "Primavera" }
+            "Verão", "Outono", "Inverno", "Primavera"
         };
 
         private List<CultivoDTO> dataGridItems = new List<CultivoDTO>();

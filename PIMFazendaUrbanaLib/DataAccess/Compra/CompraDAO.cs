@@ -242,7 +242,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para consultar um pedido de compra pelo ID
-        public PedidoCompra ConsultarPedidoCompra(int idPedidoCompra)
+        public PedidoCompra ConsultarPedidoCompraPorId(int idPedidoCompra)
         {
             PedidoCompra pedidoCompra = null;
 
@@ -334,7 +334,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para filtrar os itens de compra por nome de insumo
-        public List<PedidoCompraItem> FiltrarRegistrosDeCompraNome(string insumoNome)
+        public List<PedidoCompraItem> FiltrarRegistrosDeCompraPorNome(string insumoNome)
         {
             List<PedidoCompraItem> compraItens = new List<PedidoCompraItem>();
 
@@ -377,7 +377,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para consultar um item de compra pelo ID
-        public PedidoCompraItem ConsultarCompraItem(int idCompraItem)
+        public PedidoCompraItem ConsultarCompraItemPorId(int idCompraItem)
         {
             PedidoCompraItem compraItem = null;
 

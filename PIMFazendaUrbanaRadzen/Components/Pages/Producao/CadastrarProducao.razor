@@ -16,15 +16,18 @@
         <RadzenStack>
             
             <!-- Campo Variedade -->
-            <RadzenDropDown style="width: 100%"
-                            @bind-Value="cultivoSelecionado"
-                            Name="Cultivo"
-                            Placeholder="Selecione o cultivo"
-                            Data="@cultivos"
-                            TextProperty="Variedade"
-                            TValue="CultivoDTO"
-                            Change="@(args => AtualizarCultivoSelecionado((CultivoDTO)args))" />
-            <RadzenRequiredValidator Component="Cultivo" Text="Selecione uma variedade de cultivo" />
+            <div style="margin-bottom: 15px;">
+                <RadzenLabel Text="Variedade" />
+                <RadzenDropDown style="width: 100%"
+                                @bind-Value="cultivoSelecionado"
+                                Name="Cultivo"
+                                Placeholder="Selecione o cultivo"
+                                Data="@cultivos"
+                                TextProperty="Variedade"
+                                TValue="CultivoDTO"
+                                Change="@(args => AtualizarCultivoSelecionado((CultivoDTO)args))" />
+                <RadzenRequiredValidator Component="Cultivo" Text="Selecione uma variedade de cultivo" />
+            </div>
 
             <!-- Campo Categoria -->
             <div style="margin-bottom: 15px;">

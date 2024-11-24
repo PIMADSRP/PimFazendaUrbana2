@@ -97,7 +97,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
         {
             try
             {
-                var producao = _producaoService.ConsultarProducaoPorID(id);
+                var producao = _producaoService.ConsultarProducaoPorId(id);
                 var producaoDto = _mapper.Map<ProducaoDTO>(producao); // Mapeia Producao para ProducaoDTO
                 return Ok(producaoDto);
             }

@@ -8,9 +8,9 @@
         void ExcluirCultivo(int cultivoId);
         List<Cultivo> ListarCultivosAtivos();
         List<Cultivo> ListarCultivosInativos();
-        Cultivo ConsultarCultivoPorID(int cultivoId);
-        Cultivo ConsultarCultivoNome(string cultivoNome);
-        List<Cultivo> FiltrarCultivosNome(string cultivoNome);
+        Cultivo ConsultarCultivoPorId(int cultivoId);
+        Cultivo ConsultarCultivoPorNome(string cultivoNome);
+        List<Cultivo> FiltrarCultivosPorNome(string cultivoNome);
         public List<string> ListarCategorias();
     }
 }

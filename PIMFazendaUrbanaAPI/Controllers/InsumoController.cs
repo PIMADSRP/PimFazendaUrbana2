@@ -113,11 +113,11 @@ namespace PIMFazendaUrbanaAPI.Controllers
 
         // Método para buscar um Insumo por ID
         [HttpGet("{id}")]
-        public IActionResult ConsultarInsumoPorID(int id)
+        public IActionResult ConsultarInsumoPorId(int id)
         {
             try
             {
-                var insumo = _insumoService.ConsultarInsumoPorID(id);
+                var insumo = _insumoService.ConsultarInsumoPorId(id);
                 var insumoDto = _mapper.Map<InsumoDTO>(insumo); // Mapeia Insumo para InsumoDTO
                 return Ok(insumoDto);
             }

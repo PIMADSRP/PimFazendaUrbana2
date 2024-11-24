@@ -403,7 +403,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // 5 - MÉTODO CONSULTAR PRODUCAO POR ID NO BANCO
-        public Producao ConsultarProducaoPorID(int producaoId)
+        public Producao ConsultarProducaoPorId(int producaoId)
         {
             Producao producao = null;
 

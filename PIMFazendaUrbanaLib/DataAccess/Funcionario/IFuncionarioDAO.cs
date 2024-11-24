@@ -12,7 +12,7 @@
         void ExcluirFuncionario(int id);
         List<Funcionario> ListarFuncionariosAtivos();
         List<Funcionario> ListarFuncionariosInativos();
-        Funcionario ConsultarFuncionarioPorID(int funcionarioId);
+        Funcionario ConsultarFuncionarioPorId(int funcionarioId);
         Funcionario ConsultarFuncionarioPorNome(string funcionarioNome);
         Funcionario ConsultarFuncionarioPorUsuario(string funcionarioUsuario);
         List<Funcionario> FiltrarFuncionariosPorNome(string funcionarioNome);

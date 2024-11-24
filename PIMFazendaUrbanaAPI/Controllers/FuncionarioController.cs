@@ -116,7 +116,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
             try
             {
                 Funcionario? funcionario = new Funcionario();
-                funcionario = _funcionarioService.ConsultarFuncionarioPorID(id);
+                funcionario = _funcionarioService.ConsultarFuncionarioPorId(id);
                 if (funcionario == null)
                 {
                     return NotFound(new { message = "Funcionário não encontrado." }); // Retorna 404

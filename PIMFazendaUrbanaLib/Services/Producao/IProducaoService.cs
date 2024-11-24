@@ -9,7 +9,7 @@
         List<Producao> ListarProducoes();
         List<Producao> ListarProducoesNaoFinalizadas();
         List<Producao> FiltrarProducoesPorNome(string cultivoNome);
-        Producao ConsultarProducaoPorID(int producaoId);
+        Producao ConsultarProducaoPorId(int producaoId);
         List<Producao> FiltrarProducoesPorNomeEPeriodo(string cultivoNome, DateTime dataInicio, DateTime dataFim);
         void ValidarProducao(Producao producao);
     }

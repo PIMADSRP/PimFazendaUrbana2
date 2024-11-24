@@ -251,7 +251,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para consultar um pedido de venda pelo ID
-        public PedidoVenda ConsultarPedidoVenda(int idPedidoVenda)
+        public PedidoVenda ConsultarPedidoVendaPorId(int idPedidoVenda)
         {
             PedidoVenda pedidoVenda = null;
 
@@ -345,7 +345,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para consultar um item de venda pelo ID
-        public PedidoVendaItem ConsultarVendaItem(int idVendaItem)
+        public PedidoVendaItem ConsultarVendaItemPorId(int idVendaItem)
         {
             PedidoVendaItem vendaItem = null;
 
@@ -377,7 +377,7 @@ namespace PIMFazendaUrbanaLib
             return vendaItem;
         }
 
-        public List<PedidoVendaItem> FiltrarRegistrosDeVendaNome(string produtoNome)
+        public List<PedidoVendaItem> FiltrarRegistrosDeVendaPorNome(string produtoNome)
         {
             List<PedidoVendaItem> vendaItens = new List<PedidoVendaItem>();
 

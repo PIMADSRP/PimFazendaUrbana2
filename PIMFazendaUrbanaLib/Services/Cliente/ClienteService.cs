@@ -97,12 +97,12 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public Cliente? ConsultarClientePorID(int clienteId)
+        public Cliente? ConsultarClientePorId(int clienteId)
         {
             try
             {
                 Cliente? cliente = null;
-                cliente = clienteDAO.ConsultarClientePorID(clienteId); // Chama o método ConsultarCliente da classe ClienteDAO para obter os dados de um cliente pelo ID
+                cliente = clienteDAO.ConsultarClientePorId(clienteId); // Chama o método ConsultarCliente da classe ClienteDAO para obter os dados de um cliente pelo ID
                 return cliente; // Retorna o cliente encontrado
             }
             catch (Exception ex)

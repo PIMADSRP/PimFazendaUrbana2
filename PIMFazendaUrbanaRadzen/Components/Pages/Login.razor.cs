@@ -18,7 +18,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages
             if (string.IsNullOrEmpty(errorMessage))
             {
                 // login bem-sucedido
-                navigationManager.NavigateTo("/"); // redireciona após o login
+                navigationManager.NavigateTo("/index"); // redireciona após o login
             }
             else
             {

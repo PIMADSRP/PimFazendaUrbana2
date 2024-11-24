@@ -399,7 +399,7 @@ namespace PIMFazendaUrbanaLib
         // 5- Consulta
         // 5.1- MÉTODO CONSULTAR (PESQUISAR) CLIENTE NO BANCO POR ID (somente clientes ativos)
         // ********** FUNCIONAL **********
-        public Cliente? ConsultarClientePorID(int clienteId)
+        public Cliente? ConsultarClientePorId(int clienteId)
         {
             Cliente? cliente = null;
 

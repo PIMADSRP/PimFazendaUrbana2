@@ -4,6 +4,7 @@ using Radzen;
 using PIMFazendaUrbanaAPI.DTOs;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,11 @@ builder.Services.AddRadzenCookieThemeService(options =>
     options.Name = "MyApplicationTheme";
     options.Duration = TimeSpan.FromDays(365); // Tempo de duração do cookie de tema
 });
+
+// Configurar cultura padrão
+var cultureInfo = new CultureInfo("pt-BR");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
 builder.Services.AddHttpClient(); // Registra o HttpClient para chamadas HTTP
 
@@ -117,6 +123,12 @@ builder.Services.AddScoped(provider =>
 
 builder.Services.AddScoped(provider =>
     new VendaApiService<PedidoVendaItemDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/venda"
+    ));
+
+builder.Services.AddScoped(provider =>
+    new VendaApiService<PedidoVendaDTO>(
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/venda"
     ));

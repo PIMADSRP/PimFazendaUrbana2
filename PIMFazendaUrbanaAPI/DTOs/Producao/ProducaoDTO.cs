@@ -19,46 +19,5 @@
         public bool AmbienteControlado { get; set; }
         public bool StatusFinalizado { get; set; }
 
-        // Métodos
-        public string CalcularDataColheita()
-        {
-            string dataColheita = "";
-
-            DateTime data = DateTime.Now;
-            int tempoProd;
-            if (AmbienteControlado)
-            {
-                tempoProd = (int)Cultivo.TempoProdControlado;
-            }
-            else
-            {
-                tempoProd = (int)Cultivo.TempoProdTradicional;
-            }
-
-            dataColheita = data.AddDays(tempoProd).ToShortDateString();
-
-            return dataColheita;
-        }
-
-        public DateTime CalcularDataHoraColheita()
-        {
-            DateTime dataHoraColheita;
-
-            DateTime data = DateTime.Now;
-            int tempoProd;
-            if (AmbienteControlado)
-            {
-                tempoProd = (int)Cultivo.TempoProdControlado;
-            }
-            else
-            {
-                tempoProd = (int)Cultivo.TempoProdTradicional;
-            }
-
-            dataHoraColheita = data.AddDays(tempoProd);
-
-            return dataHoraColheita;
-        }
-
     }
 }

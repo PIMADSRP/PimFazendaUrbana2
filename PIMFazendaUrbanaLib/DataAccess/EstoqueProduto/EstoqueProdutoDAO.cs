@@ -22,11 +22,11 @@ namespace PIMFazendaUrbanaLib
                 string query = @"SELECT ep.id_estoqueproduto, ep.qtd_estoqueproduto, ep.unidqtd_estoqueproduto, 
                                 ep.dataentrada_estoqueproduto, ep.ativo_estoqueproduto,
 
-                                p.id_producao, p.qtd_producao, p.unidqtd_producao, p.ambientecontrolado_producao, 
-                                p.statusfinalizado_producao, p.data_producao, p.datacolheita_producao,
+                                p.id_producao, p.qtd_producao, p.unidqtd_producao, p.ambientectrl_producao, 
+                                p.finalizado_producao, p.data_producao, p.datacolheita_producao,
 
                                 c.id_cultivo, c.nome_cultivo, c.variedade_cultivo, c.categoria_cultivo,
-                                c.tempoprodtradicional_cultivo, c.tempoprodcontrolado_cultivo, c.statusativo_cultivo
+                                c.tempoprodtrad_cultivo, c.tempoprodctrl_cultivo, c.ativo_cultivo
 
                                 FROM estoqueproduto ep
                                 LEFT JOIN producao p ON ep.id_producao = p.id_producao 
@@ -49,31 +49,31 @@ namespace PIMFazendaUrbanaLib
                         {
                             EstoqueProduto produto = new EstoqueProduto
                             {
-                                Id = reader.GetInt32("ep.id_estoqueproduto"),
-                                Qtd = reader.GetInt32("ep.qtd_estoqueproduto"),
-                                Unidqtd = reader.GetString("ep.unidqtd_estoqueproduto"),
-                                DataEntrada = reader.GetDateTime("ep.dataentrada_estoqueproduto"),
-                                StatusAtivo = reader.GetBoolean("ep.ativo_estoqueproduto"),
+                                Id = reader.GetInt32("id_estoqueproduto"),
+                                Qtd = reader.GetInt32("qtd_estoqueproduto"),
+                                Unidqtd = reader.GetString("unidqtd_estoqueproduto"),
+                                DataEntrada = reader.GetDateTime("dataentrada_estoqueproduto"),
+                                StatusAtivo = reader.GetBoolean("ativo_estoqueproduto"),
 
                                 Producao = new Producao
                                 {
-                                    Id = reader.GetInt32("p.id_producao"),
-                                    Qtd = reader.GetInt32("p.qtd_producao"),
-                                    Unidqtd = reader.GetString("p.unidqtd_producao"),
-                                    AmbienteControlado = reader.GetBoolean("p.ambientecontrolado_producao"),
-                                    StatusFinalizado = reader.GetBoolean("p.statusfinalizado_producao"),
-                                    Data = reader.GetDateTime("p.data_producao"),
-                                    DataColheita = reader.GetDateTime("p.datacolheita_producao"),
+                                    Id = reader.GetInt32("id_producao"),
+                                    Qtd = reader.GetInt32("qtd_producao"),
+                                    Unidqtd = reader.GetString("unidqtd_producao"),
+                                    AmbienteControlado = reader.GetBoolean("ambientectrl_producao"),
+                                    StatusFinalizado = reader.GetBoolean("finalizado_producao"),
+                                    Data = reader.GetDateTime("data_producao"),
+                                    DataColheita = reader.GetDateTime("datacolheita_producao"),
 
                                     Cultivo = new Cultivo
                                     {
-                                        Id = reader.GetInt32("c.id_cultivo"),
-                                        Nome = reader.GetString("c.nome_cultivo"),
-                                        Variedade = reader.GetString("c.variedade_cultivo"),
-                                        Categoria = reader.GetString("c.categoria_cultivo"),
-                                        TempoProdTradicional = reader.GetInt32("c.tempoprodtradicional_cultivo"),
-                                        TempoProdControlado = reader.GetInt32("c.tempoprodcontrolado_cultivo"),
-                                        StatusAtivo = reader.GetBoolean("c.statusativo_cultivo")
+                                        Id = reader.GetInt32("id_cultivo"),
+                                        Nome = reader.GetString("nome_cultivo"),
+                                        Variedade = reader.GetString("variedade_cultivo"),
+                                        Categoria = reader.GetString("categoria_cultivo"),
+                                        TempoProdTradicional = reader.GetInt32("tempoprodtrad_cultivo"),
+                                        TempoProdControlado = reader.GetInt32("tempoprodctrl_cultivo"),
+                                        StatusAtivo = reader.GetBoolean("ativo_cultivo")
                                     }
 
                                 },
@@ -98,11 +98,11 @@ namespace PIMFazendaUrbanaLib
                 string query = @"SELECT ep.id_estoqueproduto, ep.qtd_estoqueproduto, ep.unidqtd_estoqueproduto, 
                                 ep.dataentrada_estoqueproduto, ep.ativo_estoqueproduto,
 
-                                p.id_producao, p.qtd_producao, p.unidqtd_producao, p.ambientecontrolado_producao, 
-                                p.statusfinalizado_producao, p.data_producao, p.datacolheita_producao,
+                                p.id_producao, p.qtd_producao, p.unidqtd_producao, p.ambientectrl_producao, 
+                                p.finalizado_producao, p.data_producao, p.datacolheita_producao,
 
                                 c.id_cultivo, c.nome_cultivo, c.variedade_cultivo, c.categoria_cultivo,
-                                c.tempoprodtradicional_cultivo, c.tempoprodcontrolado_cultivo, c.statusativo_cultivo
+                                c.tempoprodtrad_cultivo, c.tempoprodctrl_cultivo, c.ativo_cultivo
 
                                 FROM estoqueproduto ep
                                 LEFT JOIN producao p ON ep.id_producao = p.id_producao 
@@ -118,31 +118,31 @@ namespace PIMFazendaUrbanaLib
                         {
                             EstoqueProduto produto = new EstoqueProduto
                             {
-                                Id = reader.GetInt32("ep.id_estoqueproduto"),
-                                Qtd = reader.GetInt32("ep.qtd_estoqueproduto"),
-                                Unidqtd = reader.GetString("ep.unidqtd_estoqueproduto"),
-                                DataEntrada = reader.GetDateTime("ep.dataentrada_estoqueproduto"),
-                                StatusAtivo = reader.GetBoolean("ep.ativo_estoqueproduto"),
+                                Id = reader.GetInt32("id_estoqueproduto"),
+                                Qtd = reader.GetInt32("qtd_estoqueproduto"),
+                                Unidqtd = reader.GetString("unidqtd_estoqueproduto"),
+                                DataEntrada = reader.GetDateTime("dataentrada_estoqueproduto"),
+                                StatusAtivo = reader.GetBoolean("ativo_estoqueproduto"),
 
                                 Producao = new Producao
                                 {
-                                    Id = reader.GetInt32("p.id_producao"),
-                                    Qtd = reader.GetInt32("p.qtd_producao"),
-                                    Unidqtd = reader.GetString("p.unidqtd_producao"),
-                                    AmbienteControlado = reader.GetBoolean("p.ambientecontrolado_producao"),
-                                    StatusFinalizado = reader.GetBoolean("p.statusfinalizado_producao"),
-                                    Data = reader.GetDateTime("p.data_producao"),
-                                    DataColheita = reader.GetDateTime("p.datacolheita_producao"),
+                                    Id = reader.GetInt32("id_producao"),
+                                    Qtd = reader.GetInt32("qtd_producao"),
+                                    Unidqtd = reader.GetString("unidqtd_producao"),
+                                    AmbienteControlado = reader.GetBoolean("ambientectrl_producao"),
+                                    StatusFinalizado = reader.GetBoolean("finalizado_producao"),
+                                    Data = reader.GetDateTime("data_producao"),
+                                    DataColheita = reader.GetDateTime("datacolheita_producao"),
 
                                     Cultivo = new Cultivo
                                     {
-                                        Id = reader.GetInt32("c.id_cultivo"),
-                                        Nome = reader.GetString("c.nome_cultivo"),
-                                        Variedade = reader.GetString("c.variedade_cultivo"),
-                                        Categoria = reader.GetString("c.categoria_cultivo"),
-                                        TempoProdTradicional = reader.GetInt32("c.tempoprodtradicional_cultivo"),
-                                        TempoProdControlado = reader.GetInt32("c.tempoprodcontrolado_cultivo"),
-                                        StatusAtivo = reader.GetBoolean("c.statusativo_cultivo")
+                                        Id = reader.GetInt32("id_cultivo"),
+                                        Nome = reader.GetString("nome_cultivo"),
+                                        Variedade = reader.GetString("variedade_cultivo"),
+                                        Categoria = reader.GetString("categoria_cultivo"),
+                                        TempoProdTradicional = reader.GetInt32("tempoprodtrad_cultivo"),
+                                        TempoProdControlado = reader.GetInt32("tempoprodctrl_cultivo"),
+                                        StatusAtivo = reader.GetBoolean("ativo_cultivo")
                                     }
 
                                 },
@@ -166,11 +166,11 @@ namespace PIMFazendaUrbanaLib
                 string query = @"SELECT ep.id_estoqueproduto, ep.qtd_estoqueproduto, ep.unidqtd_estoqueproduto, 
                                 ep.dataentrada_estoqueproduto, ep.ativo_estoqueproduto,
 
-                                p.id_producao, p.qtd_producao, p.unidqtd_producao, p.ambientecontrolado_producao, 
-                                p.statusfinalizado_producao, p.data_producao, p.datacolheita_producao,
+                                p.id_producao, p.qtd_producao, p.unidqtd_producao, p.ambientectrl_producao, 
+                                p.finalizado_producao, p.data_producao, p.datacolheita_producao,
 
                                 c.id_cultivo, c.nome_cultivo, c.variedade_cultivo, c.categoria_cultivo,
-                                c.tempoprodtradicional_cultivo, c.tempoprodcontrolado_cultivo, c.statusativo_cultivo
+                                c.tempoprodtrad_cultivo, c.tempoprodctrl_cultivo, c.ativo_cultivo
 
                                 FROM estoqueproduto ep
                                 LEFT JOIN producao p ON ep.id_producao = p.id_producao 
@@ -188,31 +188,31 @@ namespace PIMFazendaUrbanaLib
                         {
                             EstoqueProduto produto = new EstoqueProduto
                             {
-                                Id = reader.GetInt32("ep.id_estoqueproduto"),
-                                Qtd = reader.GetInt32("ep.qtd_estoqueproduto"),
-                                Unidqtd = reader.GetString("ep.unidqtd_estoqueproduto"),
-                                DataEntrada = reader.GetDateTime("ep.dataentrada_estoqueproduto"),
-                                StatusAtivo = reader.GetBoolean("ep.ativo_estoqueproduto"),
+                                Id = reader.GetInt32("id_estoqueproduto"),
+                                Qtd = reader.GetInt32("qtd_estoqueproduto"),
+                                Unidqtd = reader.GetString("unidqtd_estoqueproduto"),
+                                DataEntrada = reader.GetDateTime("dataentrada_estoqueproduto"),
+                                StatusAtivo = reader.GetBoolean("ativo_estoqueproduto"),
 
                                 Producao = new Producao
                                 {
-                                    Id = reader.GetInt32("p.id_producao"),
-                                    Qtd = reader.GetInt32("p.qtd_producao"),
-                                    Unidqtd = reader.GetString("p.unidqtd_producao"),
-                                    AmbienteControlado = reader.GetBoolean("p.ambientecontrolado_producao"),
-                                    StatusFinalizado = reader.GetBoolean("p.statusfinalizado_producao"),
-                                    Data = reader.GetDateTime("p.data_producao"),
-                                    DataColheita = reader.GetDateTime("p.datacolheita_producao"),
+                                    Id = reader.GetInt32("id_producao"),
+                                    Qtd = reader.GetInt32("qtd_producao"),
+                                    Unidqtd = reader.GetString("unidqtd_producao"),
+                                    AmbienteControlado = reader.GetBoolean("ambientectrl_producao"),
+                                    StatusFinalizado = reader.GetBoolean("finalizado_producao"),
+                                    Data = reader.GetDateTime("data_producao"),
+                                    DataColheita = reader.GetDateTime("datacolheita_producao"),
 
                                     Cultivo = new Cultivo
                                     {
-                                        Id = reader.GetInt32("c.id_cultivo"),
-                                        Nome = reader.GetString("c.nome_cultivo"),
-                                        Variedade = reader.GetString("c.variedade_cultivo"),
-                                        Categoria = reader.GetString("c.categoria_cultivo"),
-                                        TempoProdTradicional = reader.GetInt32("c.tempoprodtradicional_cultivo"),
-                                        TempoProdControlado = reader.GetInt32("c.tempoprodcontrolado_cultivo"),
-                                        StatusAtivo = reader.GetBoolean("c.statusativo_cultivo")
+                                        Id = reader.GetInt32("id_cultivo"),
+                                        Nome = reader.GetString("nome_cultivo"),
+                                        Variedade = reader.GetString("variedade_cultivo"),
+                                        Categoria = reader.GetString("categoria_cultivo"),
+                                        TempoProdTradicional = reader.GetInt32("tempoprodtrad_cultivo"),
+                                        TempoProdControlado = reader.GetInt32("tempoprodctrl_cultivo"),
+                                        StatusAtivo = reader.GetBoolean("ativo_cultivo")
                                     }
 
                                 },
@@ -236,11 +236,11 @@ namespace PIMFazendaUrbanaLib
                 string query = @"SELECT ep.id_estoqueproduto, ep.qtd_estoqueproduto, ep.unidqtd_estoqueproduto, 
                                 ep.dataentrada_estoqueproduto, ep.ativo_estoqueproduto,
 
-                                p.id_producao, p.qtd_producao, p.unidqtd_producao, p.ambientecontrolado_producao, 
-                                p.statusfinalizado_producao, p.data_producao, p.datacolheita_producao,
+                                p.id_producao, p.qtd_producao, p.unidqtd_producao, p.ambientectrl_producao, 
+                                p.finalizado_producao, p.data_producao, p.datacolheita_producao,
 
                                 c.id_cultivo, c.nome_cultivo, c.variedade_cultivo, c.categoria_cultivo,
-                                c.tempoprodtradicional_cultivo, c.tempoprodcontrolado_cultivo, c.statusativo_cultivo
+                                c.tempoprodtrad_cultivo, c.tempoprodctrl_cultivo, c.ativo_cultivo
 
                                 FROM estoqueproduto ep
                                 LEFT JOIN producao p ON ep.id_producao = p.id_producao 
@@ -258,31 +258,31 @@ namespace PIMFazendaUrbanaLib
                         {
                             EstoqueProduto produto = new EstoqueProduto
                             {
-                                Id = reader.GetInt32("ep.id_estoqueproduto"),
-                                Qtd = reader.GetInt32("ep.qtd_estoqueproduto"),
-                                Unidqtd = reader.GetString("ep.unidqtd_estoqueproduto"),
-                                DataEntrada = reader.GetDateTime("ep.dataentrada_estoqueproduto"),
-                                StatusAtivo = reader.GetBoolean("ep.ativo_estoqueproduto"),
+                                Id = reader.GetInt32("id_estoqueproduto"),
+                                Qtd = reader.GetInt32("qtd_estoqueproduto"),
+                                Unidqtd = reader.GetString("unidqtd_estoqueproduto"),
+                                DataEntrada = reader.GetDateTime("dataentrada_estoqueproduto"),
+                                StatusAtivo = reader.GetBoolean("ativo_estoqueproduto"),
 
                                 Producao = new Producao
                                 {
-                                    Id = reader.GetInt32("p.id_producao"),
-                                    Qtd = reader.GetInt32("p.qtd_producao"),
-                                    Unidqtd = reader.GetString("p.unidqtd_producao"),
-                                    AmbienteControlado = reader.GetBoolean("p.ambientecontrolado_producao"),
-                                    StatusFinalizado = reader.GetBoolean("p.statusfinalizado_producao"),
-                                    Data = reader.GetDateTime("p.data_producao"),
-                                    DataColheita = reader.GetDateTime("p.datacolheita_producao"),
+                                    Id = reader.GetInt32("id_producao"),
+                                    Qtd = reader.GetInt32("qtd_producao"),
+                                    Unidqtd = reader.GetString("unidqtd_producao"),
+                                    AmbienteControlado = reader.GetBoolean("ambientectrl_producao"),
+                                    StatusFinalizado = reader.GetBoolean("finalizado_producao"),
+                                    Data = reader.GetDateTime("data_producao"),
+                                    DataColheita = reader.GetDateTime("datacolheita_producao"),
 
                                     Cultivo = new Cultivo
                                     {
-                                        Id = reader.GetInt32("c.id_cultivo"),
-                                        Nome = reader.GetString("c.nome_cultivo"),
-                                        Variedade = reader.GetString("c.variedade_cultivo"),
-                                        Categoria = reader.GetString("c.categoria_cultivo"),
-                                        TempoProdTradicional = reader.GetInt32("c.tempoprodtradicional_cultivo"),
-                                        TempoProdControlado = reader.GetInt32("c.tempoprodcontrolado_cultivo"),
-                                        StatusAtivo = reader.GetBoolean("c.statusativo_cultivo")
+                                        Id = reader.GetInt32("id_cultivo"),
+                                        Nome = reader.GetString("nome_cultivo"),
+                                        Variedade = reader.GetString("variedade_cultivo"),
+                                        Categoria = reader.GetString("categoria_cultivo"),
+                                        TempoProdTradicional = reader.GetInt32("tempoprodtrad_cultivo"),
+                                        TempoProdControlado = reader.GetInt32("tempoprodctrl_cultivo"),
+                                        StatusAtivo = reader.GetBoolean("ativo_cultivo")
                                     }
 
                                 },

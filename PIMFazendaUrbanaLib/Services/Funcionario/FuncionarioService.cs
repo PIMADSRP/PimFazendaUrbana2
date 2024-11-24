@@ -268,11 +268,11 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public Funcionario ConsultarFuncionarioPorID(int funcionarioId)
+        public Funcionario ConsultarFuncionarioPorId(int funcionarioId)
         {
             try
             {
-                Funcionario funcionario = funcionarioDAO.ConsultarFuncionarioPorID(funcionarioId);
+                Funcionario funcionario = funcionarioDAO.ConsultarFuncionarioPorId(funcionarioId);
                 return funcionario;
             }
             catch (Exception ex)

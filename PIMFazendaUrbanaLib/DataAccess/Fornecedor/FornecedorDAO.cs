@@ -399,7 +399,7 @@ namespace PIMFazendaUrbanaLib
         // 5- Consulta
         // 5.1- MÉTODO CONSULTAR (PESQUISAR) CLIENTE NO BANCO POR ID (somente fornecedores ativos)
         // ********** FUNCIONAL **********
-        public Fornecedor ConsultarFornecedorPorID(int fornecedorId)
+        public Fornecedor ConsultarFornecedorPorId(int fornecedorId)
         {
             Fornecedor fornecedor = null;
 

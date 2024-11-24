@@ -255,7 +255,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para filtrar saídas de insumos pelo nome do insumo
-        public List<SaidaInsumo> FiltrarSaidaInsumosNome(string insumoNome)
+        public List<SaidaInsumo> FiltrarSaidaInsumosPorNome(string insumoNome)
         {
             List<SaidaInsumo> saidainsumos = new List<SaidaInsumo>();
 
@@ -329,7 +329,7 @@ namespace PIMFazendaUrbanaLib
         }
 
         // Método para consultar insumo por ID
-        public Insumo ConsultarInsumoPorID(int idInsumo)
+        public Insumo ConsultarInsumoPorId(int idInsumo)
         {
             Insumo insumo = null;
 
@@ -364,7 +364,7 @@ namespace PIMFazendaUrbanaLib
             return insumo;
         }
 
-        public List<Insumo> FiltrarInsumosNome(string insumoNome)
+        public List<Insumo> FiltrarInsumosPorNome(string insumoNome)
         {
             List<Insumo> insumos = new List<Insumo>();
 

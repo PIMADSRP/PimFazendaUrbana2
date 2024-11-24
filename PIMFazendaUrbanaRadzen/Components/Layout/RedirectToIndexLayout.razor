@@ -1,13 +1,40 @@
 @inherits LayoutComponentBase
+@using PIMFazendaUrbanaRadzen.Services
+@inject AuthService AuthService
+@inject NavigationManager NavigationManager
 
 <RadzenLayout style="height: 100vh; display: flex; justify-content: center; align-items: center;">
     <RadzenBody>
         <RadzenStack AlignItems="AlignItems.Center" Gap="3">
             <RadzenText Text="Aguarde, estamos verificando sua autenticação..." TextStyle="TextStyle.DisplayH3" />
-            <RadzenProgressBar Indeterminate="true" />
+            <RadzenProgressBarCircular ShowValue="false" Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Medium" />
         </RadzenStack>
     </RadzenBody>
 </RadzenLayout>
+
+@code {
+    private bool isLoggedIn = false;
+    private bool hasChecked = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            isLoggedIn = await AuthService.IsAuthenticated();
+            hasChecked = true;
+
+            if (isLoggedIn)
+            {
+                NavigationManager.NavigateTo("/index");
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/login");
+            }
+        }
+    }
+}
+
 
 @*
 

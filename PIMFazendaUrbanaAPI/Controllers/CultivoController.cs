@@ -117,7 +117,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
         {
             try
             {
-                var cultivo = _cultivoService.ConsultarCultivoPorID(id);
+                var cultivo = _cultivoService.ConsultarCultivoPorId(id);
                 var cultivoDto = _mapper.Map<CultivoDTO>(cultivo); // Mapeia Cultivo para CultivoDTO
                 return Ok(cultivoDto);
             }

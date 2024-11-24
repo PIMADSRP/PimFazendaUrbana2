@@ -96,11 +96,11 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public Fornecedor ConsultarFornecedorPorID(int fornecedorId)
+        public Fornecedor ConsultarFornecedorPorId(int fornecedorId)
         {
             try
             {
-                Fornecedor fornecedor = fornecedorDAO.ConsultarFornecedorPorID(fornecedorId); // Chama o método ConsultarFornecedor da classe FornecedorDAO para obter os dados de um fornecedor pelo ID
+                Fornecedor fornecedor = fornecedorDAO.ConsultarFornecedorPorId(fornecedorId); // Chama o método ConsultarFornecedor da classe FornecedorDAO para obter os dados de um fornecedor pelo ID
                 return fornecedor; // Retorna o fornecedor encontrado
             }
             catch (Exception ex)

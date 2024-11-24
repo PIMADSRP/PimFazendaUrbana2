@@ -13,11 +13,11 @@ namespace PIMFazendaUrbanaLib
 
         void CadastrarPedidoVenda(PedidoVenda pedidoVenda);
         List<PedidoVenda> ListarPedidosVenda();
-        PedidoVenda ConsultarPedidoVenda(int idPedidoVenda);
+        PedidoVenda ConsultarPedidoVendaPorId(int idPedidoVenda);
         int? ObterUltimoIdPedidoVenda();
         List<PedidoVendaItem> ListarRegistrosDeVenda();
-        PedidoVendaItem ConsultarVendaItem(int idVendaItem);
-        List<PedidoVendaItem> FiltrarRegistrosDeVendaNome(string produtoNome);
+        PedidoVendaItem ConsultarVendaItemPorId(int idVendaItem);
+        List<PedidoVendaItem> FiltrarRegistrosDeVendaPorNome(string produtoNome);
         List<PedidoVendaItem> FiltrarRegistrosDeVendaPorNomeEPeriodo(string produtoNome, DateTime dataInicio, DateTime dataFim);
     }
 }

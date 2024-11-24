@@ -118,7 +118,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
             try
             {
                 Cliente? cliente = new Cliente();
-                cliente = _clienteService.ConsultarClientePorID(id);
+                cliente = _clienteService.ConsultarClientePorId(id);
                 if (cliente == null)
                 {
                     return NotFound(new { message = "Cliente não encontrado." }); // Retorna 404
