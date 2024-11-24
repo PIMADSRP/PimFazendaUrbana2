@@ -20,4 +20,10 @@
   <ItemGroup>
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Components\Pages\Funcionarios\EditarFuncionario.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
 </Project>

@@ -17,7 +17,7 @@
         Funcionario ConsultarFuncionarioPorNome(string funcionarioNome);
         Funcionario ConsultarFuncionarioPorUsuario(string funcionarioUsuario);
         List<Funcionario> FiltrarFuncionariosPorNome(string funcionarioNome);
-        void ValidarFuncionario(Funcionario funcionario);
+        void ValidarFuncionario(Funcionario funcionario, bool isModoEditar);
         List<ValidationError> ValidarSenha(string senha, List<ValidationError> erros);
     }
 }

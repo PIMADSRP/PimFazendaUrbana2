@@ -556,7 +556,7 @@ namespace PIMFazendaUrbanaLib
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 string query = @"SELECT f.id_funcionario, f.nome_funcionario, f.sexo_funcionario, f.email_funcionario, f.cpf_funcionario, 
-                                f.cargo_funcionario, f.usuario_funcionario, f.ativo_funcionario, 
+                                f.cargo_funcionario, f.usuario_funcionario, f.senha_funcionario, f.ativo_funcionario, 
                                 t.ddd_telfuncionario, t.numero_telfuncionario, t.ativo_telfuncionario, 
                                 e.logradouro_endfuncionario, e.numero_endfuncionario, e.complemento_endfuncionario, e.bairro_endfuncionario, e.cidade_endfuncionario, 
                                 e.uf_endfuncionario, e.cep_endfuncionario, e.ativo_endfuncionario
@@ -582,6 +582,7 @@ namespace PIMFazendaUrbanaLib
                             CPF = reader.GetString("cpf_funcionario"),
                             Cargo = reader.GetString("cargo_funcionario"),
                             Usuario = reader.GetString("usuario_funcionario"),
+                            Senha = reader.GetString("senha_funcionario"),
                             StatusAtivo = reader.GetBoolean("ativo_funcionario"),
                             Telefone = new Telefone
                             {

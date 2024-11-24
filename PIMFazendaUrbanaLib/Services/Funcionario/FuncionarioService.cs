@@ -198,8 +198,12 @@ namespace PIMFazendaUrbanaLib
         {
             try
             {
-                ValidarFuncionario(funcionario);
+                ValidarFuncionario(funcionario, false);
                 funcionarioDAO.CadastrarFuncionario(funcionario);
+            }
+            catch (ValidationException ex) // Se ocorrer uma exceção do tipo ValidationException
+            {
+                throw; // Repassa a exceção de validação para o Controller manipular
             }
             catch (Exception ex)
             {
@@ -211,8 +215,12 @@ namespace PIMFazendaUrbanaLib
         {
             try
             {
-                ValidarFuncionario(funcionario);
+                ValidarFuncionario(funcionario, true);
                 funcionarioDAO.AlterarFuncionario(funcionario);
+            }
+            catch (ValidationException ex) // Se ocorrer uma exceção do tipo ValidationException
+            {
+                throw; // Repassa a exceção de validação para o Controller manipular
             }
             catch (Exception ex)
             {
@@ -314,7 +322,7 @@ namespace PIMFazendaUrbanaLib
 
         // =-=-=-=-=-=-=-=-=-=-=-=- VALIDAÇÃO FUNCIONÁRIO =-=-=-=-=-=-=-=-=-=-=-=-
 
-        public void ValidarFuncionario(Funcionario funcionario)  // método para validação dos dados do funcionario contendo as regras de negócio e mensagens de erro
+        public void ValidarFuncionario(Funcionario funcionario, bool isModoEditar)  // método para validação dos dados do funcionario contendo as regras de negócio e mensagens de erro
         {
             var erros = new List<ValidationError>();
 
@@ -345,12 +353,16 @@ namespace PIMFazendaUrbanaLib
                 erros.Add(new ValidationError("Sexo", "O sexo deve ser 'M', 'F' ou '-'"));
             }
 
-            if (VerificarUsuarioDisponivel(funcionario.Usuario) == false)
+            if (isModoEditar == false)
             {
-                erros.Add(new ValidationError("Usuário", "O nome de usuário está indisponível"));
+                if (VerificarUsuarioDisponivel(funcionario.Usuario) == false)
+                {
+                    erros.Add(new ValidationError("Usuário", "O nome de usuário está indisponível"));
+                }
+
+                // deixar validação se os dos campos de senha são iguais no front mesmo
+                ValidarSenha(funcionario.Senha, erros);
             }
-            // deixar validação se os dos campos de senha são iguais no front mesmo
-            ValidarSenha(funcionario.Senha, erros);
 
             TelefoneValidation telefoneValidation = new TelefoneValidation();
             erros = telefoneValidation.ValidarTelefone(funcionario.Telefone, erros);

@@ -1,13 +1,18 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.IdentityModel.Tokens;
 using PIMFazendaUrbanaAPI.DTOs;
+using PIMFazendaUrbanaLib;
+using PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
 
 namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
 {
-    public partial class CadastrarFuncionario
+    public partial class EditarFuncionario
     {
+        [Parameter]
+        public int FuncionarioId { get; set; }
+
         [Inject]
         public FuncionarioApiService<FuncionarioDTO> FuncionarioApiService { get; set; }
 
@@ -36,49 +41,74 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
 
         protected override async Task OnInitializedAsync()
         {
-            funcionario = new FuncionarioDTO
+            funcionario = new FuncionarioDTO();
+            funcionario.Telefone = new TelefoneDTO();
+            funcionario.Endereco = new EnderecoDTO();
+
+            if (funcionario.Nome.IsNullOrEmpty() || funcionario == null)
             {
-                Endereco = new EnderecoDTO(),
-                Telefone = new TelefoneDTO()
-            };
+                Console.WriteLine("Fornecedor é nulo");
+            }
+            await LoadFuncionario();
+        }
+
+        //private string nomeUsuarioOriginal { get; set; } // alterar usuario removido
+
+        protected async Task LoadFuncionario()
+        {
+            try
+            {
+                funcionario = await FuncionarioApiService.GetByIdAsync(FuncionarioId);
+
+                //nomeUsuarioOriginal = funcionario.Usuario; // alterar usuario removido
+
+                if (funcionario == null)
+                {
+                    NotificationService.Notify(NotificationSeverity.Warning, "Aviso", "Funcionário não encontrado. Redirecionando para a lista de funcionários.", duration: 5000);
+                    NavigationManager.NavigateTo("/funcionarios");
+                }
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Erro ao carregar funcionários: {ex.Message}", duration: 5000);
+                NavigationManager.NavigateTo("/funcionarios");
+            }
         }
 
         protected async Task FormSubmit()
         {
             try
             {
+
                 // Limpa e formata os campos antes de enviar
                 funcionario.CPF = FormatCPF(funcionario.CPF);
                 funcionario.Telefone.Numero = FormatTelefone(funcionario.Telefone.Numero);
                 funcionario.Endereco.CEP = FormatCEP(funcionario.Endereco.CEP);
 
-                funcionario.StatusAtivo = true; // Define StatusAtivo como true por padrão
-
-                Console.WriteLine($"Chamando ApiService: CreateAsync" + " hora atual: " + DateTime.Now);
-                var response = await FuncionarioApiService.CreateAsync(funcionario); // Chama ApiService para criar o funcionario
-                Console.WriteLine("Retornou de ApiService: Create Async" + " hora atual: " + DateTime.Now);
+                Console.WriteLine($"Chamando ApiService: UpdateAsync" + " hora atual: " + DateTime.Now);
+                var response = await FuncionarioApiService.UpdateAsync(funcionario); // Chama ApiService para atualizar o funcionario
+                Console.WriteLine("Retornou de ApiService: UpdateAsync" + " hora atual: " + DateTime.Now);
 
                 if (response.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Navegando para /funcionarios");
                     // Redireciona para a página de funcionarios e exibe mensagem de sucesso
                     NavigationManager.NavigateTo("/funcionarios");
-                    NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Funcionario cadastrado com sucesso!", duration: 5000);
+                    NotificationService.Notify(NotificationSeverity.Success, "Sucesso", "Funcionario atualizado com sucesso!", duration: 5000);
                 }
                 else
                 {
                     // Usando ApiResponseHelper apenas para processar resposta de erro
                     var errorMessage = await ApiResponseHelper.HandleErrorResponseAsync(response);
-                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao cadastrar funcionário: {errorMessage}", duration: 10000);
+                    NotificationService.Notify(NotificationSeverity.Error, "Erro", $"Falha ao atualizar funcionário: {errorMessage}", duration: 10000);
                 }
             }
             catch (Exception ex)
             {
                 errorVisible = true; // Exibe mensagem de erro
-                Console.WriteLine($"Erro ao cadastrar funcionario: {ex.Message}");
+                Console.WriteLine($"Erro ao atualizar funcionario: {ex.Message}");
             }
         }
-
 
         protected async Task CancelButtonClick()
         {
@@ -137,6 +167,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
             }
         }
 
+        /* // alterar senha removido
         private string confirmaSenha;
 
         private bool senhasCoincidem;
@@ -202,11 +233,20 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
             // Atualiza a interface (Blazor)
             StateHasChanged();
         }
+        */
 
+        /* // alterar usuario removido
         private bool usuarioDisponivel;
         private string mensagemErroUsuarioIndisponivel;
         protected async Task VerificarUsuarioDisponivel()
         {
+            if (funcionario.Usuario == nomeUsuarioOriginal)
+            {
+                usuarioDisponivel = true;
+                mensagemErroUsuarioIndisponivel = string.Empty;
+                return;
+            }
+
             if (funcionario.Usuario.IsNullOrEmpty())
             {
                 usuarioDisponivel = true;
@@ -238,6 +278,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Funcionarios
                 NotificationService.Notify(NotificationSeverity.Success, "Usuário disponivel", "Nome de usuário disponível", duration: 2000);
             }
         }
+        */
 
     }
 }
