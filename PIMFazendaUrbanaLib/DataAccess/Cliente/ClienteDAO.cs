@@ -401,7 +401,6 @@ namespace PIMFazendaUrbanaLib
         // ********** FUNCIONAL **********
         public Cliente? ConsultarClientePorID(int clienteId)
         {
-            Console.WriteLine($"DAO recebeu id: {clienteId}");
             Cliente? cliente = null;
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
@@ -450,7 +449,6 @@ namespace PIMFazendaUrbanaLib
                             }
                         };
                     }
-                    Console.WriteLine($"cliente: {cliente.Nome}");
                     return cliente;
                 }
             }

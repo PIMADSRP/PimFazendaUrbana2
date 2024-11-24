@@ -1,6 +1,4 @@
-﻿using PIMFazendaUrbanaLib;
-
-namespace PIMFazendaUrbanaAPI.DTOs
+﻿namespace PIMFazendaUrbanaAPI.DTOs
 {
     public class PedidoVendaDTO
     {

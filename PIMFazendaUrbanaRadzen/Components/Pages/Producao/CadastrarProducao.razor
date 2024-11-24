@@ -14,6 +14,7 @@
 
     <RadzenTemplateForm TItem="ProducaoDTO" Data="@producao" Submit="@FormSubmit">
         <RadzenStack>
+            
             <!-- Campo Variedade -->
             <RadzenDropDown style="width: 100%"
                             @bind-Value="cultivoSelecionado"
@@ -21,7 +22,6 @@
                             Placeholder="Selecione o cultivo"
                             Data="@cultivos"
                             TextProperty="Variedade"
-                            ValueProperty="this"
                             TValue="CultivoDTO"
                             Change="@(args => AtualizarCultivoSelecionado((CultivoDTO)args))" />
             <RadzenRequiredValidator Component="Cultivo" Text="Selecione uma variedade de cultivo" />
@@ -91,7 +91,8 @@
                               Style="width: 50%; min-width: 140px;" />
                 <RadzenButton ButtonStyle="ButtonStyle.Danger" Text="Cancelar" Icon="cancel"
                               Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Light"
-                              Style="width: 50%; min-width: 130px;" />
+                              Style="width: 50%; min-width: 130px;" 
+                              Click="@CancelButtonClick" />
             </div>
         </RadzenStack>
     </RadzenTemplateForm>

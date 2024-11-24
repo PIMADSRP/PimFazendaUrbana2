@@ -12,48 +12,48 @@ namespace PIMFazendaUrbanaLib
         }
 
         // NOVO método para filtrar pedidos de compra e seus itens por uma query de busca
-        public List<PedidoCompra> ListarComprasComFiltros(string search)
+        public List<PedidoCompraItem> ListarPedidoCompraItensComFiltros(string search)
         {
-            List<PedidoCompra> pedidosCompra = new List<PedidoCompra>();
+            List<PedidoCompraItem> pedidosCompraItem = new List<PedidoCompraItem>();
 
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
 
-                string query = @"SELECT pc.id_pedidocompra, pc.data_pedidocompra, pc.id_fornecedor, f.nome_fornecedor 
-                                FROM pedidocompra pc
-                                LEFT JOIN compraitem ci ON pc.id_pedidocompra = ci.id_pedidocompra
-                                LEFT JOIN fornecedor f ON pc.id_fornecedor = f.id_fornecedor
+                string query = @"SELECT ci.id_compraitem, ci.qtd_compraitem, ci.unidqtd_compraitem, ci.valor_compraitem, ci.id_pedidocompra, ci.id_insumo, ei.nome_insumo
+                                FROM compraitem ci
                                 LEFT JOIN estoqueinsumo ei ON ci.id_insumo = ei.id_insumo
-                                WHERE f.nome_fornecedor LIKE @search OR pc.data_pedidocompra LIKE @search OR pc.id_pedidocompra LIKE @search
-                                OR ci.id_compraitem LIKE @search OR ei.nome_insumo LIKE @search";
+                                LEFT JOIN pedidocompra pc ON ci.id_pedidocompra = pc.id_pedidocompra
+                                LEFT JOIN fornecedor f ON pc.id_fornecedor = f.id_fornecedor
+                                WHERE ei.nome_insumo LIKE @search OR f.nome_fornecedor LIKE @search
+                                OR pc.id_pedidocompra LIKE @search OR ci.id_compraitem LIKE @search
+                                OR pc.data_pedidocompra LIKE @search";
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@search", $"%{search}%");
-
+                    command.Parameters.AddWithValue("@search", "%" + search + "%");
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            int idPedidoCompra = reader.GetInt32("id_pedidocompra");
-
-                            PedidoCompra pedidoCompra = new PedidoCompra
+                            PedidoCompraItem compraItem = new PedidoCompraItem
                             {
-                                Id = reader.GetInt32("id_pedidocompra"),
+                                Id = reader.GetInt32("id_compraitem"),
+                                Qtd = reader.GetInt32("qtd_compraitem"),
+                                UnidQtd = reader.GetString("unidqtd_compraitem"),
+                                Valor = reader.GetDecimal("valor_compraitem"),
+                                IdPedidoCompra = reader.GetInt32("id_pedidocompra"),
+                                IdInsumo = reader.GetInt32("id_insumo"),
+                                NomeInsumo = reader.GetString("nome_insumo"),
                                 Data = reader.GetDateTime("data_pedidocompra"),
-                                IdFornecedor = reader.GetInt32("id_fornecedor"),
-                                NomeFornecedor = reader.GetString("nome_fornecedor"),
-
-                                Itens = ListarItensPedidoCompraPorId(idPedidoCompra)
-
+                                NomeFornecedor = reader.GetString("nome_fornecedor")
                             };
-                            pedidosCompra.Add(pedidoCompra);
+                            pedidosCompraItem.Add(compraItem);
                         }
                     }
                 }
             }
-            return pedidosCompra;
+            return pedidosCompraItem;
         }
 
         // NOVO Método para obter todos os pedidos de compra e seus itens
@@ -323,7 +323,7 @@ namespace PIMFazendaUrbanaLib
                                 IdInsumo = reader.GetInt32("id_insumo"),
                                 NomeInsumo = reader.GetString("nome_insumo"),
                                 Data = reader.GetDateTime("data_pedidocompra"),
-                                //NomeFornecedor = reader.GetString("nome_fornecedor")
+                                NomeFornecedor = reader.GetString("nome_fornecedor")
                             };
                             compraItens.Add(compraItem);
                         }
@@ -366,7 +366,7 @@ namespace PIMFazendaUrbanaLib
                                 IdInsumo = reader.GetInt32("id_insumo"),
                                 NomeInsumo = reader.GetString("nome_insumo"),
                                 Data = reader.GetDateTime("data_pedidocompra"),
-                                //NomeFornecedor = reader.GetString("nome_fornecedor")
+                                NomeFornecedor = reader.GetString("nome_fornecedor")
                             };
                             compraItens.Add(compraItem);
                         }
@@ -442,7 +442,7 @@ namespace PIMFazendaUrbanaLib
                                 IdInsumo = reader.GetInt32("id_insumo"),
                                 NomeInsumo = reader.GetString("nome_insumo"),
                                 Data = reader.GetDateTime("data_pedidocompra"),
-                                //NomeFornecedor = reader.GetString("nome_fornecedor")
+                                NomeFornecedor = reader.GetString("nome_fornecedor")
                             };
                             compraItens.Add(compraItem);
                         }

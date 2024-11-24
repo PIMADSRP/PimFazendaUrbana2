@@ -25,8 +25,8 @@ namespace PIMFazendaUrbanaAPI.Controllers
             try
             {
                 var pedidoVendaItens = _vendaService.ListarPedidoVendaItensComFiltros(search);
-                var pedidoVendaItensDto = _mapper.Map<List<PedidoVendaItemDTO>>(pedidoVendaItens); // Mapeia Venda para VendaDTO
-                return Ok(pedidoVendaItensDto); // Retorna a lista de compras filtradss como resposta
+                var pedidoVendaItensDto = _mapper.Map<List<PedidoVendaItemDTO>>(pedidoVendaItens); // Mapeia PedidoVendaItem para PedidoVendaItemDTO
+                return Ok(pedidoVendaItensDto); // Retorna a lista de compras filtradas como resposta
             }
             catch (Exception ex)
             {
@@ -36,8 +36,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
             }
         }
 
-
-        // Método para listar venda
+        // Método para listar vendas
         [HttpGet("listar")]
         public IActionResult ListarRegistrosDeVenda()
         {
@@ -61,7 +60,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
         {
             try
             {
-                var pedidoVenda = _mapper.Map<PedidoVenda>(pedidoVendaDto); // Mapeia VendaDTO para Venda
+                var pedidoVenda = _mapper.Map<PedidoVenda>(pedidoVendaDto); // Mapeia PedidoVendaDTO para PedidoVenda
                 _vendaService.CadastrarPedidoVenda(pedidoVenda); // Chama o serviço para cadastrar o venda
                 return Ok(new { message = "Venda cadastrada com sucesso." });
             }

@@ -51,8 +51,8 @@ namespace PIMFazendaUrbanaLib
         {
             try
             {
-                List<PedidoVendaItem> vendatens = pedidoVendaDAO.ListarPedidoVendaItensComFiltros(search);
-                return vendatens; // Retorna a lista filtrada de vendas
+                List<PedidoVendaItem> vendaitens = pedidoVendaDAO.ListarPedidoVendaItensComFiltros(search);
+                return vendaitens; // Retorna a lista filtrada de vendas
             }
             catch (Exception ex)
             {

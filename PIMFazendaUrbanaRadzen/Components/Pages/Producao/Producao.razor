@@ -141,14 +141,14 @@
                 <!-- Coluna para Data com tooltip -->
                 <RadzenDataGridColumn TItem="ProducaoDTO" Property="Data" Title="Data de Plantio" Filterable="true" Sortable="true" Width="12%" MinWidth="150px" >
                     <Template Context="producao">
-                        <span title="@producao.Data">@producao.Data</span> <!-- Tooltip -->
+                        <span title="@producao.Data.ToShortDateString()">@producao.Data.ToShortDateString()</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para DataColheita com tooltip -->
                 <RadzenDataGridColumn TItem="ProducaoDTO" Property="DataColheita" Title="Data de Colheita" Filterable="true" Sortable="true" Width="12%" MinWidth="150px" >
                     <Template Context="producao">
-                        <span title="@producao.DataColheita">@producao.DataColheita</span> <!-- Tooltip -->
+                        <span title="@producao.DataColheita.ToShortDateString()">@producao.DataColheita.ToShortDateString()</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 

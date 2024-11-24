@@ -138,7 +138,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-/*
+
 app.Use(async (context, next) =>
 {
     await next();
@@ -148,7 +148,7 @@ app.Use(async (context, next) =>
         context.Response.Redirect("/not-found");
     }
 });
-*/
+
 
 //app.MapBlazorHub(); // Configuração necessária
 //app.MapFallbackToPage("/not-found");

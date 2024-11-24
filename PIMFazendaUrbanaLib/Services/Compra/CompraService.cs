@@ -47,12 +47,12 @@ namespace PIMFazendaUrbanaLib
         }
         */
 
-        public List<PedidoCompra> ListarComprasComFiltros(string search)
+        public List<PedidoCompraItem> ListarPedidoCompraItensComFiltros(string search)
         {
             try
             {
-                List<PedidoCompra> compras = pedidoCompraDAO.ListarComprasComFiltros(search);
-                return compras; // Retorna a lista filtrada de compras
+                List<PedidoCompraItem> compraitens = pedidoCompraDAO.ListarPedidoCompraItensComFiltros(search);
+                return compraitens; // Retorna a lista filtrada de compras
             }
             catch (Exception ex)
             {

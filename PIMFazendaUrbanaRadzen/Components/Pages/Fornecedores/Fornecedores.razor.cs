@@ -102,7 +102,15 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Fornecedores
 
         protected void EditarFornecedor(FornecedorDTO fornecedor)
         {
-            // Implementar lógica de edição de fornecedor
+            if (fornecedor?.Id != null)
+            {
+                Console.WriteLine($"Navegando para /editar-fornecedor/{fornecedor.Id}");
+                NavigationManager.NavigateTo($"/editar-fornecedor/{fornecedor.Id}");
+            }
+            else
+            {
+                Console.WriteLine("Erro: ID do fornecedor é nulo.");
+            }
         }
 
         protected async Task ExcluirFornecedor(FornecedorDTO fornecedor)

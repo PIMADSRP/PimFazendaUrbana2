@@ -7,6 +7,7 @@
         public int IdFornecedor { get; set; }
         public string NomeFornecedor { get; set; }
         public List<PedidoCompraItemDTO> Itens { get; set; }
+        public decimal ValorTotal => Itens.Sum(i => i.ValorTotal);
     }
 }
 

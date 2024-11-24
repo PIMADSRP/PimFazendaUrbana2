@@ -19,6 +19,7 @@ namespace PIMFazendaUrbanaLib
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 connection.Open();
+
                 string query = @"SELECT vi.id_vendaitem, vi.qtd_vendaitem, vi.unidqtd_vendaitem, vi.valor_vendaitem, vi.id_pedidovenda, vi.id_estoqueproduto, 
                                 cul.variedade_cultivo, pv.data_pedidovenda, cli.nome_cliente
                                 FROM vendaitem vi

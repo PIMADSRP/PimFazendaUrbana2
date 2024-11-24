@@ -29,5 +29,16 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
 
         [Inject]
         protected NotificationService NotificationService { get; set; }
+
+
+
+
+
+
+        protected async Task CancelButtonClick()
+        {
+            // Redireciona para a página de vendas
+            NavigationManager.NavigateTo("/vendas");
+        }
     }
 }

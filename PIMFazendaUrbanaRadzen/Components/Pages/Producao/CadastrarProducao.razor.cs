@@ -28,11 +28,11 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
         protected int? tempoProd;
 
         List<string> unidadesPermitidas = new List<string>
-            {
-                "kg", "g", "unidade"
-            };
+        {
+            "kg", "g", "unidade"
+        };
 
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+        protected override async Task OnInitializedAsync()
         {
             cultivos = new List<CultivoDTO>();
             cultivoSelecionado = new CultivoDTO();
@@ -49,6 +49,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
 
         protected async Task LoadCultivos()
         {
+            
             try
             {
                 cultivos = await CultivoApiService.GetAllAsync(); // Carrega todos os cultivos
@@ -60,20 +61,24 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
                 errorMessage = $"Erro ao carregar cultivos: {ex.Message}";
                 Console.WriteLine(errorMessage);
             }
+            
         }
 
         protected void AtualizarCultivoSelecionado(object args)
         {
+            
             if (args is CultivoDTO cultivo)
             {
                 cultivoSelecionado = cultivo;
                 producao.Cultivo = cultivoSelecionado;
                 AtualizarTempoProd();
             }
+            
         }
 
         protected void AtualizarTempoProd()
         {
+            
             if (cultivoSelecionado != null)
             {
                 tempoProd = producao.AmbienteControlado
@@ -87,10 +92,12 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
 
             // Força atualização de DataColheita mesmo sem mudança explícita de Data
             AtualizarDataColheita();
+            
         }
 
         protected void AtualizarDataColheita()
         {
+            
             if (producao.Data != default && tempoProd.HasValue)
             {
                 // Soma o tempo de produção à data inicial
@@ -100,6 +107,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
             {
                 producao.DataColheita = default; // Reseta caso não haja informações suficientes
             }
+            
         }
 
         protected async Task FormSubmit()

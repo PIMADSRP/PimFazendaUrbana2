@@ -101,10 +101,8 @@ namespace PIMFazendaUrbanaLib
         {
             try
             {
-                Console.WriteLine($"Service recebeu id: {clienteId}");
                 Cliente? cliente = null;
                 cliente = clienteDAO.ConsultarClientePorID(clienteId); // Chama o método ConsultarCliente da classe ClienteDAO para obter os dados de um cliente pelo ID
-                Console.WriteLine($"cliente: {cliente.Nome}");
                 return cliente; // Retorna o cliente encontrado
             }
             catch (Exception ex)

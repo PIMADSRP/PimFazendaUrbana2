@@ -94,7 +94,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
         {
             if (producao.StatusFinalizado == false)
             {
-                bool? confirm = await DialogService.Confirm($"Tem certeza que deseja finalizar a produção de {producao.Cultivo.Variedade} de {producao.Data}?",
+                bool? confirm = await DialogService.Confirm($"Tem certeza que deseja finalizar a produção de {producao.Cultivo.Variedade} de {producao.Data.ToShortDateString()}?",
                                                              "Confirmação de Finalização",
                                                              new ConfirmOptions { OkButtonText = "Finalizar", CancelButtonText = "Cancelar" });
 

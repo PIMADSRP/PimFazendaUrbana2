@@ -102,7 +102,6 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Clientes
 
         protected void EditarCliente(ClienteDTO cliente)
         {
-            Console.WriteLine("EditarCliente chamado");
             if (cliente?.Id != null)
             {
                 Console.WriteLine($"Navegando para /editar-cliente/{cliente.Id}");

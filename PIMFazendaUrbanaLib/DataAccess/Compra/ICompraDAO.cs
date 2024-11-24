@@ -4,7 +4,7 @@ namespace PIMFazendaUrbanaLib
 {
     public interface ICompraDAO
     {
-        List<PedidoCompra> ListarComprasComFiltros(string search);
+        List<PedidoCompraItem> ListarPedidoCompraItensComFiltros(string search);
         List<PedidoCompra> ListarPedidosCompraComItems();
         List<PedidoCompraItem> ListarItensPedidoCompraPorId(int idPedidoCompra);
 
@@ -12,7 +12,6 @@ namespace PIMFazendaUrbanaLib
         //void CadastrarCompraItem(PedidoCompraItem compraItem, MySqlTransaction transaction);
 
         void CadastrarPedidoCompra(PedidoCompra pedidoCompra);
-
         List<PedidoCompra> ListarPedidosCompra();
         PedidoCompra ConsultarPedidoCompra(int idPedidoCompra);
         int? ObterUltimoIdPedidoCompra();

@@ -33,31 +33,17 @@ namespace PIMFazendaUrbanaRadzen.Services
                 var result = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>();
 
                 var token = result["token"].ToString();
-                Console.WriteLine($"\nToken a ser armazenado no localStorage: {token}");
-
-                /*
-                var funcionario = JsonSerializer.Deserialize<FuncionarioSessionDTO>(result["funcionario"].ToString());
-                Console.WriteLine($"Funcionario retornado do backend: {JsonSerializer.Serialize(funcionario)}");
-                */
 
                 var funcionarioJson = result["funcionario"].ToString();
-                Console.WriteLine($"\nFuncionario JSON: {funcionarioJson}");
 
-                //var funcionario = JsonSerializer.Deserialize<FuncionarioSessionDTO>(funcionarioJson);
                 var funcionario = JsonConvert.DeserializeObject<FuncionarioSessionDTO>(funcionarioJson);
-                Console.WriteLine($"\nFuncionario Deserializado: {JsonConvert.SerializeObject(funcionario)}");
-
-                Console.WriteLine($"\nToken a ser armazenado no localStorage: {token}");
 
                 await _localStorage.SetItemAsync("authToken", token);
-                //await _localStorage.SetItemAsync("funcionario", JsonSerializer.Serialize(funcionario));
+
                 await _localStorage.SetItemAsync("funcionario", funcionarioJson);
 
                 // notifica o provedor de autenticação sobre o login bem-sucedido
                 _authenticationStateProvider.NotifyUserAuthentication(token);
-
-                Console.WriteLine($"\nToken: {token}");
-                Console.WriteLine($"\nFuncionario salvo no LocalStorage: {JsonConvert.SerializeObject(funcionario)}");
 
                 return null; // retorna null se o login for bem-sucedido
             }
@@ -80,8 +66,6 @@ namespace PIMFazendaUrbanaRadzen.Services
         public async Task<FuncionarioSessionDTO> GetCurrentUserAsync()
         {
             var funcionarioJson = await _localStorage.GetItemAsync<string>("funcionario");
-
-            Console.WriteLine($"\nConteúdo do LocalStorage (funcionario): {funcionarioJson}");
 
             return funcionarioJson != null
                 ? JsonConvert.DeserializeObject<FuncionarioSessionDTO>(funcionarioJson)
@@ -111,7 +95,6 @@ namespace PIMFazendaUrbanaRadzen.Services
 
         public async Task<string> GetAuthTokenAsync()
         {
-            Console.WriteLine("\nGetAuthTokenAsync called" + DateTime.Now);
             return await _localStorage.GetItemAsync<string>("authToken");
         }
     }

@@ -115,12 +115,10 @@ namespace PIMFazendaUrbanaAPI.Controllers
         [HttpGet("{id}")]
         public IActionResult ConsultarClientePorId(int id)
         {
-            Console.WriteLine($"Controller recebeu id: {id}");
             try
             {
                 Cliente? cliente = new Cliente();
                 cliente = _clienteService.ConsultarClientePorID(id);
-                Console.WriteLine($"No Controller: cliente: {cliente.Nome}");
                 if (cliente == null)
                 {
                     return NotFound(new { message = "Cliente não encontrado." }); // Retorna 404

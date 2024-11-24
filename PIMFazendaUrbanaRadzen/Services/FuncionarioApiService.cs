@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using PIMFazendaUrbanaRadzen.Components.Pages.Vendas;
 
 namespace PIMFazendaUrbanaRadzen.Services
 {

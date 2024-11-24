@@ -1,6 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office2010.Excel;
-
-namespace PIMFazendaUrbanaRadzen.Services
+﻿namespace PIMFazendaUrbanaRadzen.Services
 {
     public class VendaApiService<T>
     {
@@ -39,8 +37,6 @@ namespace PIMFazendaUrbanaRadzen.Services
                 Console.WriteLine($"Chamando API em: {_endpointUrl}/listar");
 
                 var response = await _httpClient.GetFromJsonAsync<List<T>>($"{_endpointUrl}/listar");
-                // loga a resposta no console
-                Console.WriteLine($"Resposta da API: {response}");
                 
                 return await _httpClient.GetFromJsonAsync<List<T>>($"{_endpointUrl}/listar");
             }

@@ -111,7 +111,7 @@
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Produto com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="NomeProduto" Title="Nome Produto" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="NomeProduto" Title="Produto" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
                     <Template Context="vendaitem">
                         <span title="@vendaitem.NomeProduto">@vendaitem.NomeProduto</span> <!-- Tooltip -->
                     </Template>
@@ -134,7 +134,7 @@
                 <!-- Coluna para Data com tooltip -->
                 <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Data" Title="Data" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
                     <Template Context="vendaitem">
-                        <span title="@vendaitem.Data">@vendaitem.Data</span> <!-- Tooltip -->
+                        <span title="@vendaitem.Data.ToShortDateString()">@vendaitem.Data.ToShortDateString()</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
@@ -148,14 +148,14 @@
                 <!-- Coluna para ValorUnitario com tooltip -->
                 <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Valor" Title="Valor Unitário" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
                     <Template Context="vendaitem">
-                        <span title="@vendaitem.Valor">@vendaitem.Valor</span> <!-- Tooltip -->
+                        <span title="@vendaitem.Valor.ToString("0.00")">@vendaitem.Valor.ToString("0.00")</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para ValorTotal com tooltip -->
                 <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="ValorTotal" Title="Valor Total" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
                     <Template Context="vendaitem">
-                        <span title="@vendaitem.ValorTotal">@vendaitem.ValorTotal</span> <!-- Tooltip -->
+                        <span title="@vendaitem.ValorTotal.ToString("0.00")">@vendaitem.ValorTotal.ToString("0.00")</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 

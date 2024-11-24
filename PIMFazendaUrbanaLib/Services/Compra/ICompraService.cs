@@ -2,7 +2,7 @@
 {
     public interface ICompraService
     {
-        List<PedidoCompra> ListarComprasComFiltros(string search);
+        List<PedidoCompraItem> ListarPedidoCompraItensComFiltros(string search);
 
         //void CadastrarPedidoCompraComItens(PedidoCompra pedidoCompra, List<PedidoCompraItem> compraItems);
         void CadastrarPedidoCompra(PedidoCompra pedidoCompra);

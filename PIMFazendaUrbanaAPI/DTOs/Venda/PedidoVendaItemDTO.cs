@@ -11,7 +11,6 @@
         public string NomeProduto { get; set; }
         public DateTime Data { get; set; }
         public string NomeCliente { get; set; }
-
         public decimal ValorTotal => Qtd * Valor;
     }
 }

@@ -5,12 +5,12 @@ using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
 using Radzen.Blazor;
 
-namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
+namespace PIMFazendaUrbanaRadzen.Components.Pages.Compras
 {
-    public partial class Vendas
+    public partial class Compras
     {
         [Inject]
-        public VendaApiService<PedidoVendaItemDTO> VendaApiService { get; set; } // serviço que chama a API
+        public CompraApiService<PedidoCompraItemDTO> CompraApiService { get; set; } // serviço que chama a API
 
         [Inject]
         public NavigationManager NavigationManager { get; set; } // serviço de navegação
@@ -24,33 +24,33 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
         [Inject]
         public IJSRuntime JSRuntime { get; set; } // para chamadas JavaScript
 
-        protected List<PedidoVendaItemDTO> vendaitens; // lista de vendaitens
+        protected List<PedidoCompraItemDTO> compraitens; // lista de compraitens
 
         protected string errorMessage = string.Empty; // mensagem de erro
 
         protected string searchQuery = string.Empty; // query da barra pesquisar
 
-        protected RadzenDataGrid<PedidoVendaItemDTO> grid0; // grid de vendaitens
+        protected RadzenDataGrid<PedidoCompraItemDTO> grid0; // grid de compraitens
 
         protected override async Task OnInitializedAsync()
         {
-            await LoadPedidoVendaItens(); // Carrega vendas inicialmente
+            await LoadPedidoCompraItens(); // Carrega compras inicialmente
         }
 
-        protected async Task LoadPedidoVendaItens()
+        protected async Task LoadPedidoCompraItens()
         {
             try
             {
-                var todasVendas = string.IsNullOrWhiteSpace(searchQuery)
-                    ? await VendaApiService.GetAllAsync()
-                    : await VendaApiService.GetVendasFiltradasAsync(searchQuery);
+                var todasCompras = string.IsNullOrWhiteSpace(searchQuery)
+                    ? await CompraApiService.GetAllAsync()
+                    : await CompraApiService.GetComprasFiltradasAsync(searchQuery);
 
-                vendaitens = todasVendas;
+                compraitens = todasCompras;
                 errorMessage = string.Empty; // Limpa mensagens de erro
             }
             catch (Exception ex)
             {
-                errorMessage = $"Erro ao carregar vendas: {ex.Message}";
+                errorMessage = $"Erro ao carregar compras: {ex.Message}";
                 Console.WriteLine(errorMessage);
             }
         }
@@ -58,13 +58,13 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
         protected async Task OnSearch(string search)
         {
             searchQuery = search;
-            await LoadPedidoVendaItens(); // Atualiza a lista de vendas com base na pesquisa
+            await LoadPedidoCompraItens(); // Atualiza a lista de compras com base na pesquisa
         }
 
         protected void AddButtonClick()
         {
             // Ação ao clicar no botão "Adicionar"
-            NavigationManager.NavigateTo("/cadastrar-venda"); // Redireciona para a página de cadastro de venda
+            NavigationManager.NavigateTo("/cadastrar-compra"); // Redireciona para a página de cadastro de compra
         }
 
         protected async Task OnExportarClick(RadzenSplitButtonItem args)
@@ -76,19 +76,19 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
             }
 
             string format = args.Value.ToString(); // "xlsx" ou "csv"
-            string fileName = $"Vendas_{DateTime.Now:yyyyMMdd_HHmmss}";
+            string fileName = $"Compras_{DateTime.Now:yyyyMMdd_HHmmss}";
 
             try
             {
                 // Verifique se há dados
-                if (vendaitens == null || !vendaitens.Any())
+                if (compraitens == null || !compraitens.Any())
                 {
                     NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.", duration: 2000);
                     return;
                 }
 
                 // Chama o serviço para exportação com base no formato selecionado
-                var fileBytes = await exportacaoApiService.ExportarAsync(vendaitens, format, fileName);
+                var fileBytes = await exportacaoApiService.ExportarAsync(compraitens, format, fileName);
 
                 if (fileBytes != null)
                 {

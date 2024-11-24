@@ -10,8 +10,8 @@
         public int IdInsumo { get; set; }
         public string NomeInsumo { get; set; }
         public DateTime Data { get; set; }
-
-        //public string NomeFornecedor { get; set; }
+        public string NomeFornecedor { get; set; }
+        public decimal ValorTotal => Qtd * Valor;
     }
 }
 
