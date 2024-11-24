@@ -53,7 +53,21 @@ namespace PIMFazendaUrbanaRadzen.Services
 
         public async Task<T> GetByIdAsync(int id)
         {
-            return await _httpClient.GetFromJsonAsync<T>($"{_endpointUrl}/{id}");
+            var response = await _httpClient.GetAsync($"{_endpointUrl}/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<T>();
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                return default; // Retorna null para 404
+            }
+            else
+            {
+                // Lança exceção para outros erros
+                throw new Exception($"Erro ao buscar funcionário: {response.ReasonPhrase}");
+            }
         }
 
         public async Task<HttpResponseMessage> CreateAsync(T entity)

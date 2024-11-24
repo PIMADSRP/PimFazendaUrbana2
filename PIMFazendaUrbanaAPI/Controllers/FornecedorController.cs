@@ -111,19 +111,25 @@ namespace PIMFazendaUrbanaAPI.Controllers
             }
         }
 
-        // Método para buscar um fornecedor por ID
+        // Método para buscar um fornecedor por id
         [HttpGet("{id}")]
         public IActionResult ConsultarFornecedorPorId(int id)
         {
             try
             {
-                var fornecedor = _fornecedorService.ConsultarFornecedorPorID(id);
+                Fornecedor? fornecedor = new Fornecedor();
+                fornecedor = _fornecedorService.ConsultarFornecedorPorID(id);
+                if (fornecedor == null)
+                {
+                    return NotFound(new { message = "Fornecedor não encontrado." }); // Retorna 404
+                }
+
                 var fornecedorDto = _mapper.Map<FornecedorDTO>(fornecedor); // Mapeia Fornecedor para FornecedorDTO
                 return Ok(fornecedorDto);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" }); // Retorna 500 para erros internos
             }
         }
 

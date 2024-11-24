@@ -115,7 +115,13 @@ namespace PIMFazendaUrbanaAPI.Controllers
         {
             try
             {
-                var funcionario = _funcionarioService.ConsultarFuncionarioPorID(id);
+                Funcionario? funcionario = new Funcionario();
+                funcionario = _funcionarioService.ConsultarFuncionarioPorID(id);
+                if (funcionario == null)
+                {
+                    return NotFound(new { message = "Funcionário não encontrado." }); // Retorna 404
+                }
+
                 var funcionarioDto = _mapper.Map<FuncionarioDTO>(funcionario); // Mapeia Funcionario para FuncionarioDTO
                 return Ok(funcionarioDto);
             }
