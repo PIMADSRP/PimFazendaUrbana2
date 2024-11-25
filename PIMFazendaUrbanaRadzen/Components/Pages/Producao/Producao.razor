@@ -180,3 +180,43 @@
 {
     <div style="color:red;">@errorMessage</div> <!-- Exibe erro em vermelho -->
 }
+
+<RadzenRow Style="margin-top: 1rem;">
+    <RadzenColumn>
+        <RadzenRow >
+            <RadzenColumn >
+                <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Pastel">
+                    <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Top" />
+                    <RadzenChartTooltipOptions Visible="true" Shared="false" />
+                    <RadzenStackedBarSeries Title="Produções" Data="@producoes" CategoryProperty="Cultivo.Variedade" ValueProperty="Qtd">
+                        <RadzenSeriesDataLabels Visible="true" />
+                    </RadzenStackedBarSeries>
+                </RadzenChart>
+            </RadzenColumn>
+
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn>
+                <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Pastel">
+                    <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Left" />
+                    <RadzenChartTooltipOptions Visible="true" Shared="false" />
+                    <RadzenPieSeries Radius="100" Title="Produções finalizadas" Data="@statusProducoes" CategoryProperty="Status" ValueProperty="Quantidade">
+                        <RadzenSeriesDataLabels Visible="true" />
+                    </RadzenPieSeries>
+                </RadzenChart>
+
+            </RadzenColumn>
+            <RadzenColumn>
+
+                <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Pastel">
+                    <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Right" />
+                    <RadzenChartTooltipOptions Visible="true" Shared="false" />
+                    <RadzenPieSeries Radius="100" Title="Distribuição de Vendas por Produto" Data="@producoes" CategoryProperty="Cultivo.Variedade" ValueProperty="Qtd">
+                        <RadzenSeriesDataLabels Visible="true" />
+                    </RadzenPieSeries>
+                </RadzenChart>
+
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenColumn>
+</RadzenRow>

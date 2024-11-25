@@ -16,12 +16,12 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Recomendacoes
         private string selectedAmbienteControlado = "Sim"; // Definindo "Sim" como padrão
         private bool selectedAmbienteControladoBool;
 
-        List<string> comboBoxRegiaoItems = new List<string>
+        protected List<string> comboBoxRegiaoItems = new List<string>
         {
             "Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"
         };
 
-        List<string> comboBoxEstacaoItems = new List<string>
+        protected List<string> comboBoxEstacaoItems = new List<string>
         {
             "Verão", "Outono", "Inverno", "Primavera"
         };

@@ -58,6 +58,15 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Cultivos
                     ? await CultivoApiService.GetAllAsync() // Carrega todos os cultivos
                     : await CultivoApiService.GetCultivosFiltradosAsync(searchQuery); // Busca cultivos filtrados
 
+                // Agrupar os cultivos por Categoria e contar a quantidade de cada categoria
+                categoryCounts = cultivos
+                    .GroupBy(c => c.Categoria)
+                    .Select(g => new CategoryCount
+                    {
+                        Categoria = g.Key,
+                        Count = g.Count()
+                    }).ToList();
+
                 errorMessage = string.Empty; // Limpa mensagens de erro
             }
             catch (Exception ex)

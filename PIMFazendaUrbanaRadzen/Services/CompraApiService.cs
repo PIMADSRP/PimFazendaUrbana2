@@ -36,8 +36,6 @@
             {
                 Console.WriteLine($"Chamando API em: {_endpointUrl}/listar");
 
-                var response = await _httpClient.GetFromJsonAsync<List<T>>($"{_endpointUrl}/listar");
-
                 return await _httpClient.GetFromJsonAsync<List<T>>($"{_endpointUrl}/listar");
             }
             catch (HttpRequestException httpEx)

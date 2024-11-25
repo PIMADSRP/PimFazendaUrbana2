@@ -100,7 +100,13 @@ builder.Services.AddScoped(provider =>
 builder.Services.AddScoped(provider =>
     new InsumoApiService<InsumoDTO>(
         provider.GetRequiredService<HttpClient>(),
-        $"{apiBaseUrl}/insumos"
+        $"{apiBaseUrl}/insumo"
+    ));
+
+builder.Services.AddScoped(provider =>
+    new InsumoApiService<SaidaInsumoDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/insumo"
     ));
 
 builder.Services.AddScoped(provider =>
@@ -116,9 +122,21 @@ builder.Services.AddScoped(provider =>
     ));
 
 builder.Services.AddScoped(provider =>
+    new CompraApiService<PedidoCompraDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/compra"
+    ));
+
+builder.Services.AddScoped(provider =>
     new CompraApiService<PedidoCompraItemDTO>(
         provider.GetRequiredService<HttpClient>(),
         $"{apiBaseUrl}/compra"
+    ));
+
+builder.Services.AddScoped(provider =>
+    new VendaApiService<PedidoVendaDTO>(
+        provider.GetRequiredService<HttpClient>(),
+        $"{apiBaseUrl}/venda"
     ));
 
 builder.Services.AddScoped(provider =>
@@ -127,11 +145,7 @@ builder.Services.AddScoped(provider =>
         $"{apiBaseUrl}/venda"
     ));
 
-builder.Services.AddScoped(provider =>
-    new VendaApiService<PedidoVendaDTO>(
-        provider.GetRequiredService<HttpClient>(),
-        $"{apiBaseUrl}/venda"
-    ));
+
 
 builder.Services.AddScoped(provider =>
     new ExportacaoApiService<object>(

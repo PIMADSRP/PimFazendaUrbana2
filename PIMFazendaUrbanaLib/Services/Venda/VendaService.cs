@@ -117,6 +117,19 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
+        // Método para obter o último ID de item de venda
+        public int? ObterUltimoIdPedidoVendaItem()
+        {
+            try
+            {
+                return pedidoVendaDAO.ObterUltimoIdPedidoVendaItem();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao obter último ID de item de venda: " + ex.Message);
+            }
+        }
+
         // Método para listar todos os itens de venda
         public List<PedidoVendaItem> ListarRegistrosDeVenda()
         {

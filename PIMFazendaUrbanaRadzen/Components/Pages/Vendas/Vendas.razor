@@ -107,53 +107,53 @@
                         class="data-grid-com-poucas-colunas">
             <Columns>
                 <!-- Coluna para Id -->
-                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Id" Title="Id" Filterable="false" Sortable="true" Width="4%" MinWidth="35px">
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Id" Title="Id" Filterable="false" Sortable="true" Width="5%" >
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Produto com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="NomeProduto" Title="Produto" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="NomeProduto" Title="Produto" Filterable="true" Sortable="true" Width="25%" >
                     <Template Context="vendaitem">
                         <span title="@vendaitem.NomeProduto">@vendaitem.NomeProduto</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Qtd com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Qtd" Title="Quantidade" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Qtd" Title="Quantidade" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="vendaitem">
                         <span title="@vendaitem.Qtd">@vendaitem.Qtd</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Unidade com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="UnidQtd" Title="Unidade" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="UnidQtd" Title="Unidade" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="vendaitem">
                         <span title="@vendaitem.UnidQtd">@vendaitem.UnidQtd</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Data com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Data" Title="Data" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Data" Title="Data" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="vendaitem">
                         <span title="@vendaitem.Data.ToShortDateString()">@vendaitem.Data.ToShortDateString()</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Cliente com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="NomeCliente" Title="Cliente" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="NomeCliente" Title="Cliente" Filterable="true" Sortable="true" Width="20%" >
                     <Template Context="vendaitem">
                         <span title="@vendaitem.NomeCliente">@vendaitem.NomeCliente</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para ValorUnitario com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Valor" Title="Valor Unitário" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="Valor" Title="Valor Unitário" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="vendaitem">
                         <span title="@vendaitem.Valor.ToString("0.00")">@vendaitem.Valor.ToString("0.00")</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para ValorTotal com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="ValorTotal" Title="Valor Total" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoVendaItemDTO" Property="ValorTotal" Title="Valor Total" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="vendaitem">
                         <span title="@vendaitem.ValorTotal.ToString("0.00")">@vendaitem.ValorTotal.ToString("0.00")</span> <!-- Tooltip -->
                     </Template>
@@ -181,15 +181,23 @@
                 </div>
             </HeaderTemplate>
             <Columns>
-                <RadzenDataGridColumn TItem="dynamic" Property="ID" Title="ID" Filterable="true" Sortable="true" Width="10%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="Id" Title="Id" Filterable="true" Sortable="true" Width="10%" />
                 <RadzenDataGridColumn TItem="dynamic" Property="Produto" Title="Produto" Filterable="true" Sortable="true" Width="20%" />
                 <RadzenDataGridColumn TItem="dynamic" Property="Categoria" Title="Categoria" Filterable="true" Sortable="true" Width="15%" />
                 <RadzenDataGridColumn TItem="dynamic" Property="Quantidade" Title="Quantidade" Filterable="true" Sortable="true" Width="10%" />
                 <RadzenDataGridColumn TItem="dynamic" Property="Unidade" Title="Unidade" Filterable="true" Sortable="true" Width="10%" />
                 <RadzenDataGridColumn TItem="dynamic" Property="DataEntrada" Title="Data de Entrada" Filterable="true" Sortable="true" Width="20%" />
-                <RadzenDataGridColumn TItem="dynamic" Property="IDProducao" Title="ID Produção" Filterable="true" Sortable="true" Width="15%" />
+                <RadzenDataGridColumn TItem="dynamic" Property="IdProducao" Title="Id Produção" Filterable="true" Sortable="true" Width="15%" />
             </Columns>
         </RadzenDataGrid>
     </RadzenRow>
 </div>
 *@
+
+<RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Pastel">
+    <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Right" />
+    <RadzenChartTooltipOptions Visible="true" Shared="true" />
+    <RadzenPieSeries Title="Distribuição de Vendas por Produto" Data="@productSales" CategoryProperty="NomeProduto" ValueProperty="TotalVendas">
+        <RadzenSeriesDataLabels Visible="true" />
+    </RadzenPieSeries>
+</RadzenChart>

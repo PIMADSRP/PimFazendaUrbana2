@@ -7,7 +7,6 @@
         void AlterarInsumo(Insumo insumo);
         Insumo ConsultarInsumoPorId(int insumoID);
         List<Insumo> ListarInsumosAtivos();
-
         List<Insumo> ListarInsumosEmEstoque();
         List<Insumo> ListarInsumosInativos();
         void DesativarInsumo(int insumoID);

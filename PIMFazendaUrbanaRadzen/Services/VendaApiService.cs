@@ -35,8 +35,6 @@
             try
             {
                 Console.WriteLine($"Chamando API em: {_endpointUrl}/listar");
-
-                var response = await _httpClient.GetFromJsonAsync<List<T>>($"{_endpointUrl}/listar");
                 
                 return await _httpClient.GetFromJsonAsync<List<T>>($"{_endpointUrl}/listar");
             }
@@ -57,6 +55,45 @@
             return await _httpClient.PostAsJsonAsync($"{_endpointUrl}/cadastrar", entity);
         }
 
+        public async Task<int> GetUltimoIdPedidoVenda()
+        {
+            try
+            {
+                Console.WriteLine($"Chamando API em: {_endpointUrl}/ultimoid-pedido");
+
+                return await _httpClient.GetFromJsonAsync<int>($"{_endpointUrl}/ultimoid-pedido");
+            }
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"Erro de requisição: {httpEx.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao chamar API: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<int> GetUltimoIdPedidoVendaItem()
+        {
+            try
+            {
+                Console.WriteLine($"Chamando API em: {_endpointUrl}/ultimoid-item");
+
+                return await _httpClient.GetFromJsonAsync<int>($"{_endpointUrl}/ultimoid-item");
+            }
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"Erro de requisição: {httpEx.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao chamar API: {ex.Message}");
+                throw;
+            }
+        }
 
     }
 }

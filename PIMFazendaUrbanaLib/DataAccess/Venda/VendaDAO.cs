@@ -301,6 +301,29 @@ namespace PIMFazendaUrbanaLib
             return idPedidoVenda;
         }
 
+        // Método para obter o ID do último item de venda cadastrado
+        public int? ObterUltimoIdPedidoVendaItem()
+        {
+            int? idVendaItem = null;
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT MAX(id_vendaitem) FROM vendaitem";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read() && !reader.IsDBNull(0))
+                        {
+                            idVendaItem = reader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+            return idVendaItem;
+        }
+
         // Método para listar todos os itens de venda
         public List<PedidoVendaItem> ListarRegistrosDeVenda()
         {

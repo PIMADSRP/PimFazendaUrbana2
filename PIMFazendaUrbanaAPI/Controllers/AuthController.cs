@@ -79,7 +79,7 @@ namespace PIMFazendaUrbanaAPI.Controllers
                 issuer: _configuration["Jwt:Issuer"], // Usa o Issuer do appsettings.json
                 audience: _configuration["Jwt:Audience"], // Usa o Audience do appsettings.json
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
+                expires: DateTime.Now.AddMinutes(30), // Tempo em minutos para expirar o token (aparentemente não funciona)
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

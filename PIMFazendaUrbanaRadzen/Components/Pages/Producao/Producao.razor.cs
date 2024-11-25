@@ -47,6 +47,8 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
 
                 producoes = todasProducoes;
                 errorMessage = string.Empty; // Limpa mensagens de erro
+
+                CalcularQtdFinalizados();
             }
             catch (Exception ex)
             {
@@ -55,6 +57,31 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
             }
         }
 
+        protected int qtdFinalizados = 0; // quantidade de produções finalizadas
+        protected int qtdNaoFinalizados = 0; // quantidade de produções não finalizadas
+
+        protected List<ProducaoStatus> statusProducoes;
+
+        protected void CalcularQtdFinalizados()
+        {
+            int total = producoes.Count;
+
+            qtdFinalizados = producoes.Count(p => p.StatusFinalizado == true);
+            qtdNaoFinalizados = producoes.Count(p => p.StatusFinalizado == false);
+
+            statusProducoes = new List<ProducaoStatus>
+            {
+                new ProducaoStatus { Status = "Finalizado", Quantidade = qtdFinalizados, Proporcao = (qtdFinalizados / (double)total).ToString("P1") },
+                new ProducaoStatus { Status = "Não Finalizado", Quantidade = qtdNaoFinalizados, Proporcao = (qtdNaoFinalizados / (double)total).ToString("P1") }
+            };
+        }
+
+        public class ProducaoStatus
+        {
+            public string Status { get; set; }
+            public int Quantidade { get; set; }
+            public string Proporcao { get; set; }
+        }
 
         protected async Task OnSearch(string search)
         {

@@ -238,12 +238,12 @@ namespace PIMFazendaUrbanaLib
                         {
                             SaidaInsumo saidainsumo = new SaidaInsumo
                             {
-                                //IdInsumo = reader.GetInt32("id_insumo"),
-                                //NomeInsumo = reader.IsDBNull(reader.GetOrdinal("nome_insumo")) ? null : reader.GetString("nome_insumo"),
-                                //CategoriaInsumo = reader.IsDBNull(reader.GetOrdinal("categoria_insumo")) ? null : reader.GetString("categoria_insumo"),
+                                IdInsumo = reader.GetInt32("id_insumo"),
+                                NomeInsumo = reader.IsDBNull(reader.GetOrdinal("nome_insumo")) ? null : reader.GetString("nome_insumo"),
+                                CategoriaInsumo = reader.IsDBNull(reader.GetOrdinal("categoria_insumo")) ? null : reader.GetString("categoria_insumo"),
                                 Id = reader.GetInt32("id_saidainsumo"),
                                 Qtd = reader.GetInt32("qtd_saidainsumo"),
-                                //Unidqtd = reader.GetString("unidqtd_saidainsumo"),
+                                Unidqtd = reader.GetString("unidqtd_saidainsumo"),
                                 Data = reader.GetDateTime("data_saidainsumo")
                             };
                             saidainsumos.Add(saidainsumo);
@@ -277,12 +277,12 @@ namespace PIMFazendaUrbanaLib
                         {
                             SaidaInsumo saidainsumo = new SaidaInsumo
                             {
-                                //IdInsumo = reader.GetInt32("id_insumo"),
-                                //NomeInsumo = reader.IsDBNull(reader.GetOrdinal("nome_insumo")) ? null : reader.GetString("nome_insumo"),
-                                //CategoriaInsumo = reader.IsDBNull(reader.GetOrdinal("categoria_insumo")) ? null : reader.GetString("categoria_insumo"),
+                                IdInsumo = reader.GetInt32("id_insumo"),
+                                NomeInsumo = reader.IsDBNull(reader.GetOrdinal("nome_insumo")) ? null : reader.GetString("nome_insumo"),
+                                CategoriaInsumo = reader.IsDBNull(reader.GetOrdinal("categoria_insumo")) ? null : reader.GetString("categoria_insumo"),
                                 Id = reader.GetInt32("id_saidainsumo"),
                                 Qtd = reader.GetInt32("qtd_saidainsumo"),
-                                //Unidqtd = reader.GetString("unidqtd_saidainsumo"),
+                                Unidqtd = reader.GetString("unidqtd_saidainsumo"),
                                 Data = reader.GetDateTime("data_saidainsumo")
                             };
                             saidainsumos.Add(saidainsumo);
@@ -474,8 +474,8 @@ namespace PIMFazendaUrbanaLib
                         using (MySqlCommand insertSaidaInsumoCommand = new MySqlCommand(insertSaidaInsumoQuery, connection, transaction))
                         {
                             insertSaidaInsumoCommand.Parameters.AddWithValue("@quantidade", saidainsumo.Qtd);
-                            //insertSaidaInsumoCommand.Parameters.AddWithValue("@unidade", saidainsumo.Unidqtd);
-                            //insertSaidaInsumoCommand.Parameters.AddWithValue("@idinsumo", saidainsumo.IdInsumo);
+                            insertSaidaInsumoCommand.Parameters.AddWithValue("@unidade", saidainsumo.Unidqtd);
+                            insertSaidaInsumoCommand.Parameters.AddWithValue("@idinsumo", saidainsumo.IdInsumo);
                             insertSaidaInsumoCommand.ExecuteNonQuery();
                         }
 
@@ -555,12 +555,12 @@ namespace PIMFazendaUrbanaLib
                         {
                             SaidaInsumo saidainsumo = new SaidaInsumo
                             {
-                                //IdInsumo = reader.GetInt32("id_insumo"),
-                                //NomeInsumo = reader.IsDBNull(reader.GetOrdinal("nome_insumo")) ? null : reader.GetString("nome_insumo"),
-                                //CategoriaInsumo = reader.IsDBNull(reader.GetOrdinal("categoria_insumo")) ? null : reader.GetString("categoria_insumo"),
+                                IdInsumo = reader.GetInt32("id_insumo"),
+                                NomeInsumo = reader.IsDBNull(reader.GetOrdinal("nome_insumo")) ? null : reader.GetString("nome_insumo"),
+                                CategoriaInsumo = reader.IsDBNull(reader.GetOrdinal("categoria_insumo")) ? null : reader.GetString("categoria_insumo"),
                                 Id = reader.GetInt32("id_saidainsumo"),
                                 Qtd = reader.GetInt32("qtd_saidainsumo"),
-                                //Unidqtd = reader.GetString("unidqtd_saidainsumo"),
+                                Unidqtd = reader.GetString("unidqtd_saidainsumo"),
                                 Data = reader.GetDateTime("data_saidainsumo")
                             };
                             saidainsumos.Add(saidainsumo);

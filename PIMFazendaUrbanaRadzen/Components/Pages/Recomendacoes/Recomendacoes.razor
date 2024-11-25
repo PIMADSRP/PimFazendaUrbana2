@@ -14,7 +14,7 @@
 <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: flex-start; flex-wrap: wrap;">
 
     <!-- Parte do formulário (lado esquerdo) -->
-    <div style="flex: 1; margin-right: 20px; min-width: 300px; display: flex; flex-direction: column;">
+    <div style="flex: 1; margin-right: 1vw; min-width: 300px; display: flex; flex-direction: column; margin-bottom: 0.5rem;">
         <RadzenFieldset>
             <HeaderTemplate>
                 <div >
@@ -22,52 +22,50 @@
                 </div>
             </HeaderTemplate>
         <ChildContent>
-            <div style="margin-bottom: 15px;">
-                <RadzenRow Gap="5" RowGap="5" >
-                    <RadzenText Text="Região" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px;"/>
-                    <RadzenDropDown TValue="string"
-                                    Style="height: 40px; flex: 1; min-width: 150px;"
-                                    @bind-Value="selectedRegiao" 
-                                    Data="@comboBoxRegiaoItems" 
-                                    TextProperty="Text" 
-                                    ValueProperty="Value" />
-                </RadzenRow>
-            </div>
+                <div style="margin-bottom: 15px;">
+                    <RadzenRow Gap="0.5" RowGap="0.5">
+                        <RadzenLabel Text="Região:" Style="flex: 0 0 100%; min-width: 150px; margin-top: 5px; margin-bottom: 5px;" />
+                        <RadzenDropDown TValue="string"
+                                        Style="height: 40px; flex: 1; min-width: 150px;"
+                                        @bind-Value="selectedRegiao"
+                                        Data="@comboBoxRegiaoItems"
+                                        Placeholder="Selecione a região" />
+                    </RadzenRow>
+                </div>
 
-            <div style="margin-bottom: 15px;">
-                <RadzenRow Gap="5" RowGap="5">
-                    <RadzenText Text="Estação do Plantio" Style="flex: 0 0 30%; min-width: 100px; margin-top: 5px;" />
-                    <RadzenDropDown TValue="string"
-                                    Style="height: 40px; flex: 1; min-width: 150px;"
-                                    @bind-Value="selectedEstacao"
-                                    Data="@comboBoxEstacaoItems"
-                                    TextProperty="Text"
-                                    ValueProperty="Value" />
-                </RadzenRow>
-            </div>
+                <div style="margin-bottom: 15px;">
+                    <RadzenRow Gap="0.5" RowGap="0.5">
+                        <RadzenLabel Text="Estação do Plantio:" Style="flex: 0 0 100%; min-width: 150px; margin-top: 5px; margin-bottom: 5px;" />
+                        <RadzenDropDown TValue="string"
+                                        Style="height: 40px; flex: 1; min-width: 150px;"
+                                        @bind-Value="selectedEstacao"
+                                        Data="@comboBoxEstacaoItems"
+                                        Placeholder="Selecione a estação do plantio" />
+                    </RadzenRow>
+                </div>
 
-            <div style="margin-bottom: 15px;">
-                <RadzenRow>
-                    <RadzenText Text="Possui ambiente climatizado para plantio" Style="flex: 0 0 50%; min-width: 150px;" />
-                    <RadzenRadioButtonList TValue="string"
-                                           Data="@(new List<string> { "Sim", "Não" })"
-                                           @bind-Value="selectedAmbienteControlado"
-                                           Style="margin-left: 10px;" />
-                </RadzenRow>
-            </div>
+                <div style="margin-bottom: 15px;">
+                    <RadzenRow Gap="0.5" RowGap="0.5">
+                        <RadzenLabel Text="Possui ambiente climatizado para plantio?" Style="flex: 0 0 100%; min-width: 150px; margin-top: 5px; margin-bottom: 5px;" />
+                        <RadzenRadioButtonList TValue="string"
+                                               Data="@(new List<string> { "Sim", "Não" })"
+                                               @bind-Value="selectedAmbienteControlado"
+                                               Style="margin-left: 10px;" />
+                    </RadzenRow>
+                </div>
 
-            <div style="width: 100%;">
-                <RadzenColumn Size="12">
-                    <RadzenButton ButtonStyle="ButtonStyle.Primary"
-                                  ButtonType="ButtonType.Submit"
-                                  Icon="check"
-                                  Text="Confirmar"
-                                  Variant="Radzen.Variant.Filled"
-                                  Shade="Radzen.Shade.Default"
-                                  Style="background-color: var(--rz-primary); width: 100%;"
-                                  Click="OnConfirmarClick" />
-                </RadzenColumn>
-            </div>
+                <div style="width: 100%; margin-top: 20px;">
+                    <RadzenColumn Size="12">
+                        <RadzenButton ButtonStyle="ButtonStyle.Primary"
+                                      ButtonType="ButtonType.Submit"
+                                      Icon="check"
+                                      Text="Confirmar"
+                                      Variant="Radzen.Variant.Filled"
+                                      Shade="Radzen.Shade.Default"
+                                      Style="background-color: var(--rz-primary); width: 100%;"
+                                      Click="OnConfirmarClick" />
+                    </RadzenColumn>
+                </div>
         </ChildContent>
         </RadzenFieldset>
     </div>

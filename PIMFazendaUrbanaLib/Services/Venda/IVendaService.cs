@@ -9,6 +9,7 @@
         List<PedidoVenda> ListarPedidosVenda();
         PedidoVenda ConsultarPedidoVendaPorId(int idPedidoVenda);
         int? ObterUltimoIdPedidoVenda();
+        int? ObterUltimoIdPedidoVendaItem();
         List<PedidoVendaItem> ListarRegistrosDeVenda();
         PedidoVendaItem ConsultarVendaItemPorId(int idVendaItem);
         List<PedidoVendaItem> FiltrarRegistrosDeVendaPorNomeEPeriodo(string produtoNome, DateTime dataInicio, DateTime dataFim);
