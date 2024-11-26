@@ -22,6 +22,19 @@
             }
         }
 
+        public List<SaidaInsumo> ListarSaidaInsumosComFiltros(string search)
+        {
+            try
+            {
+                List<SaidaInsumo> saidainsumos = insumoDAO.ListarSaidaInsumosComFiltros(search);
+                return saidainsumos;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao listar registros de saída de insumos filtrados: " + ex.Message);
+            }
+        }
+
         public void CadastrarInsumo(Insumo insumo)
         {
             try
@@ -180,12 +193,12 @@
         //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
         //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-        public void CadastrarSaidaInsumo(SaidaInsumo saidainsumo, Insumo insumo)
+        public void CadastrarSaidaInsumo(SaidaInsumo saidainsumo)
         {
             try
             {
-                this.ValidarSaidaInsumo(saidainsumo, insumo); // <--- Validação para cadastrar insumo <---
-                insumoDAO.CadastrarSaidaInsumo(saidainsumo, insumo);
+                this.ValidarSaidaInsumo(saidainsumo);
+                insumoDAO.CadastrarSaidaInsumo(saidainsumo);
             }
             catch (Exception ex)
             {
@@ -251,7 +264,7 @@
         }
 
         // =-=-=-=-=-=-=-=-=-=-=-=- VALIDAÇÃO SAIDA INSUMO =-=-=-=-=-=-=-=-=-=-=-=-
-        public void ValidarSaidaInsumo(SaidaInsumo saidainsumo, Insumo insumo)
+        public void ValidarSaidaInsumo(SaidaInsumo saidainsumo)
         {
             var erros = new List<ValidationError>();
             if (saidainsumo.Qtd <= 0)
@@ -259,10 +272,12 @@
                 erros.Add(new ValidationError("Quantidade", "A quantidade deve ser um número inteiro maior que zero."));
             }
 
+            /* // validação no front e por trigger no banco de dados
             if (saidainsumo.Qtd > insumo.Qtd)
             {
                 erros.Add(new ValidationError("Quantidade", "A quantidade de saída deve ser menor ou igual à quantidade atual no estoque."));
             }
+            */
 
             if (erros.Any()) // se teve algum erro, lança exceção com a lista de erros
             {

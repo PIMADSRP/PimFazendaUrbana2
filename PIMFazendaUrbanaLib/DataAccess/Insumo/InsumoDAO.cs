@@ -254,6 +254,46 @@ namespace PIMFazendaUrbanaLib
             return saidainsumos;
         }
 
+        public List<SaidaInsumo> ListarSaidaInsumosComFiltros(string search)
+        {
+            List<SaidaInsumo> saidainsumos = new List<SaidaInsumo>();
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT si.id_saidainsumo, si.qtd_saidainsumo, si.unidqtd_saidainsumo, si.data_saidainsumo, si.id_insumo,
+                        i.nome_insumo, i.categoria_insumo
+                        FROM saidainsumo si
+                        LEFT JOIN estoqueinsumo i ON si.id_insumo = i.id_insumo
+                        WHERE i.nome_insumo LIKE @search OR i.categoria_insumo LIKE @search
+                        OR si.datasaidainsumo LIKE @search OR si.id_insumo LIKE @search";
+
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@search", "%" + search + "%");
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            SaidaInsumo saidainsumo = new SaidaInsumo
+                            {
+                                IdInsumo = reader.GetInt32("id_insumo"),
+                                NomeInsumo = reader.IsDBNull(reader.GetOrdinal("nome_insumo")) ? null : reader.GetString("nome_insumo"),
+                                CategoriaInsumo = reader.IsDBNull(reader.GetOrdinal("categoria_insumo")) ? null : reader.GetString("categoria_insumo"),
+                                Id = reader.GetInt32("id_saidainsumo"),
+                                Qtd = reader.GetInt32("qtd_saidainsumo"),
+                                Unidqtd = reader.GetString("unidqtd_saidainsumo"),
+                                Data = reader.GetDateTime("data_saidainsumo")
+                            };
+                            saidainsumos.Add(saidainsumo);
+                        }
+                    }
+                }
+
+            }
+            return saidainsumos;
+        }
+
         // Método para filtrar saídas de insumos pelo nome do insumo
         public List<SaidaInsumo> FiltrarSaidaInsumosPorNome(string insumoNome)
         {
@@ -457,7 +497,7 @@ namespace PIMFazendaUrbanaLib
             return null;
         }
 
-        public void CadastrarSaidaInsumo(SaidaInsumo saidainsumo, Insumo insumo)
+        public void CadastrarSaidaInsumo(SaidaInsumo saidainsumo)
         {
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -467,28 +507,31 @@ namespace PIMFazendaUrbanaLib
                     try
                     {
                         string insertSaidaInsumoQuery = @"INSERT INTO saidainsumo 
-                                                    (qtd_saidainsumo, unidqtd_saidainsumo, id_insumo) 
-                                                    VALUES 
-                                                    (@quantidade, @unidade, @idinsumo)";
+                                                        (qtd_saidainsumo, data_saidainsumo, unidqtd_saidainsumo, id_insumo) 
+                                                        VALUES 
+                                                        (@quantidade, @data, @unidade, @idinsumo)";
 
                         using (MySqlCommand insertSaidaInsumoCommand = new MySqlCommand(insertSaidaInsumoQuery, connection, transaction))
                         {
                             insertSaidaInsumoCommand.Parameters.AddWithValue("@quantidade", saidainsumo.Qtd);
                             insertSaidaInsumoCommand.Parameters.AddWithValue("@unidade", saidainsumo.Unidqtd);
                             insertSaidaInsumoCommand.Parameters.AddWithValue("@idinsumo", saidainsumo.IdInsumo);
+                            insertSaidaInsumoCommand.Parameters.AddWithValue("@data", saidainsumo.Data);
                             insertSaidaInsumoCommand.ExecuteNonQuery();
                         }
 
+                        /*
                         string updateInsumoQuery = @"UPDATE estoqueinsumo SET 
                                                     qtd_insumo = @Qtd
                                                     WHERE id_insumo = @InsumoId";
 
                         using (MySqlCommand updateInsumoCommand = new MySqlCommand(updateInsumoQuery, connection, transaction))
                         {
-                            updateInsumoCommand.Parameters.AddWithValue("@InsumoId", insumo.Id);
+                            updateInsumoCommand.Parameters.AddWithValue("@InsumoId", saidainsumo.IdInsumo);
                             updateInsumoCommand.Parameters.AddWithValue("@Qtd", insumo.Qtd - saidainsumo.Qtd);
                             updateInsumoCommand.ExecuteNonQuery();
                         }
+                        */
 
                         transaction.Commit();
                     }

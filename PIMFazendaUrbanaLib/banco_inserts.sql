@@ -119,9 +119,9 @@ commit;
 
 begin;
 INSERT INTO `estoqueinsumo` (`nome_insumo`, `categoria_insumo`, `qtd_insumo`, `unidqtd_insumo`, `ativo_insumo`) VALUES
-('Nitrato de amônio', 'Fertilizantes', 0, 'kg', true),
-('Fosfato diamônico', 'Fertilizantes', 0, 'kg', true),
-('Sulfato de potássio', 'Fertilizantes', 0, 'kg', true),
+('Nitrato de amônio', 'Fertilizantes', 50, 'kg', true),
+('Fosfato diamônico', 'Fertilizantes', 40, 'kg', true),
+('Sulfato de potássio', 'Fertilizantes', 30, 'kg', true),
 ('Calcário dolomítico', 'Fertilizantes', 0, 'kg', true),
 ('Uréia', 'Fertilizantes', 0, 'kg', true),
 ('Superfosfato simples', 'Fertilizantes', 0, 'kg', true),
@@ -181,31 +181,27 @@ INSERT INTO `producao`
 VALUES 
 (10, 'Kg', '2024-11-20', '2024-12-15', true, false, 1),
 (20, 'Kg', '2024-10-10', '2024-11-10', false, true, 2),
-(100, 'Unid', '2024-09-05', '2024-10-05', true, false, 3),
-(100, 'Unid', '2024-09-05', '2024-10-05', true, true, 4),
-(100, 'Unid', '2024-09-05', '2024-10-05', true, true, 5),
-(100, 'Unid', '2024-09-05', '2024-10-05', true, true, 6),
-(100, 'Unid', '2024-09-05', '2024-10-05', true, true, 7),
-(100, 'Unid', '2024-09-05', '2024-10-05', true, true, 8),
-(100, 'Unid', '2024-09-05', '2024-10-05', true, true, 9),
-(100, 'Unid', '2024-09-05', '2024-10-05', true, true, 10),
-(100, 'Unid', '2024-09-05', '2024-10-05', true, true, 11);
+(40, 'kg', '2024-09-05', '2024-10-05', true, false, 3),
+(10, 'Kg', '2024-11-20', '2024-12-15', true, true, 4),
+(20, 'Kg', '2024-10-10', '2024-11-10', false, false, 5),
+(100, 'kg', '2024-09-05', '2024-10-05', true, true, 6),
+(10, 'Kg', '2024-11-20', '2024-12-15', true, false, 7),
+(30, 'Kg', '2024-10-10', '2024-11-10', false, true, 8),
+(80, 'kg', '2024-09-05', '2024-10-05', true, false, 9),
+(50, 'Kg', '2024-11-20', '2024-12-15', true, true, 10),
+(20, 'Kg', '2024-10-10', '2024-11-10', false, false, 11),
+(60, 'kg', '2024-09-05', '2024-10-05', true, true, 12);
 commit;
 
 begin;
 INSERT INTO estoqueproduto (qtd_estoqueproduto, unidqtd_estoqueproduto, dataentrada_estoqueproduto, ativo_estoqueproduto, id_producao) 
 VALUES
-(150, 'Kg', '2024-11-22', true, 1),
-(100, 'Kg', '2024-11-23', true, 2),
-(50, 'Kg', '2024-11-24', true, 3),
-(99, 'Kg', '2024-11-24', true, 4),
-(99, 'Kg', '2024-11-24', true, 5),
-(99, 'Kg', '2024-11-24', true, 6),
-(99, 'Kg', '2024-11-24', true, 7),
-(99, 'Kg', '2024-11-24', true, 8),
-(99, 'Kg', '2024-11-24', true, 9),
-(99, 'Kg', '2024-11-24', true, 10),
-(99, 'Kg', '2024-11-24', true, 11);
+(20, 'Kg', '2024-11-22', true, 2),
+(10, 'Kg', '2024-11-23', true, 4),
+(100, 'Kg', '2024-11-24', true, 6),
+(30, 'Kg', '2024-11-24', true, 8),
+(50, 'Kg', '2024-11-24', true, 10),
+(60, 'Kg', '2024-11-24', true, 12);
 commit;
 
 begin;

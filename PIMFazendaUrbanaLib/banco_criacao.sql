@@ -377,6 +377,37 @@ CREATE TABLE `saidainsumo` (
 	CONSTRAINT `saidainsumo_ibfk_1` FOREIGN KEY (`id_insumo`) REFERENCES `estoqueinsumo` (`id_insumo`)
 );
 
+-- Criar Trigger para atualizar qtd_insumo após inserir em saidainsumo
+DELIMITER $$
+CREATE TRIGGER `verifica_estoque_suficiente`
+BEFORE INSERT ON `saidainsumo`
+FOR EACH ROW
+BEGIN
+    DECLARE estoque_atual INT;
+
+    SELECT `qtd_insumo` INTO estoque_atual
+    FROM `estoqueinsumo`
+    WHERE `id_insumo` = NEW.`id_insumo`;
+
+    IF estoque_atual < NEW.`qtd_saidainsumo` THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Quantidade de saída maior que a do estoque.';
+    END IF;
+END$$
+DELIMITER ;
+
+-- Criar Trigger para atualizar qtd_insumo após inserir em saidainsumo
+DELIMITER $$
+CREATE TRIGGER `atualiza_estoque_saidainsumo`
+AFTER INSERT ON `saidainsumo`
+FOR EACH ROW
+BEGIN
+    UPDATE `estoqueinsumo`
+    SET `qtd_insumo` = `qtd_insumo` - NEW.`qtd_saidainsumo`
+    WHERE `id_insumo` = NEW.`id_insumo`;
+END$$
+DELIMITER ;
+
 ## Producao
 CREATE TABLE `producao` (
 	`id_producao` int NOT NULL AUTO_INCREMENT,

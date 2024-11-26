@@ -296,6 +296,8 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
             if (confirm == true)
             {
                 RemoverItemCarrinho(item);
+                ReloadDatagrid();
+                StateHasChanged();
             }
         }
 
