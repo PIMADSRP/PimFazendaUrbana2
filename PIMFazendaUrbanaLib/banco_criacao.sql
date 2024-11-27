@@ -475,6 +475,21 @@ CREATE TABLE `vendaitem` (
 	CONSTRAINT `vendaitem_ibfk_2` FOREIGN KEY (`id_estoqueproduto`) REFERENCES `estoqueproduto` (`id_estoqueproduto`)
 );
 
+-- Criar Trigger para definir estoqueproduto como inativo se sua qtd for 0
+DELIMITER $$
+CREATE TRIGGER tr_update_ativo_estoqueproduto
+BEFORE UPDATE ON estoqueproduto
+FOR EACH ROW
+BEGIN
+    -- Verifica se a quantidade está sendo atualizada para 0
+    IF NEW.qtd_estoqueproduto = 0 THEN
+        SET NEW.ativo_estoqueproduto = FALSE;
+    ELSE
+        SET NEW.ativo_estoqueproduto = TRUE;
+    END IF;
+END$$
+DELIMITER ;
+
 -- Criar Trigger para atualizar estoqueproduto após cadastrar venda
 DELIMITER //
 CREATE TRIGGER after_insert_vendaitem
@@ -488,3 +503,4 @@ END //
 DELIMITER ;
 
 commit;
+

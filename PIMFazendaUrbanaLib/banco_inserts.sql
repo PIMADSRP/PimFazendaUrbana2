@@ -169,7 +169,7 @@ commit;
 begin;
 INSERT INTO saidainsumo (qtd_saidainsumo, unidqtd_saidainsumo, data_saidainsumo, id_insumo) 
 VALUES
-(20, 'Kg', '2024-11-21', 1),
+(20, 'kg', '2024-11-21', 1),
 (15, 'Unidade', '2024-11-22', 2),
 (5, 'Litros', '2024-11-23', 3);
 commit;
@@ -179,29 +179,29 @@ begin;
 INSERT INTO `producao` 
 (`qtd_producao`, `unidqtd_producao`, `data_producao`, `datacolheita_producao`, `ambientectrl_producao`, `finalizado_producao`, `id_cultivo`) 
 VALUES 
-(10, 'Kg', '2024-11-20', '2024-12-15', true, false, 1),
-(20, 'Kg', '2024-10-10', '2024-11-10', false, true, 2),
+(10, 'kg', '2024-11-20', '2024-12-15', true, false, 1),
+(20, 'kg', '2024-10-10', '2024-11-10', false, true, 2),
 (40, 'kg', '2024-09-05', '2024-10-05', true, false, 3),
-(10, 'Kg', '2024-11-20', '2024-12-15', true, true, 4),
-(20, 'Kg', '2024-10-10', '2024-11-10', false, false, 5),
+(10, 'kg', '2024-11-20', '2024-12-15', true, true, 4),
+(20, 'kg', '2024-10-10', '2024-11-10', false, false, 5),
 (100, 'kg', '2024-09-05', '2024-10-05', true, true, 6),
-(10, 'Kg', '2024-11-20', '2024-12-15', true, false, 7),
-(30, 'Kg', '2024-10-10', '2024-11-10', false, true, 8),
+(10, 'kg', '2024-11-20', '2024-12-15', true, false, 7),
+(30, 'kg', '2024-10-10', '2024-11-10', false, true, 8),
 (80, 'kg', '2024-09-05', '2024-10-05', true, false, 9),
-(50, 'Kg', '2024-11-20', '2024-12-15', true, true, 10),
-(20, 'Kg', '2024-10-10', '2024-11-10', false, false, 11),
+(50, 'kg', '2024-11-20', '2024-12-15', true, true, 10),
+(20, 'kg', '2024-10-10', '2024-11-10', false, false, 11),
 (60, 'kg', '2024-09-05', '2024-10-05', true, true, 12);
 commit;
 
 begin;
 INSERT INTO estoqueproduto (qtd_estoqueproduto, unidqtd_estoqueproduto, dataentrada_estoqueproduto, ativo_estoqueproduto, id_producao) 
 VALUES
-(20, 'Kg', '2024-11-22', true, 2),
-(10, 'Kg', '2024-11-23', true, 4),
-(100, 'Kg', '2024-11-24', true, 6),
-(30, 'Kg', '2024-11-24', true, 8),
-(50, 'Kg', '2024-11-24', true, 10),
-(60, 'Kg', '2024-11-24', true, 12);
+(20, 'kg', '2024-11-22', true, 2),
+(10, 'kg', '2024-11-23', true, 4),
+(100, 'kg', '2024-11-24', true, 6),
+(30, 'kg', '2024-11-24', true, 8),
+(50, 'kg', '2024-11-24', true, 10),
+(60, 'kg', '2024-11-24', true, 12);
 commit;
 
 begin;
@@ -225,9 +225,9 @@ VALUES
 
 INSERT INTO vendaitem (qtd_vendaitem, unidqtd_vendaitem, valor_vendaitem, desconto_vendaitem, id_pedidovenda, id_estoqueproduto) 
 VALUES
-(20, 'Kg', 300.000, 10.000, 1, 1),
-(10, 'Kg', 150.000, 5.000, 1, 2),
-(5, 'Kg', 100.000, NULL, 2, 3);
+(20, 'kg', 300.000, 10.000, 1, 1),
+(10, 'kg', 150.000, 5.000, 1, 2),
+(5, 'kg', 100.000, NULL, 2, 3);
 commit;
 
 
