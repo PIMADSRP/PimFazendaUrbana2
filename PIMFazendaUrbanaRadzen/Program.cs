@@ -58,8 +58,6 @@ builder.Services.AddAuthorization(options =>
         policy.RequireClaim("role", "Gerente")); // Somente Gerente
 });
 
-
-
 // Registra o serviço CepApiService
 builder.Services.AddScoped<CepApiService>(provider =>
     new CepApiService(

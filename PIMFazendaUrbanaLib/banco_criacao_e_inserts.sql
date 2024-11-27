@@ -408,6 +408,11 @@ BEGIN
 END$$
 DELIMITER ;
 
+commit;
+
+
+begin;
+
 ## Producao
 CREATE TABLE `producao` (
 	`id_producao` int NOT NULL AUTO_INCREMENT,
@@ -443,8 +448,8 @@ AFTER UPDATE ON producao
 FOR EACH ROW
 BEGIN
     IF NEW.finalizado_producao = true AND OLD.finalizado_producao = false THEN
-        INSERT INTO estoqueproduto (qtd_estoqueproduto, unidqtd_estoqueproduto, id_producao)
-        VALUES (NEW.qtd_producao, NEW.unidqtd_producao, NEW.id_producao);
+        INSERT INTO estoqueproduto (qtd_estoqueproduto, unidqtd_estoqueproduto, dataentrada_estoqueproduto, id_producao)
+        VALUES (NEW.qtd_producao, NEW.unidqtd_producao, NEW.datacolheita_producao, NEW.id_producao);
     END IF;
 END //
 DELIMITER ;
@@ -489,7 +494,383 @@ BEGIN
     END IF;
 END$$
 DELIMITER ;
+commit;
 
+use pimfazendaurbana;
+
+## FUNCIONARIO, CLIENTE, FORNECEDOR
+## Funcionario:
+begin;
+INSERT INTO `funcionario` (`nome_funcionario`, `cpf_funcionario`, `sexo_funcionario`, `email_funcionario`, `cargo_funcionario`, `usuario_funcionario`, `senha_funcionario`, `ativo_funcionario`) VALUES
+('Alice Silva', '12345678900', 'F', 'alice.silva@unip.br', 'Funcionário', 'alice.s', 'A1!eB3@cD', true),
+('Bruno Souza', '23456789011', 'M', 'bruno.souza@unip.br', 'Funcionário', 'bruno.s', 'B2#rU4%uZ', true),
+('Carla Dias', '34567890122', 'F', 'carla.dias@unip.br', 'Funcionário', 'carla.d', 'C3$rL5&dI', true),
+('Diego Pereira', '45678901233', 'M', 'diego.pereira@unip.br', 'Gerente', 'diego.p', 'D4#eP6&pR', true),
+('Eva Martins', '56789012344', 'F', 'eva.martins@unip.br', 'Gerente', 'eva.m', 'E5@mA7&nS', true),
+('Felipe Ramos', '67890123455', 'M', 'felipe.ramos@unip.br', 'Funcionário', 'felipe.r', 'F6#lR8*pM', true),
+('Giselle Rocha', '78901234566', 'F', 'giselle.rocha@unip.br', 'Funcionário', 'giselle.r', 'G7&lR9@cA', true),
+('Hugo Almeida', '89012345677', 'M', 'hugo.almeida@unip.br', 'Funcionário', 'hugo.a', 'H8@uA1#lE', true),
+('Isabela Fernandes', '90123456788', 'F', 'isabela.fernandes@unip.br', 'Gerente', 'isabela.f', 'I9#bE2%mN', true),
+('João Lima', '01234567899', 'M', 'joao.lima@unip.br', 'Gerente', 'joao.l', 'J0!oL3&pA', true);
+
+INSERT INTO `enderecofuncionario` (`logradouro_endfuncionario`, `numero_endfuncionario`, `complemento_endfuncionario`, `bairro_endfuncionario`, `cidade_endfuncionario`, `uf_endfuncionario`, `cep_endfuncionario`, `ativo_endfuncionario`, `id_funcionario`) VALUES
+('Rua Sete de Setembro', '123', 'Apto 101', 'Centro', 'Ribeirão Preto', 'SP', '14010000', true, 1),
+('Rua Mariana Junqueira', '456', 'Casa', 'Vila Tibério', 'Ribeirão Preto', 'SP', '14020000', true, 2),
+('Rua Conde Afonso Celso', '789', 'Apto 202', 'Jardim Paulista', 'Ribeirão Preto', 'SP', '14090000', true, 3),
+('Rua Amador Bueno', '101', NULL, 'Sumarezinho', 'Ribeirão Preto', 'SP', '14055000', true, 4),
+('Rua General Osório', '102', 'Apto 303', 'Campos Elíseos', 'Ribeirão Preto', 'SP', '14080000', true, 5),
+('Rua Lafaiete', '103', NULL, 'Vila Seixas', 'Ribeirão Preto', 'SP', '14020250', true, 6),
+('Rua Chile', '104', 'Apto 404', 'Jardim Sumaré', 'Ribeirão Preto', 'SP', '14025220', true, 7),
+('Rua São Sebastião', '105', NULL, 'Jardim São Luiz', 'Ribeirão Preto', 'SP', '14020420', true, 8),
+('Rua Álvares Cabral', '106', 'Apto 505', 'Vila Virgínia', 'Ribeirão Preto', 'SP', '14030000', true, 9),
+('Rua João Penteado', '107', 'Casa', 'Jardim América', 'Ribeirão Preto', 'SP', '14020110', true, 10);
+
+INSERT INTO `telefonefuncionario` (`ddd_telfuncionario`, `numero_telfuncionario`, `ativo_telfuncionario`, `id_funcionario`) VALUES
+('16', '987654321', true, 1),
+('16', '976543210', true, 2),
+('16', '965432109', true, 3),
+('16', '954321098', true, 4),
+('16', '943210987', true, 5),
+('16', '932109876', true, 6),
+('16', '921098765', true, 7),
+('16', '910987654', true, 8),
+('16', '909876543', true, 9),
+('16', '898765432', true, 10);
+commit;
+
+## Cliente
+begin;
+INSERT INTO `cliente` (`nome_cliente`, `email_cliente`, `cnpj_cliente`, `ativo_cliente`) VALUES
+('Mercado São João', 'contato@mercadosaojoao.com.br', '12345678000100', true),
+('Hortifruti Bom Preço', 'contato@hortifrutibompreco.com.br', '23456789000111', true),
+('Verduras & Cia', 'contato@verdurasecia.com.br', '34567890000122', true),
+('Armazém do Campo', 'contato@armazemdocampo.com.br', '45678901000133', true),
+('Quitanda do Interior', 'contato@quitandadointerior.com.br', '56789012000144', true),
+('Feira Livre Natural', 'contato@feiralivrenatural.com.br', '67890123000155', true),
+('Empório dos Sabores', 'contato@emporiodossabores.com.br', '78901234000166', true),
+('Cantinho Verde', 'contato@cantinhoverde.com.br', '89012345000177', true),
+('Supermercado Rural', 'contato@supermercadorural.com.br', '90123456000188', true),
+('Frutas Frescas', 'contato@frutasfrescas.com.br', '01234567000199', true);
+
+INSERT INTO `enderecocliente` (`logradouro_endcliente`, `numero_endcliente`, `complemento_endcliente`, `bairro_endcliente`, `cidade_endcliente`, `uf_endcliente`, `cep_endcliente`, `ativo_endcliente`, `id_cliente`) VALUES
+('Rua Itacolomi', '1240', NULL, 'Centro', 'Ribeirão Preto', 'SP', '14010050', true, 1),
+('Avenida Independência', '200', NULL, 'Jardim América', 'Sertãozinho', 'SP', '14160230', true, 2),
+('Rua Bahia', '330', NULL, 'Vila Virgínia', 'Jaboticabal', 'SP', '14870550', true, 3),
+('Rua Camilo de Mattos', '440', NULL, 'Jardim Panorama', 'Bebedouro', 'SP', '14701150', true, 4),
+('Rua Afonso Pena', '550', 'Loja 2', 'Centro', 'Descalvado', 'SP', '13690000', true, 5),
+('Rua Marília', '660', 'Loja 1', 'Centro', 'Pirassununga', 'SP', '13640000', true, 6),
+('Rua Rio de Janeiro', '770', NULL, 'Jardim São Luís', 'São José do Rio Pardo', 'SP', '13720000', true, 7),
+('Rua Tupi', '880', NULL, 'Jardim São Paulo', 'Mococa', 'SP', '13736300', true, 8),
+('Rua Sergipe', '990', NULL, 'Centro', 'Batatais', 'SP', '14300000', true, 9),
+('Rua Tocantins', '1000', 'Loja 3', 'Centro', 'Serrana', 'SP', '14150000', true, 10);
+
+INSERT INTO `telefonecliente` (`ddd_telcliente`, `numero_telcliente`, `ativo_telcliente`, `id_cliente`) VALUES
+('16', '912345678', true, 1),
+('16', '923456789', true, 2),
+('16', '934567890', true, 3),
+('17', '945678901', true, 4),
+('16', '956789012', true, 5),
+('19', '967890123', true, 6),
+('19', '978901234', true, 7),
+('16', '989012345', true, 8),
+('16', '990123456', true, 9),
+('16', '901234567', true, 10);
+commit;
+
+## Fornecedor
+begin;
+INSERT INTO `fornecedor` (`nome_fornecedor`, `email_fornecedor`, `cnpj_fornecedor`, `ativo_fornecedor`) VALUES
+('AgroFertilizantes S.A.', 'contato@agrofertilizantes.com.br', '12345678000100', true),
+('Sementes de Qualidade Ltda.', 'contato@sementesdequalidade.com.br', '23456789000111', true),
+('Adubo Forte Indústria e Comércio', 'contato@aduboforte.com.br', '34567890000122', true),
+('Irrigação Eficiente Ltda.', 'contato@irrigacaoeficiente.com.br', '45678901000133', true),
+('Ferramentas Agrícolas & Cia.', 'contato@ferramentasagricolas.com.br', '56789012000144', true),
+('Plásticos para Estufas Ltda.', 'contato@plasticosestufas.com.br', '67890123000155', true),
+('Pesticidas do Interior', 'contato@pesticidasdointerior.com.br', '78901234000166', true),
+('Embalagens Verdes S.A.', 'contato@embalagensverdes.com.br', '89012345000177', true),
+('Equipamentos para Agricultura Ltda.', 'contato@equipamentosagricultura.com.br', '90123456000188', true),
+('Insumos Naturais do Brasil', 'contato@insumosnaturais.com.br', '01234567000199', true);
+
+INSERT INTO `enderecofornecedor` (`logradouro_endfornecedor`, `numero_endfornecedor`, `complemento_endfornecedor`, `bairro_endfornecedor`, `cidade_endfornecedor`, `uf_endfornecedor`, `cep_endfornecedor`, `ativo_endfornecedor`, `id_fornecedor`) VALUES
+('Rua Sebastião Sampaio', '1100', NULL, 'Distrito Industrial 2', 'Ribeirão Preto', 'SP', '14000000', true, 1),
+('Rua Fioravante Tordin', '220', 'Galpão 2', 'Distrito Industrial', 'Sertãozinho', 'SP', '14177500', true, 2),
+('Rua José Fregonese', '330', NULL, 'Parque Industrial 2', 'Jaboticabal', 'SP', '14870000', true, 3),
+('Rua Olívio Franceschini', '440', NULL, 'Distrito Industrial', 'Bebedouro', 'SP', '14708700', true, 4),
+('Rua Ernesto Navarro', '550', 'Loja 1', 'Parque Industrial', 'Araraquara', 'SP', '14801395', true, 5),
+('Avenida 21 de Março', '660', NULL, 'Distrito Industrial 1', 'Pirassununga', 'SP', '13640000', true, 6),
+('Rua das Pimenteiras', '770', 'Sala 3', 'Distrito Industrial 1', 'São José do Rio Pardo', 'SP', '13720000', true, 7),
+('Rua dos Coqueiros', '880', NULL, 'Parque Industrial', 'Mococa', 'SP', '13736000', true, 8),
+('Rua das Mangueiras', '990', 'Galpão 3', 'Distrito Industrial', 'Batatais', 'SP', '14300000', true, 9),
+('Rua 13 de Maio', '1000', NULL, 'Distrito Industrial', 'Serrana', 'SP', '14150000', true, 10);
+
+INSERT INTO `telefonefornecedor` (`ddd_telfornecedor`, `numero_telfornecedor`, `ativo_telfornecedor`, `id_fornecedor`) VALUES
+('16', '912345678', true, 1),
+('16', '923456789', true, 2),
+('16', '934567890', true, 3),
+('17', '945678901', true, 4),
+('16', '956789012', true, 5),
+('19', '967890123', true, 6),
+('19', '978901234', true, 7),
+('16', '989012345', true, 8),
+('16', '990123456', true, 9),
+('16', '901234567', true, 10);
+commit;
+
+## ESTOQUEINSUMO, SAIDAINSUMO, PEDIDOCOMPRA, COMPRAITEM
+begin;
+INSERT INTO `estoqueinsumo` (`nome_insumo`, `categoria_insumo`, `qtd_insumo`, `unidqtd_insumo`, `ativo_insumo`) VALUES
+('Nitrato de amônio', 'Fertilizantes', 50, 'kg', true),
+('Fosfato diamônico', 'Fertilizantes', 40, 'kg', true),
+('Sulfato de potássio', 'Fertilizantes', 30, 'kg', true),
+('Calcário dolomítico', 'Fertilizantes', 0, 'kg', true),
+('Uréia', 'Fertilizantes', 0, 'kg', true),
+('Superfosfato simples', 'Fertilizantes', 30, 'kg', true),
+('Cloreto de potássio', 'Fertilizantes', 50, 'kg', true),
+('Fertilizante líquido NPK 10-10-10', 'Fertilizantes', 0, 'l', true),
+('Fertilizante líquido NPK 20-5-10', 'Fertilizantes', 50, 'l', true),
+('Fertilizante líquido NPK 15-30-15', 'Fertilizantes', 0, 'l', true),
+('Fertilizante líquido NPK 12-0-12', 'Fertilizantes', 0, 'l', true),
+('Fertilizante granulado NPK 20-10-10', 'Fertilizantes', 0, 'kg', true),
+('Fertilizante granulado NPK 15-15-15', 'Fertilizantes', 30, 'kg', true),
+('Fertilizante granulado NPK 10-20-10', 'Fertilizantes', 0, 'kg', true),
+('Fertilizante granulado NPK 10-10-20', 'Fertilizantes', 40, 'kg', true),
+('Abacaxi Pérola', 'Sementes', 30, 'kg', true),
+('Abóbora Japonesa', 'Sementes', 0, 'kg', true),
+('Abobrinha Menina Brasileira', 'Sementes', 20, 'kg', true),
+('Acelga Verde de Verão', 'Sementes', 20, 'kg', true),
+('Agrião de Água', 'Sementes', 10, 'kg', true),
+('Alface Crespa', 'Sementes', 0, 'kg', true),
+('Alface Americana', 'Sementes', 0, 'kg', true),
+('Algodão BRS 368', 'Sementes', 0, 'kg', true),
+('Alho Roxo', 'Sementes', 10, 'kg', true),
+('Alho-poró Porto Rico', 'Sementes', 0, 'kg', true),
+('Banana Prata', 'Sementes', 50, 'kg', true),
+('Batata-doce Beauregard', 'Sementes', 0, 'kg', true),
+('Beterraba Detroit Dark Red', 'Sementes', 0, 'kg', true),
+('Beterraba Early Wonder', 'Sementes', 50, 'kg', true),
+('Berinjela Roxa', 'Sementes', 0, 'kg', true),
+('Brócolis Calabrês', 'Sementes', 60, 'kg', true),
+('Caju Anão Precoce', 'Sementes', 0, 'kg', true),
+('Cebola Baia Periforme', 'Sementes', 0, 'kg', true),
+('Cebolinha Verde Todo o Ano', 'Sementes', 60, 'kg', true),
+('Cenoura Brasília', 'Sementes', 40, 'kg', true),
+('Cenoura Nantes', 'Sementes', 0, 'kg', true),
+('Chicória Catalonha', 'Sementes', 0, 'kg', true),
+('Coentro Português', 'Sementes', 60, 'kg', true),
+('Couve Manteiga', 'Sementes', 0, 'kg', true),
+('Couve-de-bruxelas Menina', 'Sementes', 0, 'kg', true),
+('Couve-flor de Inverno', 'Sementes', 0, 'kg', true),
+('Cupuaçuzeiro', 'Sementes', 60, 'kg', true),
+('Erva-doce de Mesa', 'Sementes', 0, 'kg', true),
+('Ervilha Douce Provence', 'Sementes', 50, 'kg', true),
+('Ervilha Early Frosty', 'Sementes', 0, 'kg', true);
+commit;
+
+begin;
+INSERT INTO saidainsumo (qtd_saidainsumo, unidqtd_saidainsumo, data_saidainsumo, id_insumo) 
+VALUES
+(20, 'kg', '2024-11-21', 1),
+(15, 'unidade', '2024-11-22', 2),
+(5, 'l', '2024-11-23', 3);
+commit;
+
+## INSERTS DE COMPRA
+begin;
+INSERT INTO pedidocompra (data_pedidocompra, id_fornecedor) 
+VALUES
+('2024-11-20', 1),
+('2024-11-21', 2),
+('2024-11-22', 3);
+
+INSERT INTO compraitem (qtd_compraitem, unidqtd_compraitem, valor_compraitem, id_pedidocompra, id_insumo) 
+VALUES
+(100, 'kg', 500.000, 1, 1),
+(50, 'unidade', 200.000, 1, 2),
+(20, 'l', 300.000, 2, 3);
+commit;
+
+BEGIN;
+## Trigger que vai criar entradas na tabela estoqueproduto automaticamente logo após as entradas na tabela producao
+DELIMITER //
+CREATE TRIGGER insertsautomaticos_estoqueproduto
+AFTER INSERT ON producao
+FOR EACH ROW
+BEGIN
+    IF NEW.finalizado_producao = true THEN
+        INSERT INTO estoqueproduto (qtd_estoqueproduto, unidqtd_estoqueproduto, dataentrada_estoqueproduto, id_producao)
+        VALUES (NEW.qtd_producao, NEW.unidqtd_producao, NEW.datacolheita_producao, NEW.id_producao);
+    END IF;
+END //
+DELIMITER ;
+COMMIT;
+
+BEGIN;
+-- Produções de 2024
+INSERT INTO `producao` (`qtd_producao`, `unidqtd_producao`, `data_producao`, `datacolheita_producao`, `ambientectrl_producao`, `finalizado_producao`, `id_cultivo`)
+VALUES 
+-- Janeiro
+(20, 'kg', '2024-01-02', '2024-01-28', TRUE, TRUE, 1),  -- Abacaxi Pérola
+(10, 'kg', '2024-01-05', '2024-01-30', FALSE, TRUE, 6), -- Alface Crespa
+(15, 'kg', '2024-01-10', '2024-01-31', TRUE, TRUE, 13), -- Beterraba Detroit
+(25, 'kg', '2024-01-12', '2024-01-29', TRUE, TRUE, 20), -- Cenoura Brasília
+(30, 'kg', '2024-01-20', '2024-02-10', FALSE, TRUE, 44), -- Melão Orange Sherbet
+
+-- Fevereiro
+(25, 'kg', '2024-02-01', '2024-02-28', TRUE, TRUE, 2),  -- Abóbora Japonesa
+(12, 'kg', '2024-02-03', '2024-02-27', TRUE, TRUE, 8),  -- Algodão BRS 368
+(10, 'kg', '2024-02-05', '2024-02-28', FALSE, TRUE, 24), -- Couve Manteiga
+(15, 'kg', '2024-02-08', '2024-02-29', TRUE, TRUE, 19), -- Cebolinha Verde
+(18, 'kg', '2024-02-10', '2024-03-05', FALSE, TRUE, 17), -- Caju Anão Precoce
+
+-- Março
+(20, 'kg', '2024-03-01', '2024-03-30', TRUE, TRUE, 46), -- Morango Camarosa
+(30, 'kg', '2024-03-05', '2024-03-28', TRUE, TRUE, 43), -- Melancia Crimson Sweet
+(25, 'kg', '2024-03-10', '2024-03-31', FALSE, TRUE, 9),  -- Alho Roxo
+(15, 'kg', '2024-03-15', '2024-03-31', TRUE, TRUE, 7),  -- Alface Americana
+(10, 'kg', '2024-03-20', '2024-04-10', TRUE, TRUE, 57), -- Tomate Cereja
+
+-- Abril
+(20, 'kg', '2024-04-01', '2024-04-20', TRUE, TRUE, 42), -- Maxixe Paulista
+(15, 'kg', '2024-04-03', '2024-04-22', FALSE, TRUE, 36), -- Feijão-vagem Macarrão
+(12, 'kg', '2024-04-05', '2024-04-25', TRUE, TRUE, 23), -- Coentro Português
+(18, 'kg', '2024-04-07', '2024-04-30', FALSE, TRUE, 55), -- Salsinha Crespa
+(10, 'kg', '2024-04-10', '2024-05-01', TRUE, TRUE, 33), -- Feijão Carioca
+
+-- Maio
+(25, 'kg', '2024-05-01', '2024-05-20', TRUE, TRUE, 3),  -- Abobrinha Menina Brasileira
+(18, 'kg', '2024-05-05', '2024-05-25', FALSE, TRUE, 16), -- Brócolis Calabrês
+(20, 'kg', '2024-05-10', '2024-05-28', TRUE, TRUE, 11), -- Banana Prata
+(15, 'kg', '2024-05-12', '2024-06-01', FALSE, TRUE, 41), -- Maracujá Azedo
+(10, 'kg', '2024-05-15', '2024-06-05', TRUE, TRUE, 54), -- Salsa Gigante de Itália
+
+-- Junho
+(30, 'kg', '2024-06-01', '2024-06-30', TRUE, TRUE, 50), -- Quiabo Cristal
+(12, 'kg', '2024-06-05', '2024-06-25', FALSE, TRUE, 15), -- Berinjela Roxa
+(10, 'kg', '2024-06-07', '2024-06-27', TRUE, TRUE, 27), -- Cupuaçu
+(15, 'kg', '2024-06-10', '2024-07-01', FALSE, TRUE, 39), -- Manjericão Genovês
+(18, 'kg', '2024-06-15', '2024-07-05', TRUE, TRUE, 21), -- Cenoura Nantes
+
+-- Julho
+(20, 'kg', '2024-07-01', '2024-07-30', TRUE, TRUE, 14), -- Beterraba Early Wonder
+(10, 'kg', '2024-07-05', '2024-07-28', FALSE, TRUE, 25), -- Couve-de-bruxelas
+(15, 'kg', '2024-07-07', '2024-07-29', TRUE, TRUE, 52), -- Repolho Roxo de Inverno
+(12, 'kg', '2024-07-10', '2024-07-31', TRUE, TRUE, 40), -- Mandioca Branca
+(18, 'kg', '2024-07-12', '2024-08-01', FALSE, TRUE, 5), -- Agrião de Água
+
+-- Agosto
+(25, 'kg', '2024-08-01', '2024-08-25', TRUE, TRUE, 48), -- Pepino Caipira
+(12, 'kg', '2024-08-05', '2024-08-27', FALSE, TRUE, 49), -- Pimentão Amarelo
+(15, 'kg', '2024-08-07', '2024-08-28', TRUE, TRUE, 12), -- Batata-doce Beauregard
+(18, 'kg', '2024-08-10', '2024-08-30', TRUE, TRUE, 38), -- Hortelã Comum
+(10, 'kg', '2024-08-12', '2024-09-01', FALSE, TRUE, 4), -- Acelga Verde
+
+-- Setembro
+(20, 'kg', '2024-09-01', '2024-09-28', TRUE, TRUE, 26), -- Couve-flor de Inverno
+(15, 'kg', '2024-09-05', '2024-09-29', FALSE, TRUE, 35), -- Feijão Carioca
+(12, 'kg', '2024-09-07', '2024-09-30', TRUE, TRUE, 22), -- Chicória Catalonha
+(18, 'kg', '2024-09-10', '2024-10-01', TRUE, TRUE, 31), -- Espinafre Gigante de Inverno
+(10, 'kg', '2024-09-15', '2024-10-05', FALSE, TRUE, 53), -- Rúcula Cultivada
+
+-- Outubro
+(25, 'kg', '2024-10-01', '2024-10-25', TRUE, TRUE, 18), -- Cebola Baia Periforme
+(15, 'kg', '2024-10-05', '2024-10-28', FALSE, TRUE, 37), -- Girassol Catissol 01
+(20, 'kg', '2024-10-07', '2024-10-30', TRUE, TRUE, 45), -- Milho Doce
+(12, 'kg', '2024-10-10', '2024-10-31', TRUE, TRUE, 47), -- Orégano Grego
+(18, 'kg', '2024-10-15', '2024-11-01', FALSE, TRUE, 10), -- Alho-poró Porto Rico
+
+-- Novembro
+(20, 'kg', '2024-11-01', '2024-11-28', TRUE, TRUE, 28), -- Erva-doce de Mesa
+(15, 'kg', '2024-11-05', '2024-11-30', FALSE, TRUE, 32), -- Fava Superaguadulce
+(12, 'kg', '2024-11-07', '2024-12-01', TRUE, TRUE, 34), -- Feijão Elettra
+(18, 'kg', '2024-11-10', '2024-12-05', TRUE, FALSE, 29), -- Ervilha Douce Provence
+(10, 'kg', '2024-11-12', '2024-12-08', FALSE, FALSE, 30); -- Ervilha Early Frosty
+
+COMMIT;
+
+BEGIN;
+-- Inserir Pedidos de Venda
+INSERT INTO pedidovenda (data_pedidovenda, id_cliente)
+VALUES
+('2024-01-28', 1), 
+('2024-01-30', 2), 
+('2024-01-31', 3), 
+('2024-01-29', 4), 
+('2024-02-10', 5),
+('2024-02-28', 6), 
+('2024-02-27', 7),
+('2024-02-28', 8), 
+('2024-02-29', 9), 
+('2024-03-05', 10), 
+('2024-03-30', 1), 
+('2024-03-28', 2), 
+('2024-03-31', 3), 
+('2024-03-31', 4), 
+('2024-04-10', 5),
+('2024-04-20', 6),
+('2024-04-22', 7),
+('2024-04-25', 8),
+('2024-04-30', 9), 
+('2024-05-01', 10), 
+('2024-05-20', 1),
+('2024-05-25', 2),
+('2024-05-28', 3),
+('2024-06-01', 4), 
+('2024-06-05', 5),
+('2024-06-30', 6),
+('2024-06-25', 7),
+('2024-06-27', 8),
+('2024-07-01', 9),
+('2024-07-05', 10),
+('2024-07-30', 1),
+('2024-07-28', 2),
+('2024-07-29', 3),
+('2024-07-31', 4),
+('2024-08-01', 5),
+('2024-08-25', 6),
+('2024-08-27', 7),
+('2024-08-28', 8),
+('2024-08-30', 9),
+('2024-09-01', 10),
+('2024-09-28', 1),
+('2024-09-29', 2),
+('2024-09-30', 3),
+('2024-10-01', 4),
+('2024-10-05', 5),
+('2024-10-25', 6),
+('2024-10-28', 7),
+('2024-10-30', 8),
+('2024-10-31', 9),
+('2024-11-01', 10);
+
+-- Inserir Itens de Venda Correspondentes
+INSERT INTO vendaitem (qtd_vendaitem, unidqtd_vendaitem, valor_vendaitem, desconto_vendaitem, id_pedidovenda, id_estoqueproduto)
+SELECT 
+    qtd_estoqueproduto, -- quantidade de venda corresponde à quantidade de estoque
+    'kg' AS unidqtd_vendaitem, 
+    ROUND(50 + (RAND() * 150), 3) AS valor_vendaitem, -- valor aleatório entre 50 e 200
+    0 AS desconto_vendaitem, 
+    id_pedidovenda, 
+    id_estoqueproduto
+FROM 
+    estoqueproduto
+JOIN 
+    pedidovenda ON pedidovenda.id_pedidovenda = id_estoqueproduto
+WHERE 
+    ativo_estoqueproduto = 1; -- Apenas itens ativos
+COMMIT;
+
+BEGIN;
+-- Atualizar o estoque produto (fora do trigger)
+UPDATE estoqueproduto
+SET qtd_estoqueproduto = qtd_estoqueproduto - (SELECT SUM(qtd_vendaitem) 
+                                                FROM vendaitem 
+                                                WHERE vendaitem.id_estoqueproduto = estoqueproduto.id_estoqueproduto)
+WHERE id_estoqueproduto IN (SELECT id_estoqueproduto FROM vendaitem);
+
+COMMIT;
+
+## EXECUTAR DEPOIS DOS INSERTS DE VENDA:
+begin;
 -- Criar Trigger para atualizar estoqueproduto após cadastrar venda
 DELIMITER //
 CREATE TRIGGER after_insert_vendaitem
@@ -503,4 +884,3 @@ END //
 DELIMITER ;
 
 commit;
-

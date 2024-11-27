@@ -434,7 +434,7 @@ namespace PIMFazendaUrbanaLib
                                 IdProduto = reader.GetInt32("id_estoqueproduto"),
                                 NomeProduto = reader.GetString("variedade_cultivo"),
                                 Data = reader.GetDateTime("data_pedidovenda"),
-                                //NomeCliente = reader.GetString("nome_cliente")
+                                NomeCliente = reader.GetString("nome_cliente")
                             };
                             vendaItens.Add(vendaItem);
                         }
@@ -481,7 +481,7 @@ namespace PIMFazendaUrbanaLib
                                 IdProduto = reader.GetInt32("id_estoqueproduto"),
                                 NomeProduto = reader.GetString("variedade_cultivo"),
                                 Data = reader.GetDateTime("data_pedidovenda"),
-                                //NomeCliente = reader.GetString("nome_cliente")
+                                NomeCliente = reader.GetString("nome_cliente")
                             };
                             vendaItens.Add(vendaItem);
                         }
