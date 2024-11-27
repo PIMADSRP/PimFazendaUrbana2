@@ -1,9 +1,5 @@
 ﻿using ClosedXML.Excel;
-using Newtonsoft.Json;
-using System.Collections;
-using System.Globalization;
 using System.Text;
-using PIMFazendaUrbanaAPI.DTOs;
 using System.Text.Json;
 
 namespace PIMFazendaUrbanaAPI.Services
@@ -64,6 +60,10 @@ namespace PIMFazendaUrbanaAPI.Services
                                 if (nestedProperty.Key.Equals("Numero", StringComparison.OrdinalIgnoreCase))
                                 {
                                     newKey = $"{FormatarNomeObjeto(nestedProperty.Key)} ({FormatarNomeObjeto(property.Name)})";
+                                }
+                                else if (nestedProperty.Key.Equals("Id", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    newKey = $"{property.Name} Id";  // Renomeia a chave "Id" para evitar duplicidade
                                 }
                                 else
                                 {
@@ -158,6 +158,8 @@ namespace PIMFazendaUrbanaAPI.Services
                     return "Número";
                 case "email":
                     return "E-mail";
+                case "datacolheita":
+                    return "Data de colheita";
                 default:
                     return CapitalizarPrimeiraLetra(texto);
             }
@@ -191,6 +193,14 @@ namespace PIMFazendaUrbanaAPI.Services
                 case "cep":
                     if (stringValue.Length == 8)
                         return string.Format("{0}-{1}", stringValue.Substring(0, 5), stringValue.Substring(5));
+                    break;
+                case "data":
+                    if (DateTime.TryParse(valor.ToString(), out DateTime dataConvertida))
+                        return dataConvertida.ToString("dd/MM/yyyy");
+                    break;
+                case "datacolheita":
+                    if (DateTime.TryParse(valor.ToString(), out DateTime datacolheitaConvertida))
+                        return datacolheitaConvertida.ToString("dd/MM/yyyy");
                     break;
             }
 

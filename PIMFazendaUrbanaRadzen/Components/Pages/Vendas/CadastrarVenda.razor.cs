@@ -5,8 +5,6 @@ using PIMFazendaUrbanaRadzen.Services;
 using System.Globalization;
 using Radzen.Blazor;
 using Microsoft.JSInterop;
-using PIMFazendaUrbanaLib;
-using PIMFazendaUrbanaRadzen.Components.Pages.Producao;
 
 namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
 {
@@ -43,6 +41,8 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
         protected PedidoVendaItemDTO pedidoVendaItemAdicionar;
 
         protected RadzenDataGrid<PedidoVendaItemDTO> grid0;
+
+        protected RadzenDataGrid<EstoqueProdutoDTO> grid1;
 
         protected bool errorVisible;
         protected string errorMessage = string.Empty;
@@ -281,8 +281,6 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
         {
             grid0.Reload();
         }
-
-
 
         [Inject]
         protected DialogService DialogService { get; set; }

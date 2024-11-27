@@ -107,53 +107,53 @@
                         class="data-grid-com-poucas-colunas">
             <Columns>
                 <!-- Coluna para Id -->
-                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="Id" Title="Id" Filterable="false" Sortable="true" Width="4%" MinWidth="35px">
+                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="Id" Title="Id" Filterable="true" Sortable="true" Width="5%">
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Insumo com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="NomeInsumo" Title="Insumo" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="NomeInsumo" Title="Insumo" Filterable="true" Sortable="true" Width="25%" >
                     <Template Context="compraitem">
                         <span title="@compraitem.NomeInsumo">@compraitem.NomeInsumo</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Qtd com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="Qtd" Title="Quantidade" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="Qtd" Title="Quantidade" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="compraitem">
                         <span title="@compraitem.Qtd">@compraitem.Qtd</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Unidade com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="UnidQtd" Title="Unidade" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="UnidQtd" Title="Unidade" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="compraitem">
                         <span title="@compraitem.UnidQtd">@compraitem.UnidQtd</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Data com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="Data" Title="Data" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="Data" Title="Data" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="compraitem">
                         <span title="@compraitem.Data.ToShortDateString()">@compraitem.Data.ToShortDateString()</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Fornecedor com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="NomeFornecedor" Title="Fornecedor" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="NomeFornecedor" Title="Fornecedor" Filterable="true" Sortable="true" Width="20%" >
                     <Template Context="compraitem">
                         <span title="@compraitem.NomeFornecedor">@compraitem.NomeFornecedor</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para ValorUnitario com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="Valor" Title="Valor Unitário" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="Valor" Title="Valor Unitário" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="compraitem">
                         <span title="@compraitem.Valor.ToString("0.00")">@compraitem.Valor.ToString("0.00")</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para ValorTotal com tooltip -->
-                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="ValorTotal" Title="Valor Total" Filterable="true" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="PedidoCompraItemDTO" Property="ValorTotal" Title="Valor Total" Filterable="true" Sortable="true" Width="10%" >
                     <Template Context="compraitem">
                         <span title="@compraitem.ValorTotal.ToString("0.00")">@compraitem.ValorTotal.ToString("0.00")</span> <!-- Tooltip -->
                     </Template>

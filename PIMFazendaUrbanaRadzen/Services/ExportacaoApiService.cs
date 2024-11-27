@@ -17,6 +17,8 @@ namespace PIMFazendaUrbanaRadzen.Services
         {
             try
             {
+                //Console.WriteLine("dados recebidos: " + Newtonsoft.Json.JsonConvert.SerializeObject(dados));
+
                 var request = new ExportacaoRequestDTO
                 {
                     Dados = dados.Cast<object>().ToList(),
@@ -24,7 +26,16 @@ namespace PIMFazendaUrbanaRadzen.Services
                     NomeArquivo = nomeArquivo
                 };
 
+                //Console.WriteLine("request: " + Newtonsoft.Json.JsonConvert.SerializeObject(request));
+
                 var response = await _httpClient.PostAsJsonAsync($"{_endpointUrl}/exportar", request);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var errorContent = await response.Content.ReadAsStringAsync();
+                    Console.WriteLine($"Erro da API: {response.StatusCode} - {errorContent}");
+                    throw new Exception($"Erro ao exportar: {errorContent}");
+                }
 
                 if (response.IsSuccessStatusCode)
                 {

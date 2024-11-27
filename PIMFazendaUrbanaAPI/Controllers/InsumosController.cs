@@ -7,13 +7,13 @@ namespace PIMFazendaUrbanaAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class InsumoController : ControllerBase
+    public class InsumosController : ControllerBase
     {
         private readonly IInsumoService _insumoService;
         private readonly IMapper _mapper; // Adiciona o AutoMapper
 
         // O controlador utiliza a interface IInsumoService para acessar as operações de Insumo
-        public InsumoController(IInsumoService insumoService, IMapper mapper)
+        public InsumosController(IInsumoService insumoService, IMapper mapper)
         {
             _insumoService = insumoService;
             _mapper = mapper; // Inicializa o AutoMapper
@@ -36,6 +36,23 @@ namespace PIMFazendaUrbanaAPI.Controllers
             }
         }
 
+        [HttpGet("saida-filtrados")]
+        public ActionResult<List<SaidaInsumoDTO>> ListarSaidaInsumosFiltrados(string search)
+        {
+            try
+            {
+                var saidaInsumo = _insumoService.ListarSaidaInsumosComFiltros(search);
+                var saidaInsumoDto = _mapper.Map<List<SaidaInsumoDTO>>(saidaInsumo); // Mapeia Insumo para InsumoDTO
+                return Ok(saidaInsumoDto); // Retorna a lista de Insumo filtrados como resposta
+            }
+            catch (Exception ex)
+            {
+                // Log detalhado do erro
+                Console.WriteLine($"Erro ao listar saída de insumos: {ex.Message}\n{ex.StackTrace}");
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
+        }
+
 
         // Método para listar Insumo ativos
         [HttpGet("ativos")]
@@ -51,6 +68,23 @@ namespace PIMFazendaUrbanaAPI.Controllers
             {
                 // Log detalhado do erro
                 Console.WriteLine($"Erro ao listar Insumo: {ex.Message}\n{ex.StackTrace}");
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
+        }
+
+        [HttpGet("listar-saidas")]
+        public IActionResult ListarSaidaInsumo()
+        {
+            try
+            {
+                var insumo = _insumoService.ListarSaidaInsumos();
+                var insumoDto = _mapper.Map<List<SaidaInsumoDTO>>(insumo); // Mapeia Insumo para InsumoDTO
+                return Ok(insumoDto);
+            }
+            catch (Exception ex)
+            {
+                // Log detalhado do erro
+                Console.WriteLine($"Erro ao listar saidas de insumo: {ex.Message}\n{ex.StackTrace}");
                 return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
             }
         }
@@ -85,6 +119,26 @@ namespace PIMFazendaUrbanaAPI.Controllers
                 var insumo = _mapper.Map<Insumo>(insumoDto); // Mapeia InsumoDTO para Insumo
                 _insumoService.AlterarInsumo(insumo); // Chama o serviço para alterar o Insumo
                 return Ok(new { message = "Insumo alterado com sucesso." });
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new { errors = ex.Errors }); // Retorna erros de validação
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
+        }
+
+        [HttpPost("cadastrar-saida")]
+        public IActionResult CadastrarSaidaInsumo([FromBody] SaidaInsumoDTO saidaInsumoDto)
+        {
+            try
+            {
+                var saidaInsumo = _mapper.Map<SaidaInsumo>(saidaInsumoDto); // Mapeia InsumoDTO para Insumo
+
+                _insumoService.CadastrarSaidaInsumo(saidaInsumo); // Chama o serviço para alterar o Insumo
+                return Ok(new { message = "Saída de insumo cadastrada com sucesso." });
             }
             catch (ValidationException ex)
             {

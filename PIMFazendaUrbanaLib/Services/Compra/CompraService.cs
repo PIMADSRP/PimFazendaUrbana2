@@ -72,7 +72,7 @@ namespace PIMFazendaUrbanaLib
             {
                 throw; // Repassa a exceção de validação para o Controller manipular
             }
-            catch (Exception ex)
+            catch (Exception ex) // Se ocorrer uma exceção de qualquer outro tipo
             {
                 throw new Exception("Erro ao cadastrar pedido de compra: " + ex.Message);
             }
@@ -118,6 +118,19 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
+        // Método para obter o último ID de item de compra
+        public int? ObterUltimoIdPedidoCompraItem()
+        {
+            try
+            {
+                return pedidoCompraDAO.ObterUltimoIdPedidoCompraItem();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao obter último ID de item de compra: " + ex.Message);
+            }
+        }
+
         // Método para listar todos os itens de compra
         public List<PedidoCompraItem> ListarRegistrosDeCompra()
         {
@@ -131,19 +144,6 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        public List<PedidoCompraItem> FiltrarRegistrosDeCompraPorNome(string insumoNome)
-        {
-            try
-            {
-                List<PedidoCompraItem> compraItems = pedidoCompraDAO.FiltrarRegistrosDeCompraPorNome(insumoNome);
-                return compraItems;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erro ao filtrar registros de compra por nome de insumo: " + ex.Message);
-            }
-        }
-
         // Método para consultar um item de compra pelo ID
         public PedidoCompraItem ConsultarCompraItemPorId(int idCompraItem)
         {
@@ -154,6 +154,19 @@ namespace PIMFazendaUrbanaLib
             catch (Exception ex)
             {
                 throw new Exception("Erro ao consultar item de compra: " + ex.Message);
+            }
+        }
+
+        public List<PedidoCompraItem> FiltrarRegistrosDeCompraPorNome(string insumoNome)
+        {
+            try
+            {
+                List<PedidoCompraItem> compraItems = pedidoCompraDAO.FiltrarRegistrosDeCompraPorNome(insumoNome);
+                return compraItems;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao filtrar registros de compra por nome de insumo: " + ex.Message);
             }
         }
 

@@ -98,15 +98,15 @@ builder.Services.AddScoped(provider =>
     ));
 
 builder.Services.AddScoped(provider =>
-    new InsumoApiService<InsumoDTO>(
+    new InsumosApiService<InsumoDTO>(
         provider.GetRequiredService<HttpClient>(),
-        $"{apiBaseUrl}/insumo"
+        $"{apiBaseUrl}/insumos"
     ));
 
 builder.Services.AddScoped(provider =>
-    new InsumoApiService<SaidaInsumoDTO>(
+    new InsumosApiService<SaidaInsumoDTO>(
         provider.GetRequiredService<HttpClient>(),
-        $"{apiBaseUrl}/insumo"
+        $"{apiBaseUrl}/insumos"
     ));
 
 builder.Services.AddScoped(provider =>

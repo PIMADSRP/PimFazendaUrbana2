@@ -15,9 +15,10 @@ namespace PIMFazendaUrbanaLib
         List<PedidoCompra> ListarPedidosCompra();
         PedidoCompra ConsultarPedidoCompraPorId(int idPedidoCompra);
         int? ObterUltimoIdPedidoCompra();
+        int? ObterUltimoIdPedidoCompraItem();
         List<PedidoCompraItem> ListarRegistrosDeCompra();
-        List<PedidoCompraItem> FiltrarRegistrosDeCompraPorNome(string insumoNome);
         PedidoCompraItem ConsultarCompraItemPorId(int idCompraItem);
+        List<PedidoCompraItem> FiltrarRegistrosDeCompraPorNome(string insumoNome);
         List<PedidoCompraItem> FiltrarRegistrosDeCompraPorNomeEPeriodo(string insumoNome, DateTime dataInicio, DateTime dataFim);
     }
 }

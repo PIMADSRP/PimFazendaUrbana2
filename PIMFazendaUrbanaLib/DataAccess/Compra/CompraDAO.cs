@@ -104,6 +104,7 @@ namespace PIMFazendaUrbanaLib
                                 FROM compraitem ci 
                                 LEFT JOIN estoqueinsumo ei ON ci.id_insumo = ei.id_insumo
                                 WHERE ci.id_pedidocompra = @idPedidoCompra";
+
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@idPedidoCompra", idPedidoCompra);
@@ -290,6 +291,29 @@ namespace PIMFazendaUrbanaLib
                 }
             }
             return idPedidoCompra;
+        }
+
+        // Método para obter o ID do último item de compra cadastrado
+        public int? ObterUltimoIdPedidoCompraItem()
+        {
+            int? idCompraItem = null;
+
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+                string query = "SELECT MAX(id_compraitem) FROM compraitem";
+                using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read() && !reader.IsDBNull(0))
+                        {
+                            idCompraItem = reader.GetInt32(0);
+                        }
+                    }
+                }
+            }
+            return idCompraItem;
         }
 
         // Método para listar todos os itens de compra

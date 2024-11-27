@@ -60,7 +60,7 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-
+        // Método para cadastrar um novo pedido de venda
         public void CadastrarPedidoVenda(PedidoVenda pedidoVenda)
         {
             try
@@ -156,7 +156,20 @@ namespace PIMFazendaUrbanaLib
             }
         }
 
-        
+        public List<PedidoVendaItem> FiltrarRegistrosDeVendaPorNome(string produtoNome)
+        {
+            try
+            {
+                List<PedidoVendaItem> vendaItems = pedidoVendaDAO.FiltrarRegistrosDeVendaPorNome(produtoNome);
+                return vendaItems;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao filtrar registros de venda por nome de insumo: " + ex.Message);
+            }
+
+        }
+
         public List<PedidoVendaItem> FiltrarRegistrosDeVendaPorNomeEPeriodo(string produtoNome, DateTime dataInicio, DateTime dataFim)
         {
             
@@ -172,22 +185,6 @@ namespace PIMFazendaUrbanaLib
             
         }
         
-
-        public List<PedidoVendaItem> FiltrarRegistrosDeVendaPorNome(string produtoNome)
-        {
-            try
-            {
-                List<PedidoVendaItem> vendaItems = pedidoVendaDAO.FiltrarRegistrosDeVendaPorNome(produtoNome);
-                return vendaItems;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Erro ao filtrar registros de venda por nome de insumo: " + ex.Message);
-            }
-            
-        }
-
-
         /*
          * =-=-=-=-=-=-=-=-=-=-=-=- VALIDAÇÃO VENDA =-=-=-=-=-=-=-=-=-=-=-=-
          */

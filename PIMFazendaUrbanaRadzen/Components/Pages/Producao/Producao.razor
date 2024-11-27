@@ -104,63 +104,63 @@
                         RemoveGroupAriaLabel="Remover grupo"
                         SelectVisibleColumnsAriaLabel="Selecionar colunas visíveis"
                         Style="border: 1px solid black; padding: 5px; width: 100%;"
-                        class="data-grid-com-poucas-colunas">
+                        class="data-grid-com-muitas-colunas">
             <Columns>
                 <!-- Coluna para Id -->
-                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Id" Title="Id" Filterable="false" Sortable="true" Width="4%" MinWidth="35px">
+                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Id" Title="Id" Filterable="false" Sortable="true" Width="5%" MinWidth="27px">
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Variedade com tooltip -->
-                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Variedade" Title="Variedade" Filterable="true" Sortable="true" Width="12%" MinWidth="150px" >
+                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Variedade" Title="Variedade" Filterable="true" Sortable="true" Width="20%" MinWidth="90px" >
                     <Template Context="producao">
                         <span title="@producao.Cultivo.Variedade">@producao.Cultivo.Variedade</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Qtd com tooltip -->
-                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Qtd" Title="Quantidade" Filterable="false" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Qtd" Title="Quantidade" Filterable="false" Sortable="true" Width="11%" >
                     <Template Context="producao">
                         <span title="@producao.Qtd">@producao.Qtd</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Unidqtd com tooltip -->
-                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Unidqtd" Title="Unidade" Filterable="false" Sortable="false" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Unidqtd" Title="Unidade" Filterable="false" Sortable="false" Width="11%" >
                     <Template Context="producao">
                         <span title="@producao.Unidqtd">@producao.Unidqtd</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para AmbienteControlado com tooltip -->
-                <RadzenDataGridColumn TItem="ProducaoDTO" Property="AmbienteControlado" Title="Climatizado" Filterable="false" Sortable="true" Width="12%" MinWidth="150px">
+                <RadzenDataGridColumn TItem="ProducaoDTO" Property="AmbienteControlado" Title="Climatizado" Filterable="false" Sortable="true" Width="11%" >
                     <Template Context="producao">
                         <span title="@producao.AmbienteControlado">@producao.AmbienteControlado</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para Data com tooltip -->
-                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Data" Title="Data de Plantio" Filterable="true" Sortable="true" Width="12%" MinWidth="150px" >
+                <RadzenDataGridColumn TItem="ProducaoDTO" Property="Data" Title="Data de Plantio" Filterable="true" Sortable="true" Width="13%" >
                     <Template Context="producao">
                         <span title="@producao.Data.ToShortDateString()">@producao.Data.ToShortDateString()</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para DataColheita com tooltip -->
-                <RadzenDataGridColumn TItem="ProducaoDTO" Property="DataColheita" Title="Data de Colheita" Filterable="true" Sortable="true" Width="12%" MinWidth="150px" >
+                <RadzenDataGridColumn TItem="ProducaoDTO" Property="DataColheita" Title="Data de Colheita" Filterable="true" Sortable="true" Width="13%" >
                     <Template Context="producao">
                         <span title="@producao.DataColheita.ToShortDateString()">@producao.DataColheita.ToShortDateString()</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna para StatusFinalizado com tooltip -->
-                <RadzenDataGridColumn TItem="ProducaoDTO" Property="StatusFinalizado" Title="Finalizado" Filterable="false" Sortable="true" Width="12%" MinWidth="150px" >
+                <RadzenDataGridColumn TItem="ProducaoDTO" Property="StatusFinalizado" Title="Finalizado" Filterable="false" Sortable="true" Width="8%" >
                     <Template Context="producao">
                         <span title="@producao.StatusFinalizado">@producao.StatusFinalizado</span> <!-- Tooltip -->
                     </Template>
                 </RadzenDataGridColumn>
 
                 <!-- Coluna customizada para botões de ação -->
-                <RadzenDataGridColumn TItem="ProducaoDTO" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="5%" MinWidth="110px">
+                <RadzenDataGridColumn TItem="ProducaoDTO" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="45px" MinWidth="45px">
                     <Template Context="producao">
                         <RadzenButton ButtonStyle="ButtonStyle.Success"
                                       Icon="check"

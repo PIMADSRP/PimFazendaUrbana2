@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Newtonsoft.Json;
 using PIMFazendaUrbanaAPI.DTOs;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
@@ -155,6 +156,8 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Producao
                     NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não há dados para exportar.", duration: 2000);
                     return;
                 }
+
+                //Console.WriteLine("objeto producoes enviado: " + JsonConvert.SerializeObject(producoes));
 
                 // Chama o serviço para exportação com base no formato selecionado
                 var fileBytes = await exportacaoApiService.ExportarAsync(producoes, format, fileName);

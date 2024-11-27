@@ -9,6 +9,7 @@
         List<PedidoCompra> ListarPedidosCompra();
         PedidoCompra ConsultarPedidoCompraPorId(int idPedidoCompra);
         int? ObterUltimoIdPedidoCompra();
+        int? ObterUltimoIdPedidoCompraItem();
         List<PedidoCompraItem> ListarRegistrosDeCompra();
         PedidoCompraItem ConsultarCompraItemPorId(int idCompraItem);
         List<PedidoCompraItem> FiltrarRegistrosDeCompraPorNome(string insumoNome);

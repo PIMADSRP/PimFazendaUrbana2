@@ -55,5 +55,45 @@
             return await _httpClient.PostAsJsonAsync($"{_endpointUrl}/cadastrar", entity);
         }
 
+        public async Task<int> GetUltimoIdPedidoCompra()
+        {
+            try
+            {
+                Console.WriteLine($"Chamando API em: {_endpointUrl}/ultimoid-pedido");
+
+                return await _httpClient.GetFromJsonAsync<int>($"{_endpointUrl}/ultimoid-pedido");
+            }
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"Erro de requisição: {httpEx.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao chamar API: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<int> GetUltimoIdPedidoCompraItem()
+        {
+            try
+            {
+                Console.WriteLine($"Chamando API em: {_endpointUrl}/ultimoid-item");
+
+                return await _httpClient.GetFromJsonAsync<int>($"{_endpointUrl}/ultimoid-item");
+            }
+            catch (HttpRequestException httpEx)
+            {
+                Console.WriteLine($"Erro de requisição: {httpEx.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao chamar API: {ex.Message}");
+                throw;
+            }
+        }
+
     }
 }

@@ -74,5 +74,35 @@ namespace PIMFazendaUrbanaAPI.Controllers
             }
         }
 
+        // Método para obter o último ID de pedido de compra
+        [HttpGet("ultimoid-pedido")]
+        public IActionResult ObterUltimoIdPedidoCompra()
+        {
+            try
+            {
+                var ultimoId = _compraService.ObterUltimoIdPedidoCompra();
+                return Ok(ultimoId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
+        }
+
+        // Método para obter o último ID de item de compra
+        [HttpGet("ultimoid-item")]
+        public IActionResult ObterUltimoIdPedidoCompraItem()
+        {
+            try
+            {
+                var ultimoId = _compraService.ObterUltimoIdPedidoCompraItem();
+                return Ok(ultimoId);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"Erro interno: {ex.Message}" });
+            }
+        }
+
     }
 }

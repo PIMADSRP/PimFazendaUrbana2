@@ -111,6 +111,7 @@ namespace PIMFazendaUrbanaLib
                                 LEFT JOIN producao pr ON ep.id_producao = pr.id_producao
                                 LEFT JOIN cultivo cul ON pr.id_cultivo = cul.id_cultivo
                                 WHERE vi.id_pedidovenda = @idPedidoVenda";
+
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@idPedidoVenda", idPedidoVenda);
@@ -219,7 +220,6 @@ namespace PIMFazendaUrbanaLib
                 }
             }
         }
-
 
         // Método para listar todos os pedidos de venda
         public List<PedidoVenda> ListarPedidosVenda()

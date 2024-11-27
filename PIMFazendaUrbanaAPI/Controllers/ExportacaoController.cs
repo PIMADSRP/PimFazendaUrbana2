@@ -20,7 +20,8 @@ namespace PIMFazendaUrbanaAPI.Controllers
         public IActionResult Exportar([FromBody] ExportacaoRequestDTO request)
         {
             // logar os dados da request no console
-            Console.WriteLine($"Dados recebidos: {Newtonsoft.Json.JsonConvert.SerializeObject(request)}");
+            // ele loga parecendo errado mas funciona ¯\_(ツ)_/¯
+            //Console.WriteLine($"Dados recebidos: {Newtonsoft.Json.JsonConvert.SerializeObject(request)}");
 
             try
             {
