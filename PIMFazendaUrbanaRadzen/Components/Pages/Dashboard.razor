@@ -23,7 +23,7 @@
 
                                 @if (vendasTrimestrais != null && vendasTrimestrais.Any())
                                 {
-                                    <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Monochrome">
+                                    <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Monochrome" Style="width: 100%;">
                                         <RadzenLegend Visible="false" />
                                         <RadzenColumnSeries Data="@vendasTrimestrais" CategoryProperty="Trimestre" ValueProperty="TotalVendas">
                                             <RadzenSeriesDataLabels Visible="true" />
@@ -41,26 +41,26 @@
 
                         </RadzenColumn>
                         <RadzenColumn>
-                            <!-- CARDS -->
+                            <!-- CARDS COM VALORES -->
                             
                             <RadzenRow>
                                 <!-- Card Venda Última Semana -->
                                 <RadzenCard Style="width: 100%; height: 126px;">
                                     <RadzenRow>
-                                        <RadzenColumn SizeXS="4">
-                                            <RadzenStack>
+                                        <RadzenColumn Size="3">
+                                            <RadzenStack Style="width: 100%;">
                                                 <RadzenDropDown TValue="string"
-                                                                Style="height: 40px; width: 170px; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                                Style="height: 40px; width: 100%; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
                                                                 @bind-Value="opcaoPeriodoVendasSemana"
                                                                 Data="@listaOpcoesPeriodoVendasSemana"
                                                                 Change="AtualizarOpcaoPeriodoVendasSemana" />
                                                 <RadzenIcon Icon="attach_money" Style="width: 40px; height: 40px; font-size: 42px; margin-top: 0px;"></RadzenIcon>
                                             </RadzenStack>
                                         </RadzenColumn>
-                                        <RadzenColumn SizeXS="8">
-                                            <RadzenHeading Text="Vendas" Size="H3" Style="text-align: right; margin: 0px"></RadzenHeading>
-                                            <RadzenHeading Text="@intervaloSemana" Size="H4" Style="text-align: right; margin: 0px; "></RadzenHeading>
-                                            <RadzenHeading Text="@valorTotalVendasSemanaString" Size="H4" Style="text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        <RadzenColumn Size="9">
+                                            <RadzenHeading Text="Vendas" Size="H3" Style="width: 100%; text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="@intervaloSemana" Size="H4" Style="width: 100%; text-align: right; margin: 0px; "></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasSemanaString" Size="H4" Style="width: 100%; text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
                                         </RadzenColumn>
                                     </RadzenRow>
                                 </RadzenCard>
@@ -69,20 +69,20 @@
                                 <!-- Card Venda Último Mês -->
                                 <RadzenCard Style="width: 100%; height: 126px;">
                                     <RadzenRow>
-                                        <RadzenColumn SizeXS="4">
-                                            <RadzenStack>
+                                        <RadzenColumn SizeXS="3">
+                                            <RadzenStack Style="width: 100%;">
                                                 <RadzenDropDown TValue="string"
-                                                                Style="height: 40px; width: 170px; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                                Style="height: 40px; width: 100%; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
                                                                 @bind-Value="opcaoPeriodoVendasMes"
                                                                 Data="@listaOpcoesPeriodoVendasMes"
                                                                 Change="AtualizarOpcaoPeriodoVendasMes" />
                                                 <RadzenIcon Icon="attach_money" Style="width: 40px; height: 40px; font-size: 42px; margin-top: 0px;"></RadzenIcon>
                                             </RadzenStack>
                                         </RadzenColumn>
-                                        <RadzenColumn SizeXS="8">
-                                            <RadzenHeading Text="Vendas" Size="H3" Style="text-align: right; margin: 0px"></RadzenHeading>
-                                            <RadzenHeading Text="@nomeMesAnterior" Size="H4" Style="text-align: right; margin: 0px; "></RadzenHeading>
-                                            <RadzenHeading Text="@valorTotalVendasMesString" Size="H4" Style="text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        <RadzenColumn SizeXS="9">
+                                            <RadzenHeading Text="Vendas" Size="H3" Style="width: 100%; text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="@nomeMesAnterior" Size="H4" Style="width: 100%; text-align: right; margin: 0px; "></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasMesString" Size="H4" Style="width: 100%; text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
                                         </RadzenColumn>
                                     </RadzenRow>
                                 </RadzenCard>
@@ -91,20 +91,20 @@
                                 <!-- Card Venda Último Ano -->
                                 <RadzenCard Style="width: 100%; height: 126px;">
                                     <RadzenRow>
-                                        <RadzenColumn SizeXS="4">
-                                            <RadzenStack>
+                                        <RadzenColumn SizeXS="3">
+                                            <RadzenStack Style="width: 100%;">
                                                 <RadzenDropDown TValue="string"
-                                                                Style="height: 40px; width: 170px; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                                Style="height: 40px; width: 100%; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
                                                                 @bind-Value="opcaoPeriodoVendasAno"
                                                                 Data="@listaOpcoesPeriodoVendasAno"
                                                                 Change="AtualizarOpcaoPeriodoVendasAno" />
                                                 <RadzenIcon Icon="attach_money" Style="width: 40px; height: 40px; font-size: 42px; margin-top: 0px;"></RadzenIcon>
                                             </RadzenStack>
                                         </RadzenColumn>
-                                        <RadzenColumn SizeXS="8">
-                                            <RadzenHeading Text="Vendas" Size="H3" Style="text-align: right; margin: 0px"></RadzenHeading>
-                                            <RadzenHeading Text="@AnoSelecionado" Size="H4" Style="text-align: right; margin: 0px; "></RadzenHeading>
-                                            <RadzenHeading Text="@valorTotalVendasAnoString" Size="H4" Style="text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        <RadzenColumn SizeXS="9">
+                                            <RadzenHeading Text="Vendas" Size="H3" Style="width: 100%; text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="@AnoSelecionado" Size="H4" Style="width: 100%; text-align: right; margin: 0px; "></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasAnoString" Size="H4" Style="width: 100%; text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
                                         </RadzenColumn>
                                     </RadzenRow>
                                 </RadzenCard>
@@ -121,15 +121,15 @@
                             <RadzenCard Style="width: 100%; height: 400px;">
                                 <RadzenRow Style="width: 100%">
                                     <!-- Coluna para os Headings (Vendas do último trimestre) -->
-                                    <RadzenColumn SizeXS="9" Style="text-align: left;">
+                                    <RadzenColumn Size="9" Style="text-align: left;">
                                         <RadzenHeading Size="H2" Text="Vendas trimestrais por produto (R$)"></RadzenHeading>
                                         <RadzenHeading Text="@intervaloProductSales" Size="H5" Style="margin: 0px;"></RadzenHeading>
                                     </RadzenColumn>
 
                                     <!-- Coluna para o Dropdown (alinhado à direita) -->
-                                    <RadzenColumn SizeXS="3" Style="text-align: right;">
+                                    <RadzenColumn Size="3" Style="text-align: right;">
                                         <RadzenDropDown TValue="string"
-                                                        Style="height: 40px; width: 170px; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                        Style="height: 40px; width: 100%; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
                                                         @bind-Value="opcaoPeriodoProductSales"
                                                         Data="@listaOpcoesPeriodoTrimestre"
                                                         Change="AtualizarPeriodoProductSales" />
@@ -165,15 +165,15 @@
                             <RadzenCard Style="width: 100%; height: 400px;">
                                 <RadzenRow Style="width: 100%">
                                     <!-- Coluna para os Headings (Vendas do último trimestre) -->
-                                    <RadzenColumn SizeXS="8" Style="text-align: left;">
+                                    <RadzenColumn Size="9" Style="text-align: left;">
                                         <RadzenHeading Size="H2" Text="Vendas trimestrais por cliente (R$)"></RadzenHeading>
                                         <RadzenHeading Text="@intervaloClientSales" Size="H5" Style="margin: 0px;"></RadzenHeading>
                                     </RadzenColumn>
 
                                     <!-- Coluna para o Dropdown (alinhado à direita) -->
-                                    <RadzenColumn SizeXS="4" Style="text-align: right;">
+                                    <RadzenColumn Size="3" Style="text-align: right;">
                                         <RadzenDropDown TValue="string"
-                                                        Style="height: 40px; width: 170px; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                        Style="width: 100%; height: 40px; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
                                                         @bind-Value="opcaoPeriodoClientSales"
                                                         Data="@listaOpcoesPeriodoTrimestre"
                                                         Change="AtualizarPeriodoClientSales" />
@@ -208,9 +208,10 @@
             </ChildContent>
         </RadzenFieldset>
 
+<!-- ------------------------------------------------------------------------------------------------------------------------  -->
 
         <!-- GRÁFICOS DE ESTOQUE -->
-        <RadzenFieldset Style="margin-top: 2rem;">
+        <RadzenFieldset Style="margin-top: 1.5rem;">
             <HeaderTemplate>
                 <div>
                     <RadzenText Text="Estoque" TextStyle="Radzen.Blazor.TextStyle.H3" Style="font-weight: 500;" />
@@ -224,46 +225,98 @@
                         <RadzenColumn>
 
                             <!-- Gráfico Vendas Trimestrais -->
-                            <RadzenCard>
-                                <RadzenHeading Text="Vendas Trimestrais"></RadzenHeading>
+                            <RadzenCard Style="width: 100%; height: 400px;">
+                                <RadzenHeading Size="H2" Text="Vendas por trimestre (R$)"></RadzenHeading>
+
+                                @if (vendasTrimestrais != null && vendasTrimestrais.Any())
+                                {
+                                    <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Monochrome" Style="width: 100%;">
+                                        <RadzenLegend Visible="false" />
+                                        <RadzenColumnSeries Data="@vendasTrimestrais" CategoryProperty="Trimestre" ValueProperty="TotalVendas">
+                                            <RadzenSeriesDataLabels Visible="true" />
+                                        </RadzenColumnSeries>
+                                        <RadzenColumnOptions Width="50"></RadzenColumnOptions>
+
+                                    </RadzenChart>
+                                }
+                                else
+                                {
+                                    <p>No data available</p>
+                                }
 
                             </RadzenCard>
 
                         </RadzenColumn>
                         <RadzenColumn>
+                            <!-- CARDS COM VALORES -->
+
                             <RadzenRow>
                                 <!-- Card Venda Última Semana -->
-                                <RadzenCard Style="width: 100%;">
+                                <RadzenCard Style="width: 100%; height: 126px;">
                                     <RadzenRow>
-                                        <RadzenColumn SizeXS="4">
-                                            <RadzenIcon Icon="attach_money" Style="width: 64px; height: 64px; font-size: 48px"></RadzenIcon>
+                                        <RadzenColumn Size="3">
+                                            <RadzenStack Style="width: 100%;">
+                                                <RadzenDropDown TValue="string"
+                                                                Style="height: 40px; width: 100%; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                                @bind-Value="opcaoPeriodoVendasSemana"
+                                                                Data="@listaOpcoesPeriodoVendasSemana"
+                                                                Change="AtualizarOpcaoPeriodoVendasSemana" />
+                                                <RadzenIcon Icon="attach_money" Style="width: 40px; height: 40px; font-size: 42px; margin-top: 0px;"></RadzenIcon>
+                                            </RadzenStack>
                                         </RadzenColumn>
-
+                                        <RadzenColumn Size="9">
+                                            <RadzenHeading Text="Vendas" Size="H3" Style="width: 100%; text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="@intervaloSemana" Size="H4" Style="width: 100%; text-align: right; margin: 0px; "></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasSemanaString" Size="H4" Style="width: 100%; text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        </RadzenColumn>
                                     </RadzenRow>
                                 </RadzenCard>
                             </RadzenRow>
                             <RadzenRow Style="margin-top: 0.7rem;">
                                 <!-- Card Venda Último Mês -->
-                                <RadzenCard Style="width: 100%;">
+                                <RadzenCard Style="width: 100%; height: 126px;">
                                     <RadzenRow>
-                                        <RadzenColumn SizeXS="4">
-                                            <RadzenIcon Icon="attach_money" Style="width: 64px; height: 64px; font-size: 48px"></RadzenIcon>
+                                        <RadzenColumn SizeXS="3">
+                                            <RadzenStack Style="width: 100%;">
+                                                <RadzenDropDown TValue="string"
+                                                                Style="height: 40px; width: 100%; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                                @bind-Value="opcaoPeriodoVendasMes"
+                                                                Data="@listaOpcoesPeriodoVendasMes"
+                                                                Change="AtualizarOpcaoPeriodoVendasMes" />
+                                                <RadzenIcon Icon="attach_money" Style="width: 40px; height: 40px; font-size: 42px; margin-top: 0px;"></RadzenIcon>
+                                            </RadzenStack>
                                         </RadzenColumn>
-     
+                                        <RadzenColumn SizeXS="9">
+                                            <RadzenHeading Text="Vendas" Size="H3" Style="width: 100%; text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="@nomeMesAnterior" Size="H4" Style="width: 100%; text-align: right; margin: 0px; "></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasMesString" Size="H4" Style="width: 100%; text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        </RadzenColumn>
                                     </RadzenRow>
                                 </RadzenCard>
                             </RadzenRow>
                             <RadzenRow Style="margin-top: 0.7rem;">
                                 <!-- Card Venda Último Ano -->
-                                <RadzenCard Style="width: 100%;">
+                                <RadzenCard Style="width: 100%; height: 126px;">
                                     <RadzenRow>
-                                        <RadzenColumn SizeXS="4">
-                                            <RadzenIcon Icon="attach_money" Style="width: 64px; height: 64px; font-size: 48px"></RadzenIcon>
+                                        <RadzenColumn SizeXS="3">
+                                            <RadzenStack Style="width: 100%;">
+                                                <RadzenDropDown TValue="string"
+                                                                Style="height: 40px; width: 100%; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                                @bind-Value="opcaoPeriodoVendasAno"
+                                                                Data="@listaOpcoesPeriodoVendasAno"
+                                                                Change="AtualizarOpcaoPeriodoVendasAno" />
+                                                <RadzenIcon Icon="attach_money" Style="width: 40px; height: 40px; font-size: 42px; margin-top: 0px;"></RadzenIcon>
+                                            </RadzenStack>
                                         </RadzenColumn>
-
+                                        <RadzenColumn SizeXS="9">
+                                            <RadzenHeading Text="Vendas" Size="H3" Style="width: 100%; text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="@AnoSelecionado" Size="H4" Style="width: 100%; text-align: right; margin: 0px; "></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasAnoString" Size="H4" Style="width: 100%; text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        </RadzenColumn>
                                     </RadzenRow>
                                 </RadzenCard>
                             </RadzenRow>
+
                         </RadzenColumn>
                     </RadzenRow>
 
@@ -272,21 +325,89 @@
                         <RadzenColumn Style="width: 100%">
 
                             <!-- Gráfico Vendas por produto -->
-                            <RadzenCard>
-                                <RadzenHeading Text="Distribuição de Vendas por Produto"></RadzenHeading>
+                            <RadzenCard Style="width: 100%; height: 400px;">
+                                <RadzenRow Style="width: 100%">
+                                    <!-- Coluna para os Headings (Vendas do último trimestre) -->
+                                    <RadzenColumn Size="9" Style="text-align: left;">
+                                        <RadzenHeading Size="H2" Text="Vendas trimestrais por produto (R$)"></RadzenHeading>
+                                        <RadzenHeading Text="@intervaloProductSales" Size="H5" Style="margin: 0px;"></RadzenHeading>
+                                    </RadzenColumn>
 
+                                    <!-- Coluna para o Dropdown (alinhado à direita) -->
+                                    <RadzenColumn Size="3" Style="text-align: right;">
+                                        <RadzenDropDown TValue="string"
+                                                        Style="height: 40px; width: 100%; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                        @bind-Value="opcaoPeriodoProductSales"
+                                                        Data="@listaOpcoesPeriodoTrimestre"
+                                                        Change="AtualizarPeriodoProductSales" />
 
+                                    </RadzenColumn>
+                                </RadzenRow>
+
+                                <!-- Gráfico (se houver dados) -->
+                                <RadzenRow Style="width: 100%">
+                                    <RadzenColumn Style="width: 100%">
+                                        @if (productSales != null && productSales.Any())
+                                        {
+                                            <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Pastel">
+                                                <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Right" />
+                                                <RadzenChartTooltipOptions Visible="true" Shared="true" />
+                                                <RadzenPieSeries Title="Distribuição de Vendas por Produto" Data="@productSales" CategoryProperty="NomeProduto" ValueProperty="TotalVendas">
+                                                    <RadzenSeriesDataLabels Visible="true" />
+                                                </RadzenPieSeries>
+                                            </RadzenChart>
+                                        }
+                                        else
+                                        {
+                                            <p>No data available</p>
+                                        }
+                                    </RadzenColumn>
+                                </RadzenRow>
                             </RadzenCard>
 
                         </RadzenColumn>
                         <RadzenColumn Style="width: 100%">
+
                             <!-- Gráfico Vendas por cliente -->
+                            <RadzenCard Style="width: 100%; height: 400px;">
+                                <RadzenRow Style="width: 100%">
+                                    <!-- Coluna para os Headings (Vendas do último trimestre) -->
+                                    <RadzenColumn Size="9" Style="text-align: left;">
+                                        <RadzenHeading Size="H2" Text="Vendas trimestrais por cliente (R$)"></RadzenHeading>
+                                        <RadzenHeading Text="@intervaloClientSales" Size="H5" Style="margin: 0px;"></RadzenHeading>
+                                    </RadzenColumn>
 
-                            <RadzenCard>
-                                <RadzenHeading Text="Vendas por cliente"></RadzenHeading>
+                                    <!-- Coluna para o Dropdown (alinhado à direita) -->
+                                    <RadzenColumn Size="3" Style="text-align: right;">
+                                        <RadzenDropDown TValue="string"
+                                                        Style="width: 100%; height: 40px; font-size: 16px; padding: 7px; padding-inline-start: 10px;"
+                                                        @bind-Value="opcaoPeriodoClientSales"
+                                                        Data="@listaOpcoesPeriodoTrimestre"
+                                                        Change="AtualizarPeriodoClientSales" />
+                                    </RadzenColumn>
+                                </RadzenRow>
 
-
+                                <!-- Gráfico (se houver dados) -->
+                                <RadzenRow Style="width: 100%">
+                                    <RadzenColumn Style="width: 100%">
+                                        @if (clientSales != null && clientSales.Any())
+                                        {
+                                            <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Pastel">
+                                                <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Right" />
+                                                <RadzenChartTooltipOptions Visible="true" Shared="true" />
+                                                <RadzenPieSeries Title="Distribuição de Vendas por Cliente" Data="@clientSales" CategoryProperty="NomeCliente" ValueProperty="TotalVendas">
+                                                    <RadzenSeriesDataLabels Visible="true" />
+                                                </RadzenPieSeries>
+                                            </RadzenChart>
+                                        }
+                                        else
+                                        {
+                                            <p>No data available</p>
+                                        }
+                                    </RadzenColumn>
+                                </RadzenRow>
                             </RadzenCard>
+
 
                         </RadzenColumn>
                     </RadzenRow>
@@ -295,8 +416,6 @@
         </RadzenFieldset>
 
     </RadzenColumn>
-
-
 </div>
 
 
