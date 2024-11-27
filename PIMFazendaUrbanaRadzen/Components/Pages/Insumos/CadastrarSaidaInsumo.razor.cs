@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.IdentityModel.Tokens;
 using PIMFazendaUrbanaAPI.DTOs;
 using PIMFazendaUrbanaRadzen.Services;
 using Radzen;
 
 namespace PIMFazendaUrbanaRadzen.Components.Pages.Insumos
 {
-    public partial class BaixarInsumo
+    public partial class CadastrarSaidaInsumo
     {
         [Parameter]
         public int InsumoId { get; set; }

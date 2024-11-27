@@ -48,7 +48,7 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
                 vendaitens = todasVendas;
                 errorMessage = string.Empty; // Limpa mensagens de erro
 
-                CalculateProductSales();
+                
             }
             catch (Exception ex)
             {
@@ -107,31 +107,6 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Vendas
                 NotificationService.Notify(NotificationSeverity.Error, "Erro ao exportar", ex.Message, duration: 5000);
             }
         }
-
-
-
-        protected List<ProductSales> productSales;
-        protected void CalculateProductSales()
-        {
-            // Agrupar os itens de venda por NomeProduto e somar o ValorTotal
-            productSales = vendaitens
-                .GroupBy(v => v.NomeProduto)
-                .Select(g => new ProductSales
-                {
-                    NomeProduto = g.Key,
-                    TotalVendas = g.Sum(v => v.ValorTotal)
-                })
-                .ToList();
-        }
-
-        // Classe auxiliar para armazenar o total de vendas por produto
-        public class ProductSales
-        {
-            public string NomeProduto { get; set; }
-            public decimal TotalVendas { get; set; }
-        }
-
-
 
     }
 }

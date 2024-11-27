@@ -1,0 +1,270 @@
+﻿@page "/dashboard"
+
+<div style="width: 100%">
+    <RadzenColumn Style="width: 100%">
+
+        <!-- GRÁFICOS DE VENDAS -->
+        <RadzenFieldset>
+            <HeaderTemplate>
+                <div>
+                    <RadzenText Text="Vendas" TextStyle="Radzen.Blazor.TextStyle.H3" Style="font-weight: 500;" />
+                </div>
+            </HeaderTemplate>
+            <ChildContent>
+                <RadzenRow Style="width: 100%" Gap="1rem" RowGap="1rem">
+
+                    <!-- LINHA 1 -->
+                    <RadzenRow Style="width: 100%">
+                        <RadzenColumn>
+
+                            <!-- Gráfico Vendas Trimestrais -->
+                            <RadzenCard>
+                                <RadzenHeading Text="Vendas Trimestrais"></RadzenHeading>
+                                @*
+                                <RadzenChart>
+                                <RadzenDonutSeries Data="@vendasTrimestrais" CategoryProperty="Trimestre" ValueProperty="TotalVendas" TotalAngle="180" StartAngle="180">
+                                <TitleTemplate>
+                                <div class="rz-donut-content">
+                                <div>Vendas</div>
+                                <div>2024</div>
+                                </div>
+                                </TitleTemplate>
+                                </RadzenDonutSeries>
+                                </RadzenChart>
+                                *@
+                                <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Monochrome">
+                                    <RadzenLegend Visible="false" />
+                                    <RadzenStackedBarSeries Data="@vendasTrimestrais" CategoryProperty="Trimestre" ValueProperty="TotalVendas">
+                                        <RadzenSeriesDataLabels Visible="true" />
+                                    </RadzenStackedBarSeries>
+                                    <RadzenColumnOptions Width="50"></RadzenColumnOptions>
+                                    <RadzenValueAxis Min="30000"></RadzenValueAxis>
+                                </RadzenChart>
+                            </RadzenCard>
+
+                        </RadzenColumn>
+                        <RadzenColumn>
+                            <RadzenRow>
+                                <!-- Card Venda Última Semana -->
+                                <RadzenCard Style="width: 100%;">
+                                    <RadzenRow>
+                                        <RadzenColumn SizeXS="4">
+                                            <RadzenIcon Icon="attach_money" Style="width: 64px; height: 64px; font-size: 48px"></RadzenIcon>
+                                        </RadzenColumn>
+                                        <RadzenColumn SizeXS="8">
+                                            <RadzenHeading Text="Vendas" Size="H4" Style="text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="Última semana" Size="H4" Style="text-align: right; margin: 0px; font-size: 12px"></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasUltimaSemanaString" Size="H4" Style="text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        </RadzenColumn>
+                                    </RadzenRow>
+                                </RadzenCard>
+                            </RadzenRow>
+                            <RadzenRow Style="margin-top: 0.7rem;">
+                                <!-- Card Venda Último Mês -->
+                                <RadzenCard Style="width: 100%;">
+                                    <RadzenRow>
+                                        <RadzenColumn SizeXS="4">
+                                            <RadzenIcon Icon="attach_money" Style="width: 64px; height: 64px; font-size: 48px"></RadzenIcon>
+                                        </RadzenColumn>
+                                        <RadzenColumn SizeXS="8">
+                                            <RadzenHeading Text="Vendas" Size="H4" Style="text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="Último mês" Size="H4" Style="text-align: right; margin: 0px; font-size: 12px"></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasUltimoMesString" Size="H4" Style="text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        </RadzenColumn>
+                                    </RadzenRow>
+                                </RadzenCard>
+                            </RadzenRow>
+                            <RadzenRow Style="margin-top: 0.7rem;">
+                                <!-- Card Venda Último Ano -->
+                                <RadzenCard Style="width: 100%;">
+                                    <RadzenRow>
+                                        <RadzenColumn SizeXS="4">
+                                            <RadzenIcon Icon="attach_money" Style="width: 64px; height: 64px; font-size: 48px"></RadzenIcon>
+                                        </RadzenColumn>
+                                        <RadzenColumn SizeXS="8">
+                                            <RadzenHeading Text="Vendas" Size="H4" Style="text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="Último ano" Size="H4" Style="text-align: right; margin: 0px; font-size: 12px"></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasUltimoAnoString" Size="H4" Style="text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        </RadzenColumn>
+                                    </RadzenRow>
+                                </RadzenCard>
+                            </RadzenRow>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <!-- LINHA 2 -->
+                    <RadzenRow Style="width: 100%">
+                        <RadzenColumn Style="width: 100%">
+
+                            <!-- Gráfico Vendas por produto -->
+                            <RadzenCard>
+                                <RadzenHeading Text="Distribuição de Vendas por Produto"></RadzenHeading>
+
+                                <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Divergent">
+                                    <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Right" />
+                                    <RadzenChartTooltipOptions Visible="true" Shared="true" />
+                                    <RadzenPieSeries Title="Distribuição de Vendas por Produto" Data="@productSales" CategoryProperty="NomeProduto" ValueProperty="TotalVendas">
+                                        <RadzenSeriesDataLabels Visible="true" />
+                                    </RadzenPieSeries>
+                                </RadzenChart>
+                            </RadzenCard>
+
+                        </RadzenColumn>
+                        <RadzenColumn Style="width: 100%">
+                            <!-- Gráfico Vendas por cliente -->
+
+                            <RadzenCard>
+                                <RadzenHeading Text="Vendas por cliente"></RadzenHeading>
+
+                                <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Pastel">
+                                    <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Right" />
+                                    <RadzenChartTooltipOptions Visible="true" Shared="true" />
+                                    <RadzenPieSeries Title="Distribuição de Vendas por Cliente" Data="@clientSales" CategoryProperty="NomeCliente" ValueProperty="TotalVendas">
+                                        <RadzenSeriesDataLabels Visible="true" />
+                                    </RadzenPieSeries>
+                                </RadzenChart>
+                            </RadzenCard>
+
+                        </RadzenColumn>
+                    </RadzenRow>
+                </RadzenRow>
+            </ChildContent>
+        </RadzenFieldset>
+
+
+        <!-- GRÁFICOS DE ESTOQUE -->
+        <RadzenFieldset Style="margin-top: 2rem;">
+            <HeaderTemplate>
+                <div>
+                    <RadzenText Text="Estoque" TextStyle="Radzen.Blazor.TextStyle.H3" Style="font-weight: 500;" />
+                </div>
+            </HeaderTemplate>
+            <ChildContent>
+                <RadzenRow Style="width: 100%" Gap="1rem" RowGap="1rem">
+
+                    <!-- LINHA 1 -->
+                    <RadzenRow Style="width: 100%">
+                        <RadzenColumn>
+
+                            <!-- Gráfico Vendas Trimestrais -->
+                            <RadzenCard>
+                                <RadzenHeading Text="Vendas Trimestrais"></RadzenHeading>
+                                @*
+                                <RadzenChart>
+                                <RadzenDonutSeries Data="@vendasTrimestrais" CategoryProperty="Trimestre" ValueProperty="TotalVendas" TotalAngle="180" StartAngle="180">
+                                <TitleTemplate>
+                                <div class="rz-donut-content">
+                                <div>Vendas</div>
+                                <div>2024</div>
+                                </div>
+                                </TitleTemplate>
+                                </RadzenDonutSeries>
+                                </RadzenChart>
+                                *@
+                                <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Monochrome">
+                                    <RadzenLegend Visible="false" />
+                                    <RadzenStackedBarSeries Data="@vendasTrimestrais" CategoryProperty="Trimestre" ValueProperty="TotalVendas">
+                                        <RadzenSeriesDataLabels Visible="true" />
+                                    </RadzenStackedBarSeries>
+                                    <RadzenColumnOptions Width="50"></RadzenColumnOptions>
+                                    <RadzenValueAxis Min="30000"></RadzenValueAxis>
+                                </RadzenChart>
+                            </RadzenCard>
+
+                        </RadzenColumn>
+                        <RadzenColumn>
+                            <RadzenRow>
+                                <!-- Card Venda Última Semana -->
+                                <RadzenCard Style="width: 100%;">
+                                    <RadzenRow>
+                                        <RadzenColumn SizeXS="4">
+                                            <RadzenIcon Icon="attach_money" Style="width: 64px; height: 64px; font-size: 48px"></RadzenIcon>
+                                        </RadzenColumn>
+                                        <RadzenColumn SizeXS="8">
+                                            <RadzenHeading Text="Vendas" Size="H4" Style="text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="Última semana" Size="H4" Style="text-align: right; margin: 0px; font-size: 12px"></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasUltimaSemanaString" Size="H4" Style="text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        </RadzenColumn>
+                                    </RadzenRow>
+                                </RadzenCard>
+                            </RadzenRow>
+                            <RadzenRow Style="margin-top: 0.7rem;">
+                                <!-- Card Venda Último Mês -->
+                                <RadzenCard Style="width: 100%;">
+                                    <RadzenRow>
+                                        <RadzenColumn SizeXS="4">
+                                            <RadzenIcon Icon="attach_money" Style="width: 64px; height: 64px; font-size: 48px"></RadzenIcon>
+                                        </RadzenColumn>
+                                        <RadzenColumn SizeXS="8">
+                                            <RadzenHeading Text="Vendas" Size="H4" Style="text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="Último mês" Size="H4" Style="text-align: right; margin: 0px; font-size: 12px"></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasUltimoMesString" Size="H4" Style="text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        </RadzenColumn>
+                                    </RadzenRow>
+                                </RadzenCard>
+                            </RadzenRow>
+                            <RadzenRow Style="margin-top: 0.7rem;">
+                                <!-- Card Venda Último Ano -->
+                                <RadzenCard Style="width: 100%;">
+                                    <RadzenRow>
+                                        <RadzenColumn SizeXS="4">
+                                            <RadzenIcon Icon="attach_money" Style="width: 64px; height: 64px; font-size: 48px"></RadzenIcon>
+                                        </RadzenColumn>
+                                        <RadzenColumn SizeXS="8">
+                                            <RadzenHeading Text="Vendas" Size="H4" Style="text-align: right; margin: 0px"></RadzenHeading>
+                                            <RadzenHeading Text="Último ano" Size="H4" Style="text-align: right; margin: 0px; font-size: 12px"></RadzenHeading>
+                                            <RadzenHeading Text="@valorTotalVendasUltimoAnoString" Size="H4" Style="text-align: right; font-size: 24px; margin-top: 13px"></RadzenHeading>
+                                        </RadzenColumn>
+                                    </RadzenRow>
+                                </RadzenCard>
+                            </RadzenRow>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <!-- LINHA 2 -->
+                    <RadzenRow Style="width: 100%">
+                        <RadzenColumn Style="width: 100%">
+
+                            <!-- Gráfico Vendas por produto -->
+                            <RadzenCard>
+                                <RadzenHeading Text="Distribuição de Vendas por Produto"></RadzenHeading>
+
+                                <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Divergent">
+                                    <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Right" />
+                                    <RadzenChartTooltipOptions Visible="true" Shared="true" />
+                                    <RadzenPieSeries Title="Distribuição de Vendas por Produto" Data="@productSales" CategoryProperty="NomeProduto" ValueProperty="TotalVendas">
+                                        <RadzenSeriesDataLabels Visible="true" />
+                                    </RadzenPieSeries>
+                                </RadzenChart>
+                            </RadzenCard>
+
+                        </RadzenColumn>
+                        <RadzenColumn Style="width: 100%">
+                            <!-- Gráfico Vendas por cliente -->
+
+                            <RadzenCard>
+                                <RadzenHeading Text="Vendas por cliente"></RadzenHeading>
+
+                                <RadzenChart ColorScheme="Radzen.Blazor.ColorScheme.Pastel">
+                                    <RadzenLegend Visible="true" Position="Radzen.Blazor.LegendPosition.Right" />
+                                    <RadzenChartTooltipOptions Visible="true" Shared="true" />
+                                    <RadzenPieSeries Title="Distribuição de Vendas por Cliente" Data="@clientSales" CategoryProperty="NomeCliente" ValueProperty="TotalVendas">
+                                        <RadzenSeriesDataLabels Visible="true" />
+                                    </RadzenPieSeries>
+                                </RadzenChart>
+                            </RadzenCard>
+
+                        </RadzenColumn>
+                    </RadzenRow>
+                </RadzenRow>
+            </ChildContent>
+        </RadzenFieldset>
+
+    </RadzenColumn>
+
+
+</div>
+
+
+
+

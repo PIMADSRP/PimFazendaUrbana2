@@ -1,15 +1,15 @@
-﻿@page "/baixar-insumo/{InsumoId:int}"
+﻿@page "/cadastrar-saida-insumo/{InsumoId:int}"
 @using PIMFazendaUrbanaRadzen.Services
 @using PIMFazendaUrbanaAPI.DTOs
 @* @attribute [Authorize] *@
 
-<PageTitle>Baixar Insumo</PageTitle>
+<PageTitle>Cadastrar Saída de Insumo</PageTitle>
 
 <RadzenCard Style="max-width: 800px; margin: 0 auto; padding: 20px;" class="rz-mt-2">
-    <RadzenText Text="Baixar Insumo" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-3" />
+    <RadzenText Text="Cadastrar Saída de Insumo" TextStyle="TextStyle.H3" TagName="TagName.H1" class="rz-mb-3" />
 
     <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">
-        Erro ao baixar insumo
+        Erro ao cadastrar saída de insumo
     </RadzenAlert>
 
     <RadzenTemplateForm TItem="InsumoDTO" Data="@insumo" Submit="@FormSubmit">

@@ -95,14 +95,14 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages.Insumos
         {
             if (insumo.Qtd <= 0)
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não é possível baixar um insumo sem quantidade no estoque.", duration: 2000);
+                NotificationService.Notify(NotificationSeverity.Error, "Erro", "Não é possível cadastrar saída de um insumo sem quantidade no estoque.", duration: 2000);
                 return;
             }
 
             if (insumo?.Id != null)
             {
-                Console.WriteLine($"Navegando para /baixar-insumo/{insumo.Id}");
-                NavigationManager.NavigateTo($"/baixar-insumo/{insumo.Id}");
+                Console.WriteLine($"Navegando para /cadastrar-saida-insumo/{insumo.Id}");
+                NavigationManager.NavigateTo($"/cadastrar-saida-insumo/{insumo.Id}");
             }
             else
             {
