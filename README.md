@@ -18,14 +18,16 @@ O sistema possui **3 camadas**:
 - Cadastro de usuários
 - Controle de fornecedores e clientes
 - Controle de compra de insumos e de venda dos produtos
-- Controle de estoque
+- Controle de estoque de insumos
+- Controle de estoque de produtos
 - Controle de produção
-- Geração de relatórios
+- Geração de relatórios (xlsx e csv)
 - Sistema de recomendação do cultivo a ser plantado, conforme a localização, época do ano, e disponibilidade ou não de ambiente controlado.
+- Dashboard com gráficos e estatísticas
 
 Também é disponibilizada extensa documentação do projeto, incluindo diversos diagramas UML e modelagem do banco de dados.
 
-Desenvolvido em C#, utilizando .NET 8.0, ASP.NET, AutoMapper, Swagger, Blazor, e Radzen, com integração a banco de dados MySQL.
+Desenvolvido em C#, utilizando .NET 8.0, ASP.NET, AutoMapper, Webservice ViaCep, ClosedXML, Blazored LocalStorage, Newtonsoft.Json, Swagger, Blazor, e Radzen, com integração a banco de dados MySQL.
 
 ---
 
