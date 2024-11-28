@@ -25,9 +25,6 @@
                     <RadzenSplitButtonItem Text="CSV" Value="csv" />
                 </RadzenSplitButton>
 
-                <!-- Botão Voltar -->
-                <RadzenButton ButtonStyle="ButtonStyle.Primary" Icon="arrow_back" Text="Voltar" Click="@ReturnButtonClick" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Light" />
-
             </RadzenStack>
         </RadzenColumn>
     </RadzenRow>
@@ -138,6 +135,19 @@
             </RadzenDataGrid>
         </RadzenColumn>
     </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
+
+                <!-- Botão Voltar -->
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="arrow_back" Text="Voltar" Click="@ReturnButtonClick" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Light" />
+
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+
+
 </RadzenStack>
 
 @if (!string.IsNullOrEmpty(errorMessage))

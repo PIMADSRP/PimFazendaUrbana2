@@ -63,16 +63,14 @@
                                 <RadzenMask Mask="*****-***" Pattern="[^0-9]" Placeholder="_____-___" style="width: 100%" @bind-Value="@fornecedor.Endereco.CEP" Name="CEP" title="CEP é obrigatório e deve ter 8 dígitos" />
                                 <RadzenRequiredValidator Component="CEP" Text="CEP é obrigatório e deve ter 8 dígitos" />
                             </RadzenFormField>
-                            <RadzenButton Style="padding-left: 6px; padding-right: 6px; padding-top: 0px; padding-bottom: 0px; width: 116px !important; height: 40px !important;"
+                            <RadzenButton Style="padding-left: 6px; padding-right: 6px; padding-top: 0px; padding-bottom: 0px; width: 150px !important; height: 40px !important;"
                                           class="rz-mt-2"
                                           Text="Consultar CEP" Icon="add_location"
                                           Size="Radzen.ButtonSize.Small"
-                                          ButtonStyle="ButtonStyle.Primary"
+                                          ButtonStyle="ButtonStyle.Info"
                                           Variant="Radzen.Variant.Filled"
                                           Shade="Radzen.Shade.Default"
                                           Click="@BuscarEnderecoPorCEP" />
-                            <!-- Size="Radzen.ButtonSize.Small" -->
-
                         </RadzenStack>
                     </RadzenRow>
 

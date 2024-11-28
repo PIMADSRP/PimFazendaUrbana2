@@ -259,17 +259,3 @@
 {
     <div style="color:red;">@errorMessage</div> <!-- Exibe erro em vermelho -->
 }
-
-<RadzenChart>
-    <RadzenStackedBarSeries Title="Distribuição de Categorias" Data="@categoryCounts" CategoryProperty="Categoria" ValueProperty="Count" />
-</RadzenChart>
-
-@code{
-    protected List<CategoryCount> categoryCounts;
-
-    public class CategoryCount
-    {
-        public string Categoria { get; set; }
-        public int Count { get; set; }
-    }
-}

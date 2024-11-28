@@ -25,8 +25,14 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            vendaitens = new List<PedidoVendaItemDTO>();
             await LoadPedidoVendaItens();
             await CalcularValoresVendas();
+            
+            insumos = new List<InsumoDTO>();
+            await LoadInsumos();
+
+
         }
 
         //**************** VENDAS ****************
@@ -391,7 +397,50 @@ namespace PIMFazendaUrbanaRadzen.Components.Pages
 
         //----------------------------------------------------------------------------------------------------------
 
+        // ESTOQUE DE INSUMOS
+
+        [Inject]
+        public InsumosApiService<InsumoDTO> InsumosApiService { get; set; }
+
+        protected List<InsumoDTO> insumos;
+
+        protected int quantidadeMaxima = 30; // Quantidade máxima de um insumo para ser exibido
+        protected string tituloGraficoEstoqueInsumos = "Estoque de Insumos";
+
+        protected List<InsumoDTO> todosInsumos; // Lista completa dos insumos
+
+        protected async Task LoadInsumos()
+        {
+            try
+            {
+                todosInsumos = await InsumosApiService.GetAllAsync(); // Carrega todos os insumos
+                await AtualizarGraficoEstoqueInsumos(quantidadeMaxima);
+
+                errorMessage = string.Empty; // Limpa mensagens de erro
+            }
+            catch (Exception ex)
+            {
+                errorMessage = $"Erro ao carregar insumos: {ex.Message}";
+                Console.WriteLine(errorMessage);
+            }
+        }
+
+        protected async Task AtualizarGraficoEstoqueInsumos(int newQuantidadeMaxima)
+        {
+            quantidadeMaxima = newQuantidadeMaxima;
+
+            // Usa a lista original para garantir que os dados filtrados sejam baseados nela
+            insumos = todosInsumos.Where(i => i.Qtd <= quantidadeMaxima).ToList();
+
+            // Atualiza o título
+            //tituloGraficoEstoqueInsumos = "Estoque de Insumos" + $" (quantidade menor que {quantidadeMaxima})";
+
+            StateHasChanged(); // Notifica o componente para renderizar novamente
+        }
+
+
         // talvez exportar para pdf
+
 
     }
 }

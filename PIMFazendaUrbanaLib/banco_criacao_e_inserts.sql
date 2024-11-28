@@ -619,59 +619,32 @@ commit;
 ## ESTOQUEINSUMO, SAIDAINSUMO, PEDIDOCOMPRA, COMPRAITEM
 begin;
 INSERT INTO `estoqueinsumo` (`nome_insumo`, `categoria_insumo`, `qtd_insumo`, `unidqtd_insumo`, `ativo_insumo`) VALUES
-('Nitrato de amônio', 'Fertilizantes', 50, 'kg', true),
-('Fosfato diamônico', 'Fertilizantes', 40, 'kg', true),
+('Nitrato de amônio', 'Fertilizantes', 10, 'kg', true),
+('Fosfato diamônico', 'Fertilizantes', 10, 'kg', true),
 ('Sulfato de potássio', 'Fertilizantes', 30, 'kg', true),
-('Calcário dolomítico', 'Fertilizantes', 0, 'kg', true),
 ('Uréia', 'Fertilizantes', 0, 'kg', true),
-('Superfosfato simples', 'Fertilizantes', 30, 'kg', true),
-('Cloreto de potássio', 'Fertilizantes', 50, 'kg', true),
-('Fertilizante líquido NPK 10-10-10', 'Fertilizantes', 0, 'l', true),
-('Fertilizante líquido NPK 20-5-10', 'Fertilizantes', 50, 'l', true),
-('Fertilizante líquido NPK 15-30-15', 'Fertilizantes', 0, 'l', true),
-('Fertilizante líquido NPK 12-0-12', 'Fertilizantes', 0, 'l', true),
-('Fertilizante granulado NPK 20-10-10', 'Fertilizantes', 0, 'kg', true),
-('Fertilizante granulado NPK 15-15-15', 'Fertilizantes', 30, 'kg', true),
-('Fertilizante granulado NPK 10-20-10', 'Fertilizantes', 0, 'kg', true),
+('Superfosfato simples', 'Fertilizantes', 0, 'kg', true),
+('Fertilizante líquido NPK 15-30-15', 'Fertilizantes', 50, 'l', true),
 ('Fertilizante granulado NPK 10-10-20', 'Fertilizantes', 40, 'kg', true),
-('Abacaxi Pérola', 'Sementes', 30, 'kg', true),
-('Abóbora Japonesa', 'Sementes', 0, 'kg', true),
-('Abobrinha Menina Brasileira', 'Sementes', 20, 'kg', true),
-('Acelga Verde de Verão', 'Sementes', 20, 'kg', true),
-('Agrião de Água', 'Sementes', 10, 'kg', true),
-('Alface Crespa', 'Sementes', 0, 'kg', true),
-('Alface Americana', 'Sementes', 0, 'kg', true),
-('Algodão BRS 368', 'Sementes', 0, 'kg', true),
+('Abacaxi Pérola', 'Sementes', 10, 'kg', true),
+('Abóbora Japonesa', 'Sementes', 30, 'kg', true),
+('Abobrinha Menina Brasileira', 'Sementes', 0, 'kg', true),
+('Acelga Verde de Verão', 'Sementes', 0, 'kg', true),
+('Agrião de Água', 'Sementes', 0, 'kg', true),
+('Alface Crespa', 'Sementes', 30, 'kg', true),
+('Alface Americana', 'Sementes', 10, 'kg', true),
 ('Alho Roxo', 'Sementes', 10, 'kg', true),
 ('Alho-poró Porto Rico', 'Sementes', 0, 'kg', true),
-('Banana Prata', 'Sementes', 50, 'kg', true),
+('Banana Prata', 'Sementes', 40, 'kg', true),
 ('Batata-doce Beauregard', 'Sementes', 0, 'kg', true),
-('Beterraba Detroit Dark Red', 'Sementes', 0, 'kg', true),
-('Beterraba Early Wonder', 'Sementes', 50, 'kg', true),
-('Berinjela Roxa', 'Sementes', 0, 'kg', true),
-('Brócolis Calabrês', 'Sementes', 60, 'kg', true),
-('Caju Anão Precoce', 'Sementes', 0, 'kg', true),
-('Cebola Baia Periforme', 'Sementes', 0, 'kg', true),
-('Cebolinha Verde Todo o Ano', 'Sementes', 60, 'kg', true),
-('Cenoura Brasília', 'Sementes', 40, 'kg', true),
-('Cenoura Nantes', 'Sementes', 0, 'kg', true),
-('Chicória Catalonha', 'Sementes', 0, 'kg', true),
-('Coentro Português', 'Sementes', 60, 'kg', true),
+('Beterraba Early Wonder', 'Sementes', 30, 'kg', true),
+('Brócolis Calabrês', 'Sementes', 10, 'kg', true),
+('Cebolinha Verde Todo o Ano', 'Sementes', 0, 'kg', true),
+('Cenoura Nantes', 'Sementes', 20, 'kg', true),
+('Coentro Português', 'Sementes', 10, 'kg', true),
 ('Couve Manteiga', 'Sementes', 0, 'kg', true),
-('Couve-de-bruxelas Menina', 'Sementes', 0, 'kg', true),
 ('Couve-flor de Inverno', 'Sementes', 0, 'kg', true),
-('Cupuaçuzeiro', 'Sementes', 60, 'kg', true),
-('Erva-doce de Mesa', 'Sementes', 0, 'kg', true),
-('Ervilha Douce Provence', 'Sementes', 50, 'kg', true),
-('Ervilha Early Frosty', 'Sementes', 0, 'kg', true);
-commit;
-
-begin;
-INSERT INTO saidainsumo (qtd_saidainsumo, unidqtd_saidainsumo, data_saidainsumo, id_insumo) 
-VALUES
-(20, 'kg', '2024-11-21', 1),
-(15, 'unidade', '2024-11-22', 2),
-(5, 'l', '2024-11-23', 3);
+('Ervilha Early Frosty', 'Sementes', 20, 'kg', true);
 commit;
 
 ## INSERTS DE COMPRA
@@ -684,9 +657,18 @@ VALUES
 
 INSERT INTO compraitem (qtd_compraitem, unidqtd_compraitem, valor_compraitem, id_pedidocompra, id_insumo) 
 VALUES
-(100, 'kg', 500.000, 1, 1),
+(10, 'kg', 500.000, 1, 1),
 (50, 'unidade', 200.000, 1, 2),
 (20, 'l', 300.000, 2, 3);
+commit;
+
+begin;
+INSERT INTO saidainsumo (qtd_saidainsumo, unidqtd_saidainsumo, data_saidainsumo, id_insumo) 
+VALUES
+(10, 'kg', '2024-11-21', 1),
+(15, 'unidade', '2024-11-22', 2),
+(5, 'l', '2024-11-23', 3),
+(5, 'l', '2024-11-24', 7);
 commit;
 
 BEGIN;
