@@ -64,7 +64,14 @@
                             </RadzenFormField>
 
                             <RadzenStack Style="margin-top: 0.3rem; margin-left: 0.3rem;" Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center">
-                                <RadzenButton Icon="add_location" ButtonStyle="ButtonStyle.Primary" Text="Consultar CEP" Click="@BuscarEnderecoPorCEP" Variant="Radzen.Variant.Filled" Shade="Radzen.Shade.Default" />
+                            <RadzenButton Style="padding-left: 6px; padding-right: 6px; padding-top: 0px; padding-bottom: 0px; width: 150px !important; height: 40px !important;"
+                                          
+                                          Text="Consultar CEP" Icon="add_location"
+                                          Size="Radzen.ButtonSize.Small"
+                                          ButtonStyle="ButtonStyle.Info"
+                                          Variant="Radzen.Variant.Filled"
+                                          Shade="Radzen.Shade.Default"
+                                          Click="@BuscarEnderecoPorCEP" />
                             </RadzenStack>
 
                         </RadzenRow>

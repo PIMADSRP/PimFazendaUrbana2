@@ -27,9 +27,8 @@ namespace PIMFazendaUrbanaLib
                                 FROM cliente c
                                 LEFT JOIN telefonecliente t ON c.id_cliente = t.id_cliente
                                 LEFT JOIN enderecocliente e ON c.id_cliente = e.id_cliente
-                                WHERE c.ativo_cliente = true 
-                                AND (c.nome_cliente LIKE @search OR c.email_cliente LIKE @search OR 
-                                    c.cnpj_cliente LIKE @search OR t.numero_telcliente LIKE @search)";
+                                WHERE c.nome_cliente LIKE @search OR c.email_cliente LIKE @search OR 
+                                    c.cnpj_cliente LIKE @search OR t.numero_telcliente LIKE @search";
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {

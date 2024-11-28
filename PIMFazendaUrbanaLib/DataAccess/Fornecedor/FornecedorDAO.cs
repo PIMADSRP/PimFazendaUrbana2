@@ -27,9 +27,8 @@ namespace PIMFazendaUrbanaLib
                                 FROM fornecedor c
                                 LEFT JOIN telefonefornecedor t ON c.id_fornecedor = t.id_fornecedor
                                 LEFT JOIN enderecofornecedor e ON c.id_fornecedor = e.id_fornecedor
-                                WHERE c.ativo_fornecedor = true 
-                                AND (c.nome_fornecedor LIKE @search OR c.email_fornecedor LIKE @search OR 
-                                    c.cnpj_fornecedor LIKE @search OR t.numero_telfornecedor LIKE @search)";
+                                WHERE c.nome_fornecedor LIKE @search OR c.email_fornecedor LIKE @search OR 
+                                    c.cnpj_fornecedor LIKE @search OR t.numero_telfornecedor LIKE @search";
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {

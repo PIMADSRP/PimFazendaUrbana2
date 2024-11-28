@@ -28,7 +28,10 @@ namespace PIMFazendaUrbanaLib
                                 FROM funcionario f
                                 LEFT JOIN telefonefuncionario t ON f.id_funcionario = t.id_funcionario
                                 LEFT JOIN enderecofuncionario e ON f.id_funcionario = e.id_funcionario
-                                WHERE f.nome_funcionario LIKE @Search";
+                                WHERE f.nome_funcionario LIKE @Search 
+                                OR f.usuario_funcionario LIKE @Search 
+                                OR f.cpf_funcionario LIKE @Search 
+                                OR f.email_funcionario LIKE @Search";
 
                 using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
